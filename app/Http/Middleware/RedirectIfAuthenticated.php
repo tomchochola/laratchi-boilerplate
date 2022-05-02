@@ -17,7 +17,7 @@ class RedirectIfAuthenticated
      */
     public function handle(Request $request, Closure $next, string|null ...$guards): SymfonyResponse
     {
-        mustBeGuest($guards);
+        mustBeGuest(\count($guards) === 0 ? [null] : $guards);
 
         return $next($request);
     }
