@@ -1,7 +1,8 @@
 <?php
 
-return [
+declare(strict_types=1);
 
+return [
     /*
     |--------------------------------------------------------------------------
     | Default Filesystem Disk
@@ -29,16 +30,15 @@ return [
     */
 
     'disks' => [
-
         'local' => [
             'driver' => 'local',
-            'root' => storage_path('app'),
+            'root' => resolveApp()->storagePath('app'),
             'throw' => false,
         ],
 
         'public' => [
             'driver' => 'local',
-            'root' => storage_path('app/public'),
+            'root' => resolveApp()->storagePath('app/public'),
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
             'throw' => false,
@@ -55,7 +55,6 @@ return [
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
             'throw' => false,
         ],
-
     ],
 
     /*
@@ -70,7 +69,6 @@ return [
     */
 
     'links' => [
-        public_path('storage') => storage_path('app/public'),
+        resolveApp()->publicPath().\DIRECTORY_SEPARATOR.'storage' => resolveApp()->storagePath('app/public'),
     ],
-
 ];

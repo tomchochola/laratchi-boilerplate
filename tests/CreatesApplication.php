@@ -1,21 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests;
 
-use Illuminate\Contracts\Console\Kernel;
+use Illuminate\Contracts\Console\Kernel as KernelContract;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 trait CreatesApplication
 {
     /**
-     * Creates the application.
-     *
-     * @return \Illuminate\Foundation\Application
+     * @inheritDoc
      */
-    public function createApplication()
+    public function createApplication(): HttpKernelInterface
     {
         $app = require __DIR__.'/../bootstrap/app.php';
 
-        $app->make(Kernel::class)->bootstrap();
+        $app->make(KernelContract::class)->bootstrap();
 
         return $app;
     }

@@ -1,0 +1,724 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Laratchi",
+    "description": "API V1 specification",
+    "version": "0.1.0",
+    "contact": {
+      "name": "Tomáš Chochola",
+      "url": "https://github.com/tomchochola/laratchi",
+      "email": "chocholatom1997@gmail.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "/api/v1"
+    }
+  ],
+  "security": [
+    {},
+    {
+      "bearer": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "auth",
+      "description": "Register, login, logout and e-mail verification"
+    }
+  ],
+  "paths": {
+    "/auth/register": {
+      "post": {
+        "tags": ["auth"],
+        "summary": "Register new user",
+        "description": "Register and login new user\n\nUser must not be authenticated\n\nThrottled",
+        "operationId": "post_auth_register",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "example": {
+                "name": "John Doe",
+                "email": "test@test.com",
+                "password": "password",
+                "password_confirmation": "password",
+                "terms_accepted": true,
+                "remember": false
+              },
+              "schema": {
+                "description": "request data",
+                "type": "object",
+                "required": ["name", "email", "password", "password_confirmation", "terms_accepted", "remember"],
+                "properties": {
+                  "name": {
+                    "description": "user full name",
+                    "type": "string",
+                    "pattern": ".+",
+                    "minLength": 1,
+                    "maxLength": 255
+                  },
+                  "email": {
+                    "description": "unique e-mail",
+                    "type": "string",
+                    "pattern": ".+",
+                    "minLength": 1,
+                    "maxLength": 255
+                  },
+                  "password": {
+                    "description": "password",
+                    "type": "string",
+                    "format": "password",
+                    "pattern": ".+",
+                    "minLength": 1,
+                    "maxLength": 1024
+                  },
+                  "password_confirmation": {
+                    "description": "password confirmation",
+                    "type": "string",
+                    "format": "password",
+                    "pattern": ".+",
+                    "minLength": 1,
+                    "maxLength": 1024
+                  },
+                  "remember": {
+                    "description": "remember login",
+                    "type": "boolean"
+                  },
+                  "terms_accepted": {
+                    "description": "accept terms",
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/User"
+          },
+          "427": {
+            "$ref": "#/components/responses/427"
+          },
+          "429": {
+            "$ref": "#/components/responses/429"
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": ["auth"],
+        "summary": "Log in user",
+        "description": "Log in user\n\nUser must not be authenticated\n\nThrottled",
+        "operationId": "post_auth_login",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "email": "test@test.com",
+                "password": "password"
+              },
+              "schema": {
+                "description": "request data",
+                "type": "object",
+                "required": ["email", "password"],
+                "properties": {
+                  "email": {
+                    "description": "e-mail",
+                    "type": "string",
+                    "pattern": ".+",
+                    "minLength": 1,
+                    "maxLength": 255
+                  },
+                  "password": {
+                    "description": "password",
+                    "type": "string",
+                    "format": "password",
+                    "pattern": ".+",
+                    "minLength": 1,
+                    "maxLength": 1024
+                  },
+                  "remember": {
+                    "description": "remember login",
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/User"
+          },
+          "427": {
+            "$ref": "#/components/responses/427"
+          },
+          "429": {
+            "$ref": "#/components/responses/429"
+          }
+        }
+      }
+    },
+    "/auth/logout/current": {
+      "post": {
+        "tags": ["auth"],
+        "summary": "Logout current device",
+        "description": "Logout current device\n\nUser must be authenticated",
+        "operationId": "post_auth_logout_current_device",
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/204"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "429": {
+            "$ref": "#/components/responses/429"
+          }
+        }
+      }
+    },
+    "/auth/logout/other": {
+      "post": {
+        "tags": ["auth"],
+        "summary": "Logout other devices",
+        "description": "Logout other devices\n\nUser must be authenticated\n\nThrottled",
+        "operationId": "post_auth_logout_other_devices",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "password": "password"
+              },
+              "schema": {
+                "description": "request data",
+                "type": "object",
+                "properties": {
+                  "password": {
+                    "description": "password",
+                    "type": "string",
+                    "format": "password",
+                    "pattern": ".*",
+                    "minLength": 1,
+                    "maxLength": 1024
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/User"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "429": {
+            "$ref": "#/components/responses/429"
+          }
+        }
+      }
+    },
+    "/auth/email_verification/resend": {
+      "post": {
+        "tags": ["auth"],
+        "summary": "Resend e-mail verification",
+        "description": "Resend e-mail verification notification\n\nUser must be authenticated\n\nThrottled",
+        "operationId": "post_auth_email_verification_resend",
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/204"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "429": {
+            "$ref": "#/components/responses/429"
+          }
+        }
+      }
+    },
+    "/auth/email_verification/verify/{id}/{hash}": {
+      "post": {
+        "tags": ["auth"],
+        "summary": "Verify e-mail",
+        "description": "Verify e-mail via link from e-mail\n\nThrottled",
+        "operationId": "post_auth_email_verification_verify_id_hash",
+        "parameters": [
+          {
+            "description": "user id",
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string",
+              "pattern": ".+",
+              "minLength": 1,
+              "maxLength": 255
+            },
+            "required": true
+          },
+          {
+            "description": "verification hash",
+            "name": "hash",
+            "in": "path",
+            "schema": {
+              "type": "string",
+              "pattern": ".+",
+              "minLength": 64,
+              "maxLength": 64
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/204"
+          },
+          "403": {
+            "$ref": "#/components/responses/signed"
+          },
+          "429": {
+            "$ref": "#/components/responses/429"
+          }
+        }
+      }
+    },
+    "/auth/password/forgot": {
+      "post": {
+        "tags": ["auth"],
+        "summary": "Send password forgot e-mail",
+        "description": "Send password forgot e-mail\n\nUser must not be authenticated\n\nThrottled",
+        "operationId": "post_auth_password_forgot",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "email": "test@test.com"
+              },
+              "schema": {
+                "description": "request data",
+                "type": "object",
+                "required": ["email"],
+                "properties": {
+                  "email": {
+                    "description": "e-mail",
+                    "type": "string",
+                    "pattern": ".+",
+                    "minLength": 1,
+                    "maxLength": 255
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/204"
+          },
+          "427": {
+            "$ref": "#/components/responses/427"
+          },
+          "429": {
+            "$ref": "#/components/responses/429"
+          }
+        }
+      }
+    },
+    "/auth/password/reset": {
+      "post": {
+        "tags": ["auth"],
+        "summary": "Reset password",
+        "description": "Reset password\n\nUser must not be authenticated\n\nThrottled",
+        "operationId": "post_auth_password_reset",
+        "requestBody": {
+          "description": "send body if verifying unathenticated user",
+          "required": false,
+          "content": {
+            "application/json": {
+              "example": {
+                "email": "test@test.com",
+                "token": "token",
+                "password": "password",
+                "password_confirmation": "password"
+              },
+              "schema": {
+                "description": "request data",
+                "type": "object",
+                "required": ["email", "token", "password", "password_confirmation"],
+                "properties": {
+                  "email": {
+                    "description": "e-mail",
+                    "type": "string",
+                    "pattern": ".+",
+                    "minLength": 1,
+                    "maxLength": 255
+                  },
+                  "token": {
+                    "description": "token",
+                    "type": "string",
+                    "pattern": ".+",
+                    "minLength": 1,
+                    "maxLength": 255
+                  },
+                  "password": {
+                    "description": "password",
+                    "type": "string",
+                    "format": "password",
+                    "pattern": ".+",
+                    "minLength": 1,
+                    "maxLength": 1024
+                  },
+                  "password_confirmation": {
+                    "description": "password confirmation",
+                    "type": "string",
+                    "format": "password",
+                    "pattern": ".+",
+                    "minLength": 1,
+                    "maxLength": 1024
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/User"
+          },
+          "427": {
+            "$ref": "#/components/responses/427"
+          },
+          "429": {
+            "$ref": "#/components/responses/429"
+          }
+        }
+      }
+    },
+    "/auth/password/update": {
+      "post": {
+        "tags": ["auth"],
+        "summary": "Update password",
+        "description": "Update password\n\nUser must be authenticated\n\nThrottled",
+        "operationId": "post_auth_password_update",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "password": "password",
+                "new_password": "password",
+                "new_password_confirmation": "password"
+              },
+              "schema": {
+                "description": "request data",
+                "type": "object",
+                "required": ["password", "new_password", "new_password_confirmation"],
+                "properties": {
+                  "password": {
+                    "description": "current password",
+                    "type": "string",
+                    "pattern": ".+",
+                    "minLength": 1,
+                    "maxLength": 1024
+                  },
+                  "new_password": {
+                    "description": "new password",
+                    "type": "string",
+                    "pattern": ".+",
+                    "minLength": 1,
+                    "maxLength": 1024
+                  },
+                  "new_password_confirmation": {
+                    "description": "new password confirmation",
+                    "type": "string",
+                    "pattern": ".+",
+                    "minLength": 1,
+                    "maxLength": 1024
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/User"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "429": {
+            "$ref": "#/components/responses/429"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Resource": {
+        "description": "json:api resource",
+        "type": "object",
+        "required": ["id", "slug", "type"],
+        "properties": {
+          "id": {
+            "description": "id",
+            "type": "string"
+          },
+          "slug": {
+            "description": "slug",
+            "type": "string"
+          },
+          "type": {
+            "description": "type",
+            "type": "string"
+          }
+        }
+      },
+      "SingleRelationship": {
+        "description": "json:api single relationship",
+        "type": "object",
+        "required": ["data"],
+        "properties": {
+          "data": {
+            "description": "json:api resource",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Resource"
+              },
+              {
+                "type": "object",
+                "nullable": true
+              }
+            ]
+          }
+        }
+      },
+      "User": {
+        "description": "user schema",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Resource"
+          },
+          {
+            "type": "object",
+            "required": ["attributes"],
+            "properties": {
+              "attributes": {
+                "description": "attributes",
+                "type": "object",
+                "required": ["name", "email", "locale", "created_at", "updated_at", "email_verified_at"],
+                "properties": {
+                  "name": {
+                    "description": "user full name",
+                    "type": "string"
+                  },
+                  "email": {
+                    "description": "e-mail",
+                    "type": "string"
+                  },
+                  "locale": {
+                    "description": "locale",
+                    "type": "string"
+                  },
+                  "created_at": {
+                    "description": "date-time of creation",
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "updated_at": {
+                    "description": "date-time of last update",
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "email_verified_at": {
+                    "description": "date-time of e-mail verification",
+                    "type": "string",
+                    "format": "date-time",
+                    "nullable": true
+                  }
+                }
+              },
+              "relationships": {
+                "description": "relationships",
+                "type": "object",
+                "properties": {
+                  "database_token": {
+                    "$ref": "#/components/schemas/SingleRelationship"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "DatabaseToken": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Resource"
+          },
+          {
+            "type": "object",
+            "required": ["attributes", "meta"],
+            "properties": {
+              "attributes": {
+                "description": "attributes",
+                "type": "object",
+                "required": ["provider", "auth_id", "created_at", "updated_at"],
+                "properties": {
+                  "provider": {
+                    "description": "user provider name",
+                    "type": "string"
+                  },
+                  "auth_id": {
+                    "description": "authenticatable id",
+                    "type": "string"
+                  },
+                  "created_at": {
+                    "description": "date-time of creation",
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "updated_at": {
+                    "description": "date-time of last update",
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "bearer": {
+                    "description": "bearer token",
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "Error": {
+        "description": "generic error",
+        "type": "object",
+        "required": ["message", "code", "status", "title"],
+        "properties": {
+          "message": {
+            "description": "computer readable message",
+            "type": "string"
+          },
+          "title": {
+            "description": "human readable message",
+            "type": "string"
+          },
+          "status": {
+            "description": "HTTP status code",
+            "type": "integer"
+          },
+          "code": {
+            "description": "error code",
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "responses": {
+      "204": {
+        "description": "Successful operation"
+      },
+      "401": {
+        "description": "`Unauthorized` - `0` - User must be authenticated",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "427": {
+        "description": "`Must Be Guest` - `0` - User must not be authenticated",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "429": {
+        "description": "`Too Many Requests` - `0` - Throttled",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "signed": {
+        "description": "`Invalid Signature` - `0` - Invalid signature",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "User": {
+        "description": "Successful operation",
+        "content": {
+          "application/json": {
+            "example": {
+              "data": {
+                "id": "1",
+                "slug": "1",
+                "type": "users",
+                "attributes": {
+                  "name": "John Doe",
+                  "email": "test@test.com",
+                  "locale": "en",
+                  "created_at": "2021-12-10T11:19:32.296419Z",
+                  "updated_at": "2021-12-10T11:19:32.296419Z",
+                  "email_verified_at": null
+                }
+              }
+            },
+            "schema": {
+              "description": "user schema",
+              "type": "object",
+              "required": ["data"],
+              "properties": {
+                "data": {
+                  "$ref": "#/components/schemas/User"
+                },
+                "included": {
+                  "description": "included relationships",
+                  "type": "array",
+                  "items": {
+                    "oneOf": [
+                      {
+                        "$ref": "#/components/schemas/DatabaseToken"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearer": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  }
+}

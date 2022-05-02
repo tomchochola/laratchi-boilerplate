@@ -1,18 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers;
 
+use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
+use Tomchochola\Laratchi\Auth\Observers\UserObserver;
 
 class EventServiceProvider extends ServiceProvider
 {
     /**
-     * The event listener mappings for the application.
+     * @inheritDoc
      *
-     * @var array<class-string, array<int, class-string>>
+     * @var array<mixed>
      */
     protected $listen = [
         Registered::class => [
@@ -21,22 +24,12 @@ class EventServiceProvider extends ServiceProvider
     ];
 
     /**
-     * Register any events for your application.
-     *
-     * @return void
+     * @inheritDoc
      */
-    public function boot()
+    public function boot(): void
     {
-        //
-    }
+        parent::boot();
 
-    /**
-     * Determine if events and listeners should be automatically discovered.
-     *
-     * @return bool
-     */
-    public function shouldDiscoverEvents()
-    {
-        return false;
+        User::observe([UserObserver::class]);
     }
 }

@@ -1,0 +1,363 @@
+includes:
+    - tools/phpstan/vendor/spaze/phpstan-disallowed-calls/disallowed-dangerous-calls.neon
+    - tools/phpstan/vendor/spaze/phpstan-disallowed-calls/disallowed-execution-calls.neon
+    - tools/phpstan/vendor/spaze/phpstan-disallowed-calls/disallowed-insecure-calls.neon
+    - tools/phpstan/vendor/spaze/phpstan-disallowed-calls/disallowed-loose-calls.neon
+
+parameters:
+  level: max
+  paths:
+    - app
+    - config
+    - database
+    - lang
+    - resources
+    - routes
+    - tests
+  disallowedFunctionCalls:
+    -
+      function: 'abort()'
+      message: 'laravel helpers are banned'
+    -
+      function: 'abort_if()'
+      message: 'laravel helpers are banned'
+    -
+      function: 'abort_unless()'
+      message: 'laravel helpers are banned'
+    -
+      function: 'action()'
+      message: 'laravel helpers are banned'
+    -
+      function: 'app()'
+      message: 'laravel helpers are banned'
+    -
+      function: 'app_path()'
+      message: 'laravel helpers are banned'
+    -
+      function: 'asset()'
+      message: 'laravel helpers are banned'
+    -
+      function: 'auth()'
+      message: 'laravel helpers are banned'
+    -
+      function: 'back()'
+      message: 'laravel helpers are banned'
+    -
+      function: 'base_path()'
+      message: 'laravel helpers are banned'
+    -
+      function: 'bcrypt()'
+      message: 'laravel helpers are banned'
+    -
+      function: 'broadcast()'
+      message: 'laravel helpers are banned'
+    -
+      function: 'cache()'
+      message: 'laravel helpers are banned'
+    -
+      function: 'config()'
+      message: 'laravel helpers are banned'
+    -
+      function: 'config_path()'
+      message: 'laravel helpers are banned'
+    -
+      function: 'cookie()'
+      message: 'laravel helpers are banned'
+    -
+      function: 'csrf_field()'
+      message: 'laravel helpers are banned'
+    -
+      function: 'csrf_token()'
+      message: 'laravel helpers are banned'
+    -
+      function: 'database_path()'
+      message: 'laravel helpers are banned'
+    -
+      function: 'decrypt()'
+      message: 'laravel helpers are banned'
+    -
+      function: 'dispatch()'
+      message: 'laravel helpers are banned'
+    -
+      function: 'dispatch_sync()'
+      message: 'laravel helpers are banned'
+    -
+      function: 'dispatch_now()'
+      message: 'laravel helpers are banned'
+    -
+      function: 'encrypt()'
+      message: 'laravel helpers are banned'
+    -
+      function: 'event()'
+      message: 'laravel helpers are banned'
+    -
+      function: 'info()'
+      message: 'laravel helpers are banned'
+    -
+      function: 'logger()'
+      message: 'laravel helpers are banned'
+    -
+      function: 'lang_path()'
+      message: 'laravel helpers are banned'
+    -
+      function: 'logs()'
+      message: 'laravel helpers are banned'
+    -
+      function: 'method_field()'
+      message: 'laravel helpers are banned'
+    -
+      function: 'mix()'
+      message: 'laravel helpers are banned'
+    -
+      function: 'now()'
+      message: 'laravel helpers are banned'
+    -
+      function: 'old()'
+      message: 'laravel helpers are banned'
+    -
+      function: 'policy()'
+      message: 'laravel helpers are banned'
+    -
+      function: 'public_path()'
+      message: 'laravel helpers are banned'
+    -
+      function: 'redirect()'
+      message: 'laravel helpers are banned'
+    -
+      function: 'report()'
+      message: 'laravel helpers are banned'
+    -
+      function: 'request()'
+      message: 'laravel helpers are banned'
+    -
+      function: 'rescue()'
+      message: 'laravel helpers are banned'
+    -
+      function: 'resolve()'
+      message: 'laravel helpers are banned'
+    -
+      function: 'resource_path()'
+      message: 'laravel helpers are banned'
+    -
+      function: 'response()'
+      message: 'laravel helpers are banned'
+    -
+      function: 'route()'
+      message: 'laravel helpers are banned'
+    -
+      function: 'secure_asset()'
+      message: 'laravel helpers are banned'
+    -
+      function: 'secure_url()'
+      message: 'laravel helpers are banned'
+    -
+      function: 'session()'
+      message: 'laravel helpers are banned'
+    -
+      function: 'storage_path()'
+      message: 'laravel helpers are banned'
+    -
+      function: 'to_route()'
+      message: 'laravel helpers are banned'
+    -
+      function: 'today()'
+      message: 'laravel helpers are banned'
+    -
+      function: 'trans()'
+      message: 'laravel helpers are banned'
+    -
+      function: 'trans_choice()'
+      message: 'laravel helpers are banned'
+    -
+      function: '__()'
+      message: 'laravel helpers are banned'
+    -
+      function: 'url()'
+      message: 'laravel helpers are banned'
+    -
+      function: 'validator()'
+      message: 'laravel helpers are banned'
+    -
+      function: 'view()'
+      message: 'laravel helpers are banned'
+  disallowedNamespaces:
+    -
+      namespace: 'Illuminate\Support\Facades\App'
+      message: 'laravel facades are banned'
+      allowIn:
+        - tests/*
+    -
+      namespace: 'Illuminate\Support\Facades\Artisan'
+      message: 'laravel facades are banned'
+      allowIn:
+        - tests/*
+    -
+      namespace: 'Illuminate\Support\Facades\Auth'
+      message: 'laravel facades are banned'
+      allowIn:
+        - tests/*
+    -
+      namespace: 'Illuminate\Support\Facades\Blade'
+      message: 'laravel facades are banned'
+      allowIn:
+        - tests/*
+    -
+      namespace: 'Illuminate\Support\Facades\Broadcast'
+      message: 'laravel facades are banned'
+      allowIn:
+        - tests/*
+    -
+      namespace: 'Illuminate\Support\Facades\Bus'
+      message: 'laravel facades are banned'
+      allowIn:
+        - tests/*
+    -
+      namespace: 'Illuminate\Support\Facades\Cache'
+      message: 'laravel facades are banned'
+      allowIn:
+        - tests/*
+    -
+      namespace: 'Illuminate\Support\Facades\Config'
+      message: 'laravel facades are banned'
+      allowIn:
+        - tests/*
+    -
+      namespace: 'Illuminate\Support\Facades\Cookie'
+      message: 'laravel facades are banned'
+      allowIn:
+        - tests/*
+    -
+      namespace: 'Illuminate\Support\Facades\Crypt'
+      message: 'laravel facades are banned'
+      allowIn:
+        - tests/*
+    -
+      namespace: 'Illuminate\Support\Facades\Date'
+      message: 'laravel facades are banned'
+      allowIn:
+        - tests/*
+    -
+      namespace: 'Illuminate\Support\Facades\DB'
+      message: 'laravel facades are banned'
+      allowIn:
+        - tests/*
+    -
+      namespace: 'Illuminate\Support\Facades\Event'
+      message: 'laravel facades are banned'
+      allowIn:
+        - tests/*
+    -
+      namespace: 'Illuminate\Support\Facades\File'
+      message: 'laravel facades are banned'
+      allowIn:
+        - tests/*
+    -
+      namespace: 'Illuminate\Support\Facades\Gate'
+      message: 'laravel facades are banned'
+      allowIn:
+        - tests/*
+    -
+      namespace: 'Illuminate\Support\Facades\Hash'
+      message: 'laravel facades are banned'
+      allowIn:
+        - tests/*
+    -
+      namespace: 'Illuminate\Support\Facades\Http'
+      message: 'laravel facades are banned'
+      allowIn:
+        - tests/*
+    -
+      namespace: 'Illuminate\Support\Facades\Lang'
+      message: 'laravel facades are banned'
+      allowIn:
+        - tests/*
+    -
+      namespace: 'Illuminate\Support\Facades\Log'
+      message: 'laravel facades are banned'
+      allowIn:
+        - tests/*
+    -
+      namespace: 'Illuminate\Support\Facades\Mail'
+      message: 'laravel facades are banned'
+      allowIn:
+        - tests/*
+    -
+      namespace: 'Illuminate\Support\Facades\Notification'
+      message: 'laravel facades are banned'
+      allowIn:
+        - tests/*
+    -
+      namespace: 'Illuminate\Support\Facades\ParallelTesting'
+      message: 'laravel facades are banned'
+      allowIn:
+        - tests/*
+    -
+      namespace: 'Illuminate\Support\Facades\Password'
+      message: 'laravel facades are banned'
+      allowIn:
+        - tests/*
+    -
+      namespace: 'Illuminate\Support\Facades\Queue'
+      message: 'laravel facades are banned'
+      allowIn:
+        - tests/*
+    -
+      namespace: 'Illuminate\Support\Facades\RateLimiter'
+      message: 'laravel facades are banned'
+      allowIn:
+        - tests/*
+    -
+      namespace: 'Illuminate\Support\Facades\Redirect'
+      message: 'laravel facades are banned'
+      allowIn:
+        - tests/*
+    -
+      namespace: 'Illuminate\Support\Facades\Redis'
+      message: 'laravel facades are banned'
+      allowIn:
+        - tests/*
+    -
+      namespace: 'Illuminate\Support\Facades\Request'
+      message: 'laravel facades are banned'
+      allowIn:
+        - tests/*
+    -
+      namespace: 'Illuminate\Support\Facades\Response'
+      message: 'laravel facades are banned'
+      allowIn:
+        - tests/*
+    -
+      namespace: 'Illuminate\Support\Facades\Route'
+      message: 'laravel facades are banned'
+      allowIn:
+        - tests/*
+    -
+      namespace: 'Illuminate\Support\Facades\Session'
+      message: 'laravel facades are banned'
+      allowIn:
+        - tests/*
+    -
+      namespace: 'Illuminate\Support\Facades\Schema'
+      message: 'laravel facades are banned'
+      allowIn:
+        - tests/*
+    -
+      namespace: 'Illuminate\Support\Facades\Storage'
+      message: 'laravel facades are banned'
+      allowIn:
+        - tests/*
+    -
+      namespace: 'Illuminate\Support\Facades\URL'
+      message: 'laravel facades are banned'
+      allowIn:
+        - tests/*
+    -
+      namespace: 'Illuminate\Support\Facades\Validator'
+      message: 'laravel facades are banned'
+      allowIn:
+        - tests/*
+    -
+      namespace: 'Illuminate\Support\Facades\View'
+      message: 'laravel facades are banned'
+      allowIn:
+        - tests/*

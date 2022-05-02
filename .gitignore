@@ -1,3 +1,4 @@
+# stock
 /node_modules
 /public/hot
 /public/storage
@@ -12,3 +13,32 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
+
+# generic
+.DS_Store
+.idea
+.vscode
+
+# node
+node_modules
+package-lock.json
+
+# composer
+/vendor
+composer.lock
+
+# phpunit
+phpunit.xml
+.phpunit.result.cache
+
+# phpstan
+phpstan.neon
+
+# php-cs-fixer
+.php-cs-fixer.cache
+
+# tools
+/tools/*/vendor
+
+# public
+public/vendor

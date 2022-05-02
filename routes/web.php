@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+declare(strict_types=1);
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +13,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+resolveRouter()->get('api/v1/spec', Tomchochola\Laratchi\Api\Http\Controllers\SwaggerUiController::class)->defaults('file', resolveApp()->basePath('docs/api_v1_spec.json'))->name('api.v1.spec');

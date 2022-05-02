@@ -1,7 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
+declare(strict_types=1);
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:web')->get('/user', function (Request $request) {
-    return $request->user();
+resolveRouteRegistrar()->prefix('v1')->name('v1.')->group(static function (): void {
+    resolveRouteRegistrar()->prefix('auth')->name('auth.')->group(static function (): void {
+        Tomchochola\Laratchi\Support\ServiceProvider::registerRoutes();
+    });
 });
+
+resolveRouter()->any('{any?}', Tomchochola\Laratchi\Http\Controllers\NotFoundController::class)->where('any', '.*')->name('fallback')->fallback();

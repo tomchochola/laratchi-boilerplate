@@ -6,5 +6,7 @@
 *.md diff=markdown
 *.php diff=php
 
-/.github export-ignore
-CHANGELOG.md export-ignore
+*.svg -merge -diff
+
+composer.lock -merge -diff
+package-lock.json -merge -diff
