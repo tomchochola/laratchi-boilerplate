@@ -567,7 +567,7 @@
           },
           {
             "type": "object",
-            "required": ["attributes", "meta"],
+            "required": ["attributes"],
             "properties": {
               "attributes": {
                 "description": "attributes",
