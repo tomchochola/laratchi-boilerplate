@@ -1,0 +1,28 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+use Illuminate\Console\Command;
+
+class {{ class }} extends Command
+{
+    /**
+     * @inheritDoc
+     */
+    protected $signature = '{{ command }}';
+
+    /**
+     * @inheritDoc
+     */
+    protected $description = 'Command description';
+
+    /**
+     * Execute the console command.
+     */
+    public function handle(): int
+    {
+        return static::SUCCESS;
+    }
+}

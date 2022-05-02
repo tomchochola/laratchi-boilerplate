@@ -1,0 +1,22 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+use Closure;
+use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
+use Illuminate\Http\Request;
+
+class {{ class }}
+{
+    /**
+     * Handle an incoming request.
+     *
+     * @param Closure(Request): SymfonyResponse $next
+     */
+    public function handle(Request $request, Closure $next): SymfonyResponse
+    {
+        return $next($request);
+    }
+}

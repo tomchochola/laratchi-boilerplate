@@ -1,0 +1,60 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
+use Tomchochola\Laratchi\Routing\Controller;
+use Tomchochola\Laratchi\Http\Requests\SecureFormRequest;
+
+class {{ class }} extends Controller
+{
+    /**
+     * Create a new controller instance.
+     */
+    public function __construct()
+    {
+        $this->transaction(['store', 'update', 'destroy']);
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function index(SecureFormRequest $request): SymfonyResponse
+    {
+        return resolveResponseFactory()->noContent();
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(SecureFormRequest $request): SymfonyResponse
+    {
+        return resolveResponseFactory()->noContent();
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id, SecureFormRequest $request): SymfonyResponse
+    {
+        return resolveResponseFactory()->noContent();
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(string $id, SecureFormRequest $request): SymfonyResponse
+    {
+        return resolveResponseFactory()->noContent();
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id, SecureFormRequest $request): SymfonyResponse
+    {
+        return resolveResponseFactory()->noContent();
+    }
+}

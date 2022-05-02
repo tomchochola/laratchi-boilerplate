@@ -1,0 +1,22 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+use Illuminate\Contracts\Support\Arrayable as ArrayableContract;
+use Illuminate\Http\Resources\Json\ResourceCollection;
+use JsonSerializable;
+
+class {{ class }} extends ResourceCollection
+{
+    /**
+     * @inheritDoc
+     *
+     * @return array<string, mixed>|ArrayableContract<string, mixed>|JsonSerializable
+     */
+    public function toArray(mixed $request): array|ArrayableContract|JsonSerializable
+    {
+        return parent::toArray($request);
+    }
+}

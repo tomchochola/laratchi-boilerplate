@@ -1,0 +1,25 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+use Illuminate\Support\ServiceProvider;
+
+class {{ class }} extends ServiceProvider
+{
+    /**
+     * @inheritDoc
+     */
+    public function register(): void
+    {
+        parent::register();
+    }
+
+    /**
+     * Bootstrap services.
+     */
+    public function boot(): void
+    {
+    }
+}

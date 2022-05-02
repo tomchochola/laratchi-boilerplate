@@ -1,0 +1,30 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+use Illuminate\Contracts\Database\Eloquent\CastsAttributes as CastsAttributesContract;
+
+class {{ class }} implements CastsAttributesContract
+{
+    /**
+     * @inheritDoc
+     *
+     * @param array<mixed> $attributes
+     */
+    public function get(mixed $model, string $key, mixed $value, array $attributes): mixed
+    {
+        return $value;
+    }
+
+    /**
+     * @inheritDoc
+     *
+     * @param array<mixed> $attributes
+     */
+    public function set(mixed $model, string $key, mixed $value, array $attributes): mixed
+    {
+        return $value;
+    }
+}

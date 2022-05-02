@@ -1,0 +1,19 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+use Illuminate\Database\Eloquent\Builder;
+use Tomchochola\Laratchi\Database\Model;
+use Illuminate\Database\Eloquent\Scope;
+
+class {{ class }} implements Scope
+{
+    /**
+     * @inheritDoc
+     */
+    public function apply(Builder $builder, Model $model): void
+    {
+    }
+}

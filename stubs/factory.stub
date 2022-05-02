@@ -1,0 +1,21 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ factoryNamespace }};
+
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+/**
+ * @extends Factory<{{ model }}>
+ */
+class {{ factory }}Factory extends Factory
+{
+    /**
+     * @inheritDoc
+     */
+    public function definition(): array
+    {
+        return [];
+    }
+}

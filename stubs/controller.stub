@@ -1,0 +1,76 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
+use Tomchochola\Laratchi\Routing\Controller;
+use Illuminate\Http\Request;
+
+class {{ class }} extends Controller
+{
+    /**
+     * Create a new controller instance.
+     */
+    public function __construct()
+    {
+        $this->transaction(['store', 'update', 'destroy']);
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function index(Request $request): SymfonyResponse
+    {
+        return resolveResponseFactory()->noContent();
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create(Request $request): SymfonyResponse
+    {
+        return resolveResponseFactory()->noContent();
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request): SymfonyResponse
+    {
+        return resolveResponseFactory()->noContent();
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id, Request $request): SymfonyResponse
+    {
+        return resolveResponseFactory()->noContent();
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id, Request $request): SymfonyResponse
+    {
+        return resolveResponseFactory()->noContent();
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(string $id, Request $request): SymfonyResponse
+    {
+        return resolveResponseFactory()->noContent();
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id, Request $request): SymfonyResponse
+    {
+        return resolveResponseFactory()->noContent();
+    }
+}

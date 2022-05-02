@@ -1,0 +1,28 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
+use Tomchochola\Laratchi\Routing\Controller;
+use Tomchochola\Laratchi\Http\Requests\SecureFormRequest;
+
+class {{ class }} extends Controller
+{
+    /**
+     * Create a new controller instance.
+     */
+    public function __construct()
+    {
+        $this->transaction();
+    }
+
+    /**
+     * Handle the incoming request.
+     */
+    public function __invoke(SecureFormRequest $request): SymfonyResponse
+    {
+        return resolveResponseFactory()->noContent();
+    }
+}
