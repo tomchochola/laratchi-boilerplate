@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\LazyLoadingViolationException;
 use Illuminate\Support\ServiceProvider;
+use Tomchochola\Laratchi\Support\ServiceProvider as LaratchiServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,10 +22,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Model::unguard();
-        Model::preventLazyLoading();
-        Model::handleLazyLoadingViolationUsing(static function (object $model, string $relation): never {
-            throw new LazyLoadingViolationException($model, $relation);
-        });
+        LaratchiServiceProvider::modelRestrictions();
     }
 }
