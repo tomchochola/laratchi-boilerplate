@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http;
 
-use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\TrimStrings;
 use Illuminate\Auth\Middleware\Authenticate;
 use Illuminate\Auth\Middleware\AuthenticateWithBasicAuth;
@@ -25,6 +24,7 @@ use Illuminate\Routing\Middleware\ValidateSignature;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Tomchochola\Laratchi\Http\Middleware\MustBeGuestMiddleware;
 use Tomchochola\Laratchi\Http\Middleware\SetPreferredLanguageMiddleware;
 use Tomchochola\Laratchi\Http\Middleware\SetRequestFormatMiddleware;
 use Tomchochola\Laratchi\Http\Middleware\ValidateAcceptHeaderMiddleware;
@@ -78,7 +78,7 @@ class Kernel extends HttpKernel
         'auth.session' => AuthenticateSession::class,
         'cache.headers' => SetCacheHeaders::class,
         'can' => Authorize::class,
-        'guest' => RedirectIfAuthenticated::class,
+        'guest' => MustBeGuestMiddleware::class,
         'password.confirm' => RequirePassword::class,
         'signed' => ValidateSignature::class,
         'throttle' => ThrottleRequests::class,
