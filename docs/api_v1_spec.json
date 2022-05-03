@@ -37,7 +37,7 @@
         "requestBody": {
           "required": true,
           "content": {
-            "multipart/form-data": {
+            "application/json": {
               "example": {
                 "name": "John Doe",
                 "email": "test@test.com",
@@ -98,6 +98,9 @@
           "201": {
             "$ref": "#/components/responses/User"
           },
+          "422": {
+            "$ref": "#/components/responses/422"
+          },
           "427": {
             "$ref": "#/components/responses/427"
           },
@@ -119,12 +122,13 @@
             "application/json": {
               "example": {
                 "email": "test@test.com",
-                "password": "password"
+                "password": "password",
+                "remember": true
               },
               "schema": {
                 "description": "request data",
                 "type": "object",
-                "required": ["email", "password"],
+                "required": ["email", "password", "remember"],
                 "properties": {
                   "email": {
                     "description": "e-mail",
@@ -154,6 +158,9 @@
           "200": {
             "$ref": "#/components/responses/User"
           },
+          "422": {
+            "$ref": "#/components/responses/422"
+          },
           "427": {
             "$ref": "#/components/responses/427"
           },
@@ -175,9 +182,6 @@
           },
           "401": {
             "$ref": "#/components/responses/401"
-          },
-          "429": {
-            "$ref": "#/components/responses/429"
           }
         }
       }
@@ -218,6 +222,9 @@
           },
           "401": {
             "$ref": "#/components/responses/401"
+          },
+          "422": {
+            "$ref": "#/components/responses/422"
           },
           "429": {
             "$ref": "#/components/responses/429"
@@ -323,6 +330,9 @@
           "204": {
             "$ref": "#/components/responses/204"
           },
+          "422": {
+            "$ref": "#/components/responses/422"
+          },
           "427": {
             "$ref": "#/components/responses/427"
           },
@@ -393,6 +403,9 @@
           "200": {
             "$ref": "#/components/responses/User"
           },
+          "422": {
+            "$ref": "#/components/responses/422"
+          },
           "427": {
             "$ref": "#/components/responses/427"
           },
@@ -455,8 +468,27 @@
           "401": {
             "$ref": "#/components/responses/401"
           },
+          "422": {
+            "$ref": "#/components/responses/422"
+          },
           "429": {
             "$ref": "#/components/responses/429"
+          }
+        }
+      }
+    },
+    "/auth/me": {
+      "get": {
+        "tags": ["auth"],
+        "summary": "Get currently authenticated user",
+        "description": "User must be authenticated",
+        "operationId": "get_auth_me",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/User"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
           }
         }
       }
@@ -624,6 +656,29 @@
             "type": "integer"
           }
         }
+      },
+      "ValidationError": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Error"
+          },
+          {
+            "type": "object",
+            "required": ["errors"],
+            "properties": {
+              "errors": {
+                "description": "validation errors",
+                "type": "object",
+                "additionalProperties": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        ]
       }
     },
     "responses": {
@@ -636,6 +691,16 @@
           "application/json": {
             "schema": {
               "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "422": {
+        "description": "`The Given Data Was Invalid` - `0` - Validation errors",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ValidationError"
             }
           }
         }
