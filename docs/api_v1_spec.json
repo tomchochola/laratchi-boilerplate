@@ -103,9 +103,6 @@
           },
           "427": {
             "$ref": "#/components/responses/427"
-          },
-          "429": {
-            "$ref": "#/components/responses/429"
           }
         }
       }
@@ -163,9 +160,6 @@
           },
           "427": {
             "$ref": "#/components/responses/427"
-          },
-          "429": {
-            "$ref": "#/components/responses/429"
           }
         }
       }
@@ -245,6 +239,9 @@
           "401": {
             "$ref": "#/components/responses/401"
           },
+          "403": {
+            "$ref": "#/components/responses/403"
+          },
           "429": {
             "$ref": "#/components/responses/429"
           }
@@ -255,7 +252,7 @@
       "post": {
         "tags": ["auth"],
         "summary": "Verify e-mail",
-        "description": "Verify e-mail via link from e-mail\n\nThrottled",
+        "description": "Verify e-mail via link from e-mail\n\nUser must be authenticated\n\nThrottled",
         "operationId": "post_auth_email_verification_verify_id_hash",
         "parameters": [
           {
@@ -287,8 +284,11 @@
           "204": {
             "$ref": "#/components/responses/204"
           },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
           "403": {
-            "$ref": "#/components/responses/signed"
+            "$ref": "#/components/responses/403"
           },
           "429": {
             "$ref": "#/components/responses/429"
@@ -335,9 +335,6 @@
           },
           "427": {
             "$ref": "#/components/responses/427"
-          },
-          "429": {
-            "$ref": "#/components/responses/429"
           }
         }
       }
@@ -408,9 +405,6 @@
           },
           "427": {
             "$ref": "#/components/responses/427"
-          },
-          "429": {
-            "$ref": "#/components/responses/429"
           }
         }
       }
@@ -470,9 +464,6 @@
           },
           "422": {
             "$ref": "#/components/responses/422"
-          },
-          "429": {
-            "$ref": "#/components/responses/429"
           }
         }
       }
@@ -481,14 +472,14 @@
       "get": {
         "tags": ["auth"],
         "summary": "Get currently authenticated user",
-        "description": "User must be authenticated",
+        "description": "Get currently authenticated user\n\n200 -> Authenticated, 204 -> Unauthenticated",
         "operationId": "get_auth_me",
         "responses": {
           "200": {
             "$ref": "#/components/responses/User"
           },
-          "401": {
-            "$ref": "#/components/responses/401"
+          "204": {
+            "description": "User is not authenticated"
           }
         }
       }
@@ -695,6 +686,16 @@
           }
         }
       },
+      "403": {
+        "description": "`Forbidden` - `0` - Sorry, you are forbidden from accessing this page",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
       "422": {
         "description": "`The Given Data Was Invalid` - `0` - Validation errors",
         "content": {
@@ -717,16 +718,6 @@
       },
       "429": {
         "description": "`Too Many Requests` - `0` - Throttled",
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/Error"
-            }
-          }
-        }
-      },
-      "signed": {
-        "description": "`Invalid Signature` - `0` - Invalid signature",
         "content": {
           "application/json": {
             "schema": {
