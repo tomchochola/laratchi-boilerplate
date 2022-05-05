@@ -17,347 +17,347 @@ parameters:
   disallowedFunctionCalls:
     -
       function: 'abort()'
-      message: 'laravel helpers are banned'
+      message: 'abort() is banned, use throw new \Symfony\Component\HttpKernel\Exception\HttpException() insteand'
     -
       function: 'abort_if()'
-      message: 'laravel helpers are banned'
+      message: 'abort_if() is banned, use throw new \Symfony\Component\HttpKernel\Exception\HttpException() instead'
     -
       function: 'abort_unless()'
-      message: 'laravel helpers are banned'
+      message: 'abort_unless() is banned, use throw new \Symfony\Component\HttpKernel\Exception\HttpException() instead'
     -
       function: 'action()'
-      message: 'laravel helpers are banned'
+      message: 'action() is banned, use resolveUrlFactory()->action() instead'
     -
       function: 'app()'
-      message: 'laravel helpers are banned'
+      message: 'app() is banned, use resolveApp() instead'
     -
       function: 'app_path()'
-      message: 'laravel helpers are banned'
+      message: 'app_path() is banned, use resolveApp()->path() instead'
     -
       function: 'asset()'
-      message: 'laravel helpers are banned'
+      message: 'asset() is banned, use resolveUrlFactory()->asset() instead'
     -
       function: 'auth()'
-      message: 'laravel helpers are banned'
+      message: 'auth() is banned, use resolveAuthManager() instead'
     -
       function: 'back()'
-      message: 'laravel helpers are banned'
+      message: 'back() is banned, use resolveRedirector()->back() instead'
     -
       function: 'base_path()'
-      message: 'laravel helpers are banned'
+      message: 'base_path() is banned, use resolveApp()->basePath() instead'
     -
       function: 'bcrypt()'
-      message: 'laravel helpers are banned'
+      message: 'bcrypt() is banned, use resolveHasher()->make() instead'
     -
       function: 'broadcast()'
-      message: 'laravel helpers are banned'
+      message: 'broadcast() is banned, use resolveBroadcastManager()->broadcast() instead'
     -
       function: 'cache()'
-      message: 'laravel helpers are banned'
+      message: 'cache() is banned, use resolveCacheManager()->get() instead'
     -
       function: 'config()'
-      message: 'laravel helpers are banned'
+      message: 'config() is banned, use resolveConfig() or mustConfigXXX(), configXXX() instead, example mustConfigString()'
     -
       function: 'config_path()'
-      message: 'laravel helpers are banned'
+      message: 'config_path() is banned, use resolveApp()->configPath() instead'
     -
       function: 'cookie()'
-      message: 'laravel helpers are banned'
+      message: 'cookie() is banned, use resolveCookieJar()->make() instead'
     -
       function: 'csrf_field()'
-      message: 'laravel helpers are banned'
+      message: 'csrf_field() is banned, use @csrf'
     -
       function: 'csrf_token()'
-      message: 'laravel helpers are banned'
+      message: 'csrf_token() is banned, use resolveSession()->token() instead'
     -
       function: 'database_path()'
-      message: 'laravel helpers are banned'
+      message: 'database_path() is banned, use resolveApp()->databasePath() instead'
     -
       function: 'decrypt()'
-      message: 'laravel helpers are banned'
+      message: 'decrypt() is banned, use resolveEncrypter()->decrypt() instead'
     -
       function: 'dispatch()'
-      message: 'laravel helpers are banned'
+      message: 'dispatch() is banned, use resolveBus()->dispatch() instead'
     -
       function: 'dispatch_sync()'
-      message: 'laravel helpers are banned'
+      message: 'dispatch_sync() is banned, use resolveBus()->dispatchSync() instead'
     -
       function: 'dispatch_now()'
-      message: 'laravel helpers are banned'
+      message: 'dispatch_now() is banned, use resolveBus()->dispatchNow() instead'
     -
       function: 'encrypt()'
-      message: 'laravel helpers are banned'
+      message: 'encrypt() is banned, use resolveEncrypter()->encrypt() instead'
     -
       function: 'event()'
-      message: 'laravel helpers are banned'
+      message: 'event() is banned, use resolveEventDispatcher()->dispatch() instead'
     -
       function: 'info()'
-      message: 'laravel helpers are banned'
+      message: 'info() is banned, use resolveLogger()->info() instead'
     -
       function: 'logger()'
-      message: 'laravel helpers are banned'
+      message: 'logger() is banned, use resolveLogger() instead'
     -
       function: 'lang_path()'
-      message: 'laravel helpers are banned'
+      message: 'lang_path() is banned, use resolveApp()->langPath() instead'
     -
       function: 'logs()'
-      message: 'laravel helpers are banned'
+      message: 'logs() is banned, use resolveLogger() instead'
     -
       function: 'method_field()'
-      message: 'laravel helpers are banned'
+      message: 'method_field() is banned, use @method'
     -
       function: 'mix()'
-      message: 'laravel helpers are banned'
+      message: 'mix() is banned, use inject(\Illuminate\Foundation\Mix::class) instead'
     -
       function: 'now()'
-      message: 'laravel helpers are banned'
+      message: 'now() is banned, use \Illuminate\Support\Carbon::now() instead'
     -
       function: 'old()'
-      message: 'laravel helpers are banned'
+      message: 'old() is banned, use resolveRequest()->old() instead'
     -
       function: 'policy()'
-      message: 'laravel helpers are banned'
+      message: 'policy() is banned, use resolveGate()->getPolicyFor() instead'
     -
       function: 'public_path()'
-      message: 'laravel helpers are banned'
+      message: 'public_path() is banned, use resolveApp()->publicPath() instead'
     -
       function: 'redirect()'
-      message: 'laravel helpers are banned'
+      message: 'redirect() is banned, use resolveRedirector()->to() instead'
     -
       function: 'report()'
-      message: 'laravel helpers are banned'
+      message: 'report() is banned, use resolveExceptionHandler()->report() instead'
     -
       function: 'request()'
-      message: 'laravel helpers are banned'
+      message: 'request() is banned, use resolveRequest() instead'
     -
       function: 'rescue()'
-      message: 'laravel helpers are banned'
+      message: 'rescue() is banned, use try {} catch {} instead'
     -
       function: 'resolve()'
-      message: 'laravel helpers are banned'
+      message: 'resolve() is banned, use inject() instead'
     -
       function: 'resource_path()'
-      message: 'laravel helpers are banned'
+      message: 'resource_path() is banned, use resolveApp()->resourcePath() instead'
     -
       function: 'response()'
-      message: 'laravel helpers are banned'
+      message: 'response() is banned, use resolveResponseFactory()->make() instead'
     -
       function: 'route()'
-      message: 'laravel helpers are banned'
+      message: 'route() is banned, use resolveUrlFactory()->route() instead'
     -
       function: 'secure_asset()'
-      message: 'laravel helpers are banned'
+      message: 'secure_asset() is banned, use resolveUrlFactory()->secureAsset() instead'
     -
       function: 'secure_url()'
-      message: 'laravel helpers are banned'
+      message: 'secure_url() is banned, use resolveUrlFactory()->secure() instead'
     -
       function: 'session()'
-      message: 'laravel helpers are banned'
+      message: 'session() is banned, use resolveSession() instead'
     -
       function: 'storage_path()'
-      message: 'laravel helpers are banned'
+      message: 'storage_path() is banned, use resolveApp()->storagePath() instead'
     -
       function: 'to_route()'
-      message: 'laravel helpers are banned'
+      message: 'to_route() is banned, use resolveRedirector()->route() instead'
     -
       function: 'today()'
-      message: 'laravel helpers are banned'
+      message: 'today() is banned, use \Illuminate\Support\Carbon::today() instead'
     -
       function: 'trans()'
-      message: 'laravel helpers are banned'
+      message: 'trans() is banned, use mustTransString(), mustTransJson(), mustTransArray() instead'
     -
       function: 'trans_choice()'
-      message: 'laravel helpers are banned'
+      message: 'trans_choice() is banned, use resolveTranslator()->choice() instead'
     -
       function: '__()'
-      message: 'laravel helpers are banned'
+      message: '__() is banned, use mustTransString(), mustTransJson(), mustTransArray() instead'
     -
       function: 'url()'
-      message: 'laravel helpers are banned'
+      message: 'url() is banned, use resolveUrlFactory()->to() instead'
     -
       function: 'validator()'
-      message: 'laravel helpers are banned'
+      message: 'validator() is banned, use resolveValidatorFactory()->make() instead'
     -
       function: 'view()'
-      message: 'laravel helpers are banned'
+      message: 'view() is banned, use resolveViewFactory()->make() instead'
   disallowedNamespaces:
     -
       namespace: 'Illuminate\Support\Facades\App'
-      message: 'laravel facades are banned'
+      message: 'laravel facades are banned, use resolveXXX() instead, example resolveRequest()'
       allowIn:
         - tests/*
     -
       namespace: 'Illuminate\Support\Facades\Artisan'
-      message: 'laravel facades are banned'
+      message: 'laravel facades are banned, use resolveXXX() instead, example resolveRequest()'
       allowIn:
         - tests/*
     -
       namespace: 'Illuminate\Support\Facades\Auth'
-      message: 'laravel facades are banned'
+      message: 'laravel facades are banned, use resolveXXX() instead, example resolveRequest()'
       allowIn:
         - tests/*
     -
       namespace: 'Illuminate\Support\Facades\Blade'
-      message: 'laravel facades are banned'
+      message: 'laravel facades are banned, use resolveXXX() instead, example resolveRequest()'
       allowIn:
         - tests/*
     -
       namespace: 'Illuminate\Support\Facades\Broadcast'
-      message: 'laravel facades are banned'
+      message: 'laravel facades are banned, use resolveXXX() instead, example resolveRequest()'
       allowIn:
         - tests/*
     -
       namespace: 'Illuminate\Support\Facades\Bus'
-      message: 'laravel facades are banned'
+      message: 'laravel facades are banned, use resolveXXX() instead, example resolveRequest()'
       allowIn:
         - tests/*
     -
       namespace: 'Illuminate\Support\Facades\Cache'
-      message: 'laravel facades are banned'
+      message: 'laravel facades are banned, use resolveXXX() instead, example resolveRequest()'
       allowIn:
         - tests/*
     -
       namespace: 'Illuminate\Support\Facades\Config'
-      message: 'laravel facades are banned'
+      message: 'laravel facades are banned, use resolveXXX() instead, example resolveRequest()'
       allowIn:
         - tests/*
     -
       namespace: 'Illuminate\Support\Facades\Cookie'
-      message: 'laravel facades are banned'
+      message: 'laravel facades are banned, use resolveXXX() instead, example resolveRequest()'
       allowIn:
         - tests/*
     -
       namespace: 'Illuminate\Support\Facades\Crypt'
-      message: 'laravel facades are banned'
+      message: 'laravel facades are banned, use resolveXXX() instead, example resolveRequest()'
       allowIn:
         - tests/*
     -
       namespace: 'Illuminate\Support\Facades\Date'
-      message: 'laravel facades are banned'
+      message: 'laravel facades are banned, use resolveXXX() instead, example resolveRequest()'
       allowIn:
         - tests/*
     -
       namespace: 'Illuminate\Support\Facades\DB'
-      message: 'laravel facades are banned'
+      message: 'laravel facades are banned, use resolveXXX() instead, example resolveRequest()'
       allowIn:
         - tests/*
     -
       namespace: 'Illuminate\Support\Facades\Event'
-      message: 'laravel facades are banned'
+      message: 'laravel facades are banned, use resolveXXX() instead, example resolveRequest()'
       allowIn:
         - tests/*
     -
       namespace: 'Illuminate\Support\Facades\File'
-      message: 'laravel facades are banned'
+      message: 'laravel facades are banned, use resolveXXX() instead, example resolveRequest()'
       allowIn:
         - tests/*
     -
       namespace: 'Illuminate\Support\Facades\Gate'
-      message: 'laravel facades are banned'
+      message: 'laravel facades are banned, use resolveXXX() instead, example resolveRequest()'
       allowIn:
         - tests/*
     -
       namespace: 'Illuminate\Support\Facades\Hash'
-      message: 'laravel facades are banned'
+      message: 'laravel facades are banned, use resolveXXX() instead, example resolveRequest()'
       allowIn:
         - tests/*
     -
       namespace: 'Illuminate\Support\Facades\Http'
-      message: 'laravel facades are banned'
+      message: 'laravel facades are banned, use resolveXXX() instead, example resolveRequest()'
       allowIn:
         - tests/*
     -
       namespace: 'Illuminate\Support\Facades\Lang'
-      message: 'laravel facades are banned'
+      message: 'laravel facades are banned, use resolveXXX() instead, example resolveRequest()'
       allowIn:
         - tests/*
     -
       namespace: 'Illuminate\Support\Facades\Log'
-      message: 'laravel facades are banned'
+      message: 'laravel facades are banned, use resolveXXX() instead, example resolveRequest()'
       allowIn:
         - tests/*
     -
       namespace: 'Illuminate\Support\Facades\Mail'
-      message: 'laravel facades are banned'
+      message: 'laravel facades are banned, use resolveXXX() instead, example resolveRequest()'
       allowIn:
         - tests/*
     -
       namespace: 'Illuminate\Support\Facades\Notification'
-      message: 'laravel facades are banned'
+      message: 'laravel facades are banned, use resolveXXX() instead, example resolveRequest()'
       allowIn:
         - tests/*
     -
       namespace: 'Illuminate\Support\Facades\ParallelTesting'
-      message: 'laravel facades are banned'
+      message: 'laravel facades are banned, use resolveXXX() instead, example resolveRequest()'
       allowIn:
         - tests/*
     -
       namespace: 'Illuminate\Support\Facades\Password'
-      message: 'laravel facades are banned'
+      message: 'laravel facades are banned, use resolveXXX() instead, example resolveRequest()'
       allowIn:
         - tests/*
     -
       namespace: 'Illuminate\Support\Facades\Queue'
-      message: 'laravel facades are banned'
+      message: 'laravel facades are banned, use resolveXXX() instead, example resolveRequest()'
       allowIn:
         - tests/*
     -
       namespace: 'Illuminate\Support\Facades\RateLimiter'
-      message: 'laravel facades are banned'
+      message: 'laravel facades are banned, use resolveXXX() instead, example resolveRequest()'
       allowIn:
         - tests/*
     -
       namespace: 'Illuminate\Support\Facades\Redirect'
-      message: 'laravel facades are banned'
+      message: 'laravel facades are banned, use resolveXXX() instead, example resolveRequest()'
       allowIn:
         - tests/*
     -
       namespace: 'Illuminate\Support\Facades\Redis'
-      message: 'laravel facades are banned'
+      message: 'laravel facades are banned, use resolveXXX() instead, example resolveRequest()'
       allowIn:
         - tests/*
     -
       namespace: 'Illuminate\Support\Facades\Request'
-      message: 'laravel facades are banned'
+      message: 'laravel facades are banned, use resolveXXX() instead, example resolveRequest()'
       allowIn:
         - tests/*
     -
       namespace: 'Illuminate\Support\Facades\Response'
-      message: 'laravel facades are banned'
+      message: 'laravel facades are banned, use resolveXXX() instead, example resolveRequest()'
       allowIn:
         - tests/*
     -
       namespace: 'Illuminate\Support\Facades\Route'
-      message: 'laravel facades are banned'
+      message: 'laravel facades are banned, use resolveXXX() instead, example resolveRequest()'
       allowIn:
         - tests/*
     -
       namespace: 'Illuminate\Support\Facades\Session'
-      message: 'laravel facades are banned'
+      message: 'laravel facades are banned, use resolveXXX() instead, example resolveRequest()'
       allowIn:
         - tests/*
     -
       namespace: 'Illuminate\Support\Facades\Schema'
-      message: 'laravel facades are banned'
+      message: 'laravel facades are banned, use resolveXXX() instead, example resolveRequest()'
       allowIn:
         - tests/*
     -
       namespace: 'Illuminate\Support\Facades\Storage'
-      message: 'laravel facades are banned'
+      message: 'laravel facades are banned, use resolveXXX() instead, example resolveRequest()'
       allowIn:
         - tests/*
     -
       namespace: 'Illuminate\Support\Facades\URL'
-      message: 'laravel facades are banned'
+      message: 'laravel facades are banned, use resolveXXX() instead, example resolveRequest()'
       allowIn:
         - tests/*
     -
       namespace: 'Illuminate\Support\Facades\Validator'
-      message: 'laravel facades are banned'
+      message: 'laravel facades are banned, use resolveXXX() instead, example resolveRequest()'
       allowIn:
         - tests/*
     -
       namespace: 'Illuminate\Support\Facades\View'
-      message: 'laravel facades are banned'
+      message: 'laravel facades are banned, use resolveXXX() instead, example resolveRequest()'
       allowIn:
         - tests/*
