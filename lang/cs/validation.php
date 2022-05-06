@@ -165,5 +165,13 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'remember' => 'zapamatovat přihlášení',
+        'email' => 'e-mail',
+        'password' => 'heslo',
+        'token' => 'kód',
+        'new_password' => 'nové heslo',
+        'name' => 'jméno',
+        'terms_accepted' => 'souhlas s podmínkami',
+    ],
 ];
