@@ -13,4 +13,4 @@ declare(strict_types=1);
 |
 */
 
-resolveRouter()->get('api/v1/spec', Tomchochola\Laratchi\Api\Http\Controllers\SwaggerUiController::class)->defaults('file', resolveApp()->basePath('docs/api_v1_spec.json'))->name('api.v1.spec');
+resolveRouter()->get('api/v1/spec', Tomchochola\Laratchi\Api\Http\Controllers\SwaggerUiController::class)->defaults('file', resolveApp()->basePath('docs/openapi_v1.json'))->name('api.v1.spec');
