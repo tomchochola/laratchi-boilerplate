@@ -3,6 +3,7 @@ includes:
     - tools/phpstan/vendor/spaze/phpstan-disallowed-calls/disallowed-execution-calls.neon
     - tools/phpstan/vendor/spaze/phpstan-disallowed-calls/disallowed-insecure-calls.neon
     - tools/phpstan/vendor/spaze/phpstan-disallowed-calls/disallowed-loose-calls.neon
+    - tools/phpstan/vendor/phpstan/phpstan/conf/bleedingEdge.neon
 
 parameters:
   level: max
@@ -14,6 +15,7 @@ parameters:
     - resources
     - routes
     - tests
+  checkMissingCallableSignature: true
   disallowedFunctionCalls:
     -
       function: 'abort()'
