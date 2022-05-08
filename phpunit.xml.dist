@@ -42,5 +42,6 @@
     <env name="LOG_CHANNEL" value="null" />
     <env name="LOG_DEPRECATIONS_CHANNEL" value="null" />
     <env name="LOG_LEVEL" value="debug" />
+    <env name="SCOUT_DRIVER" value="collection" />
   </php>
 </phpunit>
