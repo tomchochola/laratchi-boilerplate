@@ -48,7 +48,7 @@ clean:
 
 .PHONY: cold
 cold:
-	git clean -Xfd tools composer.lock vendor package-lock.json node_modules public bootstrap storage/framework
+	git clean -xfd tools composer.lock vendor package-lock.json node_modules public bootstrap storage/framework
 
 .PHONY: production
 production: MAKE_COMPOSER_ARGUMENTS := --no-dev -a
