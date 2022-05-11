@@ -14,6 +14,17 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [];
 
     /**
+     * @inheritDoc
+     */
+    public function register(): void
+    {
+        parent::register();
+
+        // Override password default validation
+        // \Illuminate\Validation\Rules\Password::defaults(\Illuminate\Validation\Rules\Password::min(6));
+    }
+
+    /**
      * Register any authentication / authorization services.
      */
     public function boot(): void
