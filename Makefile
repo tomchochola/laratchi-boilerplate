@@ -30,7 +30,7 @@ lint: vendor tools
 	tools/spectral/node_modules/.bin/spectral lint --fail-severity=hint docs/api_v1_spec.json
 
 .PHONY: test
-test: vendor clear optimize
+test: vendor
 	${MAKE_ARTISAN} test
 
 .PHONY: fix
