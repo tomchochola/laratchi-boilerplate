@@ -5,7 +5,13 @@ declare(strict_types=1);
 namespace {{ namespace }};
 
 use Tomchochola\Laratchi\Database\Model;
+use Illuminate\Database\Eloquent\Collection;
 
+/**
+ * @property string $property
+ * @property Collection<array-key, Model> $relationship
+ * @property Model $relationship
+ */
 class {{ class }} extends Model
 {
 }

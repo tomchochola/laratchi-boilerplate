@@ -6,6 +6,38 @@ namespace {{ namespace }};
 
 use Tomchochola\Laratchi\Http\Resources\ModelJsonApiResource;
 
+/**
+ * @property Model $resource
+ */
 class {{ class }} extends ModelJsonApiResource
 {
+    /**
+     * @inheritDoc
+     */
+    public function __construct(Model $resource)
+    {
+        parent::__construct($resource);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getAttributes(): array
+    {
+        return \array_merge(parent::getAttributes(), [
+            'property' => $this->resource->property,
+        ]);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getRelationships(): array
+    {
+        $relationships = parent::getRelationships();
+
+        $relationships['relationship'] = $this->resource->relationship === null ? null : new ModelJsonApiResource($this->resource->relationship);
+
+        return $relationships;
+    }
 }

@@ -5,14 +5,8 @@ declare(strict_types=1);
 namespace {{ namespace }};
 
 use Tomchochola\Laratchi\Routing\Controller;
+use Tomchochola\Laratchi\Routing\TransactionController;
 
-class {{ class }} extends Controller
+class {{ class }} extends Controller|TransactionController
 {
-    /**
-     * Create a new controller instance.
-     */
-    public function __construct()
-    {
-        $this->transaction();
-    }
 }

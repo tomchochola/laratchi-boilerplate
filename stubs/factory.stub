@@ -14,6 +14,11 @@ class {{ factory }}Factory extends Factory
     /**
      * @inheritDoc
      */
+    protected $model = {{ model }}::class;
+
+    /**
+     * @inheritDoc
+     */
     public function definition(): array
     {
         return [];

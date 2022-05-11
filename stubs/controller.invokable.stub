@@ -6,18 +6,11 @@ namespace {{ namespace }};
 
 use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 use Tomchochola\Laratchi\Routing\Controller;
+use Tomchochola\Laratchi\Routing\TransactionController;
 use Tomchochola\Laratchi\Http\Requests\SecureFormRequest;
 
-class {{ class }} extends Controller
+class {{ class }} extends Controller|TransactionController
 {
-    /**
-     * Create a new controller instance.
-     */
-    public function __construct()
-    {
-        $this->transaction();
-    }
-
     /**
      * Handle the incoming request.
      */
