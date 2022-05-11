@@ -12,6 +12,7 @@
   beStrictAboutChangesToGlobalState="true"
   beStrictAboutOutputDuringTests="true"
   beStrictAboutTodoAnnotatedTests="true"
+  beStrictAboutTestsThatDoNotTestAnything="false"
   verbose="true"
 >
   <testsuites>
