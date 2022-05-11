@@ -24,7 +24,7 @@
   "tags": [
     {
       "name": "auth",
-      "description": "Register, login, logout and e-mail verification"
+      "description": "Auth system"
     }
   ],
   "paths": {
@@ -44,12 +44,12 @@
                 "password": "password",
                 "password_confirmation": "password",
                 "terms_accepted": true,
-                "remember": false
+                "locale": "en"
               },
               "schema": {
                 "description": "request data",
                 "type": "object",
-                "required": ["name", "email", "password", "password_confirmation", "terms_accepted", "remember"],
+                "required": ["name", "email", "password", "password_confirmation", "terms_accepted", "locale"],
                 "properties": {
                   "name": {
                     "description": "user full name",
@@ -81,9 +81,10 @@
                     "minLength": 1,
                     "maxLength": 1024
                   },
-                  "remember": {
-                    "description": "remember login",
-                    "type": "boolean"
+                  "locale": {
+                    "description": "locale",
+                    "type": "string",
+                    "enum": ["en"]
                   },
                   "terms_accepted": {
                     "description": "accept terms",
@@ -187,7 +188,7 @@
         "description": "Logout other devices\n\nUser must be authenticated\n\nThrottled",
         "operationId": "post_auth_logout_other_devices",
         "requestBody": {
-          "required": true,
+          "required": false,
           "content": {
             "application/json": {
               "example": {
@@ -196,6 +197,7 @@
               "schema": {
                 "description": "request data",
                 "type": "object",
+                "required": ["password"],
                 "properties": {
                   "password": {
                     "description": "password",
@@ -219,9 +221,6 @@
           },
           "422": {
             "$ref": "#/components/responses/422"
-          },
-          "429": {
-            "$ref": "#/components/responses/429"
           }
         }
       }
@@ -343,11 +342,11 @@
       "post": {
         "tags": ["auth"],
         "summary": "Reset password",
-        "description": "Reset password\n\nUser must not be authenticated\n\nThrottled",
+        "description": "Reset password and login user\n\nUser must not be authenticated\n\nThrottled",
         "operationId": "post_auth_password_reset",
         "requestBody": {
-          "description": "send body if verifying unathenticated user",
-          "required": false,
+          "description": "request data",
+          "required": true,
           "content": {
             "application/json": {
               "example": {
@@ -432,6 +431,7 @@
                   "password": {
                     "description": "current password",
                     "type": "string",
+                    "format": "password",
                     "pattern": ".+",
                     "minLength": 1,
                     "maxLength": 1024
@@ -439,6 +439,7 @@
                   "new_password": {
                     "description": "new password",
                     "type": "string",
+                    "format": "password",
                     "pattern": ".+",
                     "minLength": 1,
                     "maxLength": 1024
@@ -446,6 +447,7 @@
                   "new_password_confirmation": {
                     "description": "new password confirmation",
                     "type": "string",
+                    "format": "password",
                     "pattern": ".+",
                     "minLength": 1,
                     "maxLength": 1024
@@ -480,6 +482,78 @@
           },
           "204": {
             "description": "User is not authenticated"
+          }
+        }
+      }
+    },
+    "/auth/me/update": {
+      "post": {
+        "tags": ["auth"],
+        "summary": "Update currently authenticated user",
+        "description": "Update currently authenticated user\n\nUser must be authenticated\n\nThrottled if updating credentials",
+        "operationId": "post_auth_me_update",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "name": "John Doe",
+                "email": "test@test.com",
+                "locale": "en"
+              },
+              "schema": {
+                "description": "request data",
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "description": "user full name",
+                    "type": "string",
+                    "pattern": ".+",
+                    "minLength": 1,
+                    "maxLength": 255
+                  },
+                  "email": {
+                    "description": "unique e-mail",
+                    "type": "string",
+                    "pattern": ".+",
+                    "minLength": 1,
+                    "maxLength": 255
+                  },
+                  "locale": {
+                    "description": "locale",
+                    "type": "string",
+                    "enum": ["en"]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/User"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "422": {
+            "$ref": "#/components/responses/422"
+          }
+        }
+      }
+    },
+    "/auth/me/destroy": {
+      "post": {
+        "tags": ["auth"],
+        "summary": "Destroy currently authenticated user",
+        "description": "Destroy currently authenticated user\n\nUser must be authenticated",
+        "operationId": "post_auth_me_destroy",
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/204"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
           }
         }
       }
