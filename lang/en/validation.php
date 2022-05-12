@@ -173,5 +173,6 @@ return [
         'new_password' => 'new password',
         'name' => 'name',
         'terms_accepted' => 'terms accepted',
+        'locale' => 'locale',
     ],
 ];

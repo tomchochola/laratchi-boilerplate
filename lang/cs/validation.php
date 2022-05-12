@@ -173,5 +173,6 @@ return [
         'new_password' => 'nové heslo',
         'name' => 'jméno',
         'terms_accepted' => 'souhlas s podmínkami',
+        'locale' => 'jazyk',
     ],
 ];
