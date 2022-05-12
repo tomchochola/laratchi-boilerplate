@@ -41,4 +41,4 @@ phpstan.neon
 /tools/*/vendor
 
 # public
-public/vendor
+/public/vendor
