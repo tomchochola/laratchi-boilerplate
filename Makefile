@@ -66,7 +66,7 @@ local: composer clear migrate seed storage queue
 
 .PHONY: testing
 testing: MAKE_COMPOSER_ARGUMENTS := -a
-testing: composer clear migrate seed optimize storage queue
+testing: composer clear migrate seed storage queue
 
 .PHONY: composer
 composer:
