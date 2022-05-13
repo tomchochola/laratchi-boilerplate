@@ -22,4 +22,18 @@ abstract class TestCase extends BaseTestCase
 
         Storage::fake('public');
     }
+
+    /**
+     * Locale data provider.
+     *
+     * @return array<string, array{string}>
+     */
+    public function localeDataProvider(): array
+    {
+        return [
+            'en' => [
+                'en',
+            ],
+        ];
+    }
 }
