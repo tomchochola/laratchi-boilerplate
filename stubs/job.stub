@@ -15,6 +15,7 @@ class {{ class }}
      */
     public function __construct()
     {
+        $this->afterCommit();
     }
 
     /**

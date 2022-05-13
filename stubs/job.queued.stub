@@ -23,6 +23,7 @@ class {{ class }} implements ShouldQueueContract
      */
     public function __construct()
     {
+        $this->afterCommit();
     }
 
     /**
