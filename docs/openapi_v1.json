@@ -580,13 +580,22 @@
           }
         }
       },
-      "SingleRelationship": {
-        "description": "json:api single relationship",
+      "Relationship": {
+        "description": "json:api relationship",
         "type": "object",
         "required": ["data"],
         "properties": {
           "data": {
-            "description": "json:api resource",
+            "$ref": "#/components/schemas/Resource"
+          }
+        }
+      },
+      "NullableRelationship": {
+        "description": "json:api nullable relationship",
+        "type": "object",
+        "required": ["data"],
+        "properties": {
+          "data": {
             "allOf": [
               {
                 "$ref": "#/components/schemas/Resource"
@@ -596,6 +605,20 @@
                 "nullable": true
               }
             ]
+          }
+        }
+      },
+      "Relationships": {
+        "description": "json:api relationships",
+        "type": "object",
+        "required": ["data"],
+        "properties": {
+          "data": {
+            "description": "json:api resources",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Resource"
+            }
           }
         }
       },
@@ -649,7 +672,7 @@
                 "type": "object",
                 "properties": {
                   "database_token": {
-                    "$ref": "#/components/schemas/SingleRelationship"
+                    "$ref": "#/components/schemas/Relationship"
                   }
                 }
               }
@@ -658,6 +681,7 @@
         ]
       },
       "DatabaseToken": {
+        "description": "database token schema",
         "allOf": [
           {
             "$ref": "#/components/schemas/Resource"
@@ -723,6 +747,7 @@
         }
       },
       "ValidationError": {
+        "description": "validation error",
         "allOf": [
           {
             "$ref": "#/components/schemas/Error"
