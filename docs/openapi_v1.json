@@ -61,6 +61,7 @@
                   "email": {
                     "description": "unique e-mail",
                     "type": "string",
+                    "format": "email",
                     "pattern": ".+",
                     "minLength": 1,
                     "maxLength": 255
@@ -131,6 +132,7 @@
                   "email": {
                     "description": "e-mail",
                     "type": "string",
+                    "format": "email",
                     "pattern": ".+",
                     "minLength": 1,
                     "maxLength": 255
@@ -316,6 +318,7 @@
                   "email": {
                     "description": "e-mail",
                     "type": "string",
+                    "format": "email",
                     "pattern": ".+",
                     "minLength": 1,
                     "maxLength": 255
@@ -345,7 +348,6 @@
         "description": "Reset password and login user\n\nUser must not be authenticated\n\nThrottled",
         "operationId": "post_auth_password_reset",
         "requestBody": {
-          "description": "request data",
           "required": true,
           "content": {
             "application/json": {
@@ -363,6 +365,7 @@
                   "email": {
                     "description": "e-mail",
                     "type": "string",
+                    "format": "email",
                     "pattern": ".+",
                     "minLength": 1,
                     "maxLength": 255
@@ -515,6 +518,7 @@
                   "email": {
                     "description": "unique e-mail",
                     "type": "string",
+                    "format": "email",
                     "pattern": ".+",
                     "minLength": 1,
                     "maxLength": 255
@@ -829,23 +833,8 @@
         "description": "Successful operation",
         "content": {
           "application/json": {
-            "example": {
-              "data": {
-                "id": "1",
-                "slug": "1",
-                "type": "users",
-                "attributes": {
-                  "name": "John Doe",
-                  "email": "test@test.com",
-                  "locale": "en",
-                  "created_at": "2021-12-10T11:19:32.296419Z",
-                  "updated_at": "2021-12-10T11:19:32.296419Z",
-                  "email_verified_at": null
-                }
-              }
-            },
             "schema": {
-              "description": "user schema",
+              "description": "response data",
               "type": "object",
               "required": ["data"],
               "properties": {
