@@ -27,7 +27,7 @@ lint: vendor tools
 	${MAKE_PHP} tools/phpstan/vendor/bin/phpstan analyse
 	set -e; for file in composer.json tools/*/composer.json; do ${MAKE_PHP} tools/composer-normalize/vendor/bin/composer-normalize $$file --dry-run --diff --indent-size=2 --indent-style=space; done
 	${MAKE_PHP} tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --dry-run --diff
-	tools/spectral/node_modules/.bin/spectral lint --fail-severity=hint docs/api_v1_spec.json
+	tools/spectral/node_modules/.bin/spectral lint --fail-severity=hint docs/openapi*
 
 .PHONY: test
 test: vendor
