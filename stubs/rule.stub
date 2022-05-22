@@ -30,6 +30,6 @@ class {{ class }} implements {{ ruleType }}Contract
      */
     public function message(): string|array
     {
-        return mustTrans('validation.string');
+        return mustTransString('validation.string');
     }
 }
