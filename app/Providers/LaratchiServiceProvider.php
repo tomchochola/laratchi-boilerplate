@@ -16,6 +16,8 @@ class LaratchiServiceProvider extends ServiceProvider
      */
     public array $singletons = [
         // \Tomchochola\Laratchi\Auth\Http\Validation\AuthValidity::class => \App\Http\Validation\AuthValidity::class,
+        // \Tomchochola\Laratchi\Validation\MediaValidity::class => \App\Http\Validation\MediaValidity::class,
+        // \Tomchochola\Laratchi\Validation\GenericValidity::class => \App\Http\Validation\GenericValidity::class,
     ];
 
     /**
@@ -29,7 +31,7 @@ class LaratchiServiceProvider extends ServiceProvider
         VendorLaratchiServiceProvider::modelRestrictions();
 
         // Override user json api resource
-        // \Tomchochola\Laratchi\Auth\Services\AuthService::$userJsonApiResource = \App\Http\Resources\UserJsonApiResource::class;
+        // \Tomchochola\Laratchi\Auth\Services\AuthService::$jsonApiResource = \App\Http\Resources\MeJsonApiResource::class;
     }
 
     /**
