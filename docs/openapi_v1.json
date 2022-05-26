@@ -172,7 +172,7 @@
         "tags": ["auth"],
         "summary": "Logout current device",
         "description": "Logout current device\n\nUser must be authenticated",
-        "operationId": "post_auth_logout_current_device",
+        "operationId": "post_auth_logout_current",
         "responses": {
           "204": {
             "$ref": "#/components/responses/204"
@@ -188,7 +188,7 @@
         "tags": ["auth"],
         "summary": "Logout other devices",
         "description": "Logout other devices\n\nUser must be authenticated\n\nThrottled",
-        "operationId": "post_auth_logout_other_devices",
+        "operationId": "post_auth_logout_other",
         "requestBody": {
           "required": false,
           "content": {
