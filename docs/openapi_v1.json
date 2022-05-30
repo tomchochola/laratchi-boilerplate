@@ -98,7 +98,7 @@
         },
         "responses": {
           "201": {
-            "$ref": "#/components/responses/User"
+            "$ref": "#/components/responses/Me"
           },
           "422": {
             "$ref": "#/components/responses/422"
@@ -156,7 +156,7 @@
         },
         "responses": {
           "200": {
-            "$ref": "#/components/responses/User"
+            "$ref": "#/components/responses/Me"
           },
           "422": {
             "$ref": "#/components/responses/422"
@@ -216,7 +216,7 @@
         },
         "responses": {
           "200": {
-            "$ref": "#/components/responses/User"
+            "$ref": "#/components/responses/Me"
           },
           "401": {
             "$ref": "#/components/responses/401"
@@ -400,7 +400,7 @@
         },
         "responses": {
           "200": {
-            "$ref": "#/components/responses/User"
+            "$ref": "#/components/responses/Me"
           },
           "422": {
             "$ref": "#/components/responses/422"
@@ -462,7 +462,7 @@
         },
         "responses": {
           "200": {
-            "$ref": "#/components/responses/User"
+            "$ref": "#/components/responses/Me"
           },
           "401": {
             "$ref": "#/components/responses/401"
@@ -481,7 +481,7 @@
         "operationId": "get_auth_me",
         "responses": {
           "200": {
-            "$ref": "#/components/responses/User"
+            "$ref": "#/components/responses/Me"
           },
           "204": {
             "description": "User is not authenticated"
@@ -535,7 +535,7 @@
         },
         "responses": {
           "200": {
-            "$ref": "#/components/responses/User"
+            "$ref": "#/components/responses/Me"
           },
           "401": {
             "$ref": "#/components/responses/401"
@@ -626,7 +626,7 @@
           }
         }
       },
-      "User": {
+      "Me": {
         "description": "user schema",
         "allOf": [
           {
@@ -647,7 +647,8 @@
                   },
                   "email": {
                     "description": "e-mail",
-                    "type": "string"
+                    "type": "string",
+                    "format": "email"
                   },
                   "locale": {
                     "description": "locale",
@@ -829,7 +830,7 @@
           }
         }
       },
-      "User": {
+      "Me": {
         "description": "Successful operation",
         "content": {
           "application/json": {
@@ -839,7 +840,7 @@
               "required": ["data"],
               "properties": {
                 "data": {
-                  "$ref": "#/components/schemas/User"
+                  "$ref": "#/components/schemas/Me"
                 },
                 "included": {
                   "description": "included relationships",
