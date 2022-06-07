@@ -137,6 +137,18 @@ return [
     'url' => 'Formát :attribute je neplatný.',
     'uuid' => ':Attribute musí být validní UUID.',
 
+    'prohibited_with' => 'Pole :attribute je zakázáno pokud :values je vyplněno.',
+    'prohibited_with_all' => 'Pole :attribute je zakázáno pokud :values je zvoleno.',
+    'prohibited_without' => 'Pole :attribute je zakázáno pokud :values není vyplněno.',
+    'prohibited_without_all' => 'Pole :attribute je zakázáno pokud není žádné z :values zvoleno.',
+    'null_with' => 'Pole :attribute je zakázáno pokud :values je vyplněno.',
+    'null_with_all' => 'Pole :attribute je zakázáno pokud :values je zvoleno.',
+    'null_without' => 'Pole :attribute je zakázáno pokud :values není vyplněno.',
+    'null_without_all' => 'Pole :attribute je zakázáno pokud není žádné z :values zvoleno.',
+    'strlen' => ':Attribute musí být přesně :size znaků dlouhý.',
+    'strlen_max' => ':Attribute nemůže být delší než :max znaků.',
+    'strlen_min' => ':Attribute musí být delší než :min znaků.',
+
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines
@@ -166,6 +178,7 @@ return [
     */
 
     'attributes' => [
+        '*' => 'položka',
         'remember' => 'zapamatovat přihlášení',
         'email' => 'e-mail',
         'password' => 'heslo',

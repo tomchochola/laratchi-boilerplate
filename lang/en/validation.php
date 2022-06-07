@@ -137,6 +137,18 @@ return [
     'url' => 'The :attribute must be a valid URL.',
     'uuid' => 'The :attribute must be a valid UUID.',
 
+    'prohibited_with' => 'The :attribute field is prohibited when :values is present.',
+    'prohibited_with_all' => 'The :attribute field is prohibited when :values are present.',
+    'prohibited_without' => 'The :attribute field is prohibited when :values is not present.',
+    'prohibited_without_all' => 'The :attribute field is prohibited when none of :values are present.',
+    'null_with' => 'The :attribute field is prohibited when :values is present.',
+    'null_with_all' => 'The :attribute field is prohibited when :values are present.',
+    'null_without' => 'The :attribute field is prohibited when :values is not present.',
+    'null_without_all' => 'The :attribute field is prohibited when none of :values are present.',
+    'strlen' => 'The :attribute must be :size characters.',
+    'strlen_max' => 'The :attribute must not be greater than :max characters.',
+    'strlen_min' => 'The :attribute must be at least :min characters.',
+
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines
@@ -166,6 +178,7 @@ return [
     */
 
     'attributes' => [
+        '*' => 'item',
         'remember' => 'remember login',
         'email' => 'e-mail',
         'password' => 'password',
