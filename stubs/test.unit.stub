@@ -8,8 +8,7 @@ use PHPUnit\Framework\TestCase;
 
 class {{ class }} extends TestCase
 {
-    public function test_example(): void
+    public function test_(): void
     {
-        static::assertGreaterThan(10, \random_int(1, 9));
     }
 }

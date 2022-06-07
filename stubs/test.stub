@@ -4,14 +4,25 @@ declare(strict_types=1);
 
 namespace {{ namespace }};
 
+use App\Models\User;
+use Database\Factories\UserFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class {{ class }} extends TestCase
 {
-    public function test_example(): void
+    use RefreshDatabase;
+
+    public function test_(): void
     {
-        static::assertGreaterThan(10, \random_int(1, 9));
+        $user = UserFactory::new()->createOne();
+
+        \assert($user instanceof User);
+
+        $response = $this->be($user, 'users')->get(resolveUrlFactory()->action(Controller::class));
+
+        $response->assertOk();
+
+        $this->assertJsonApiResponse($response, $this->jsonStructureResource());
     }
 }
