@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace {{ factoryNamespace }};
 
+use {{ namespacedModel }};
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
