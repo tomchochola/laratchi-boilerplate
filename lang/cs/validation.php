@@ -148,6 +148,7 @@ return [
     'strlen' => ':Attribute musí být přesně :size znaků dlouhý.',
     'strlen_max' => ':Attribute nemůže být delší než :max znaků.',
     'strlen_min' => ':Attribute musí být delší než :min znaků.',
+    'null' => 'Pole :attribute je zakázáno.',
 
     /*
     |--------------------------------------------------------------------------

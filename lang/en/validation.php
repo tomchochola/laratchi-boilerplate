@@ -148,6 +148,7 @@ return [
     'strlen' => 'The :attribute must be :size characters.',
     'strlen_max' => 'The :attribute must not be greater than :max characters.',
     'strlen_min' => 'The :attribute must be at least :min characters.',
+    'null' => 'The :attribute field is prohibited.',
 
     /*
     |--------------------------------------------------------------------------
