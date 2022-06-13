@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace {{ namespace }};
 
+use Illuminate\Support\Arr;
 use Tomchochola\Laratchi\Http\Resources\ModelJsonApiResource;
 
 /**
@@ -24,9 +25,7 @@ class {{ class }} extends ModelJsonApiResource
      */
     public function getAttributes(): array
     {
-        return \array_merge(parent::getAttributes(), [
-            'property' => $this->resource->property,
-        ]);
+        return Arr::only(parent::getAttributes(), ['created_at', 'updated_at']);
     }
 
     /**
