@@ -13,10 +13,10 @@ declare(strict_types=1);
 |
 */
 
-resolveRouteRegistrar()->prefix('v1')->name('v1.')->group(static function (): void {
-    resolveRouteRegistrar()->prefix('auth')->name('auth.')->group(static function (): void {
+resolveRouteRegistrar()->prefix('v1')->group(static function (): void {
+    resolveRouteRegistrar()->prefix('auth')->group(static function (): void {
         Tomchochola\Laratchi\Support\ServiceProvider::registerRoutes();
     });
 });
 
-resolveRouter()->any('{any?}', Tomchochola\Laratchi\Http\Controllers\NotFoundController::class)->where('any', '.*')->name('fallback')->fallback();
+resolveRouter()->any('{any?}', Tomchochola\Laratchi\Http\Controllers\NotFoundController::class)->where('any', '.*')->fallback();

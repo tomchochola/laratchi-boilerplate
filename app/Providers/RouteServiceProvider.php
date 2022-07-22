@@ -20,11 +20,9 @@ class RouteServiceProvider extends ServiceProvider
 
             resolveRouteRegistrar()->middleware('api')
                 ->prefix('api')
-                ->name('api.')
                 ->group($app->basePath('routes/api.php'));
 
             resolveRouteRegistrar()->middleware('web')
-                ->name('web.')
                 ->group($app->basePath('routes/web.php'));
         });
     }
