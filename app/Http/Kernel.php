@@ -56,7 +56,7 @@ class Kernel extends HttpKernel
         'api' => [
             SetRequestFormatMiddleware::class.':json',
             ValidateAcceptHeaderMiddleware::class.':application/json',
-            ValidateContentTypeHeaderMiddleware::class.':json,form',
+            ValidateContentTypeHeaderMiddleware::class.':form',
         ],
     ];
 
