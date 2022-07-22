@@ -32,6 +32,12 @@ class LaratchiServiceProvider extends ServiceProvider
 
         // Override user json api resource
         // \Tomchochola\Laratchi\Auth\Services\AuthService::$jsonApiResource = \App\Http\Resources\MeJsonApiResource::class;
+
+        // Override default validator
+        // \Tomchochola\Laratchi\Http\Middleware\SwapValidatorMiddleware::$secureValidator = \Tomchochola\Laratchi\Validation\StrictSecureValidator::class or \Tomchochola\Laratchi\Validation\SecureValidator::class;
+
+        // Override validated input error status
+        // \Tomchochola\Laratchi\Validation\ValidatedInput::$castFailedStatus = \Illuminate\Http\Response::HTTP_BAD_REQUEST;
     }
 
     /**
