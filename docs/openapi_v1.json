@@ -37,19 +37,11 @@
         "requestBody": {
           "required": true,
           "content": {
-            "application/json": {
-              "example": {
-                "name": "John Doe",
-                "email": "test@test.com",
-                "password": "password",
-                "password_confirmation": "password",
-                "terms_accepted": true,
-                "locale": "en"
-              },
+            "multipart/form-data": {
               "schema": {
                 "description": "request data",
                 "type": "object",
-                "required": ["name", "email", "password", "password_confirmation", "terms_accepted", "locale"],
+                "required": ["name", "email", "password", "password_confirmation", "locale", "terms_accepted"],
                 "properties": {
                   "name": {
                     "description": "user full name",
@@ -118,12 +110,7 @@
         "requestBody": {
           "required": true,
           "content": {
-            "application/json": {
-              "example": {
-                "email": "test@test.com",
-                "password": "password",
-                "remember": true
-              },
+            "multipart/form-data": {
               "schema": {
                 "description": "request data",
                 "type": "object",
@@ -192,10 +179,7 @@
         "requestBody": {
           "required": false,
           "content": {
-            "application/json": {
-              "example": {
-                "password": "password"
-              },
+            "multipart/form-data": {
               "schema": {
                 "description": "request data",
                 "type": "object",
@@ -261,10 +245,7 @@
             "name": "id",
             "in": "path",
             "schema": {
-              "type": "string",
-              "pattern": ".+",
-              "minLength": 1,
-              "maxLength": 255
+              "$ref": "#/components/schemas/slug"
             },
             "required": true
           },
@@ -306,10 +287,7 @@
         "requestBody": {
           "required": true,
           "content": {
-            "application/json": {
-              "example": {
-                "email": "test@test.com"
-              },
+            "multipart/form-data": {
               "schema": {
                 "description": "request data",
                 "type": "object",
@@ -350,13 +328,7 @@
         "requestBody": {
           "required": true,
           "content": {
-            "application/json": {
-              "example": {
-                "email": "test@test.com",
-                "token": "token",
-                "password": "password",
-                "password_confirmation": "password"
-              },
+            "multipart/form-data": {
               "schema": {
                 "description": "request data",
                 "type": "object",
@@ -420,12 +392,7 @@
         "requestBody": {
           "required": true,
           "content": {
-            "application/json": {
-              "example": {
-                "password": "password",
-                "new_password": "password",
-                "new_password_confirmation": "password"
-              },
+            "multipart/form-data": {
               "schema": {
                 "description": "request data",
                 "type": "object",
@@ -498,12 +465,7 @@
         "requestBody": {
           "required": true,
           "content": {
-            "application/json": {
-              "example": {
-                "name": "John Doe",
-                "email": "test@test.com",
-                "locale": "en"
-              },
+            "multipart/form-data": {
               "schema": {
                 "description": "request data",
                 "type": "object",
@@ -565,6 +527,27 @@
   },
   "components": {
     "schemas": {
+      "slug": {
+        "description": "slug",
+        "type": "string",
+        "format": "identifier",
+        "pattern": ".+",
+        "minLength": 1,
+        "maxLength": 255
+      },
+      "id": {
+        "description": "id",
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 18446744073709551615
+      },
+      "nullableId": {
+        "description": "id",
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 18446744073709551615,
+        "nullable": true
+      },
       "Resource": {
         "description": "json:api resource",
         "type": "object",
@@ -581,6 +564,10 @@
           "type": {
             "description": "type",
             "type": "string"
+          },
+          "meta": {
+            "description": "meta",
+            "type": "object"
           }
         }
       },
@@ -627,7 +614,7 @@
         }
       },
       "Me": {
-        "description": "user schema",
+        "description": "me schema",
         "allOf": [
           {
             "$ref": "#/components/schemas/Resource"
@@ -731,7 +718,7 @@
       "Error": {
         "description": "generic error",
         "type": "object",
-        "required": ["message", "code", "status", "title"],
+        "required": ["message", "title", "status", "code"],
         "properties": {
           "message": {
             "description": "computer readable message",
@@ -841,17 +828,6 @@
               "properties": {
                 "data": {
                   "$ref": "#/components/schemas/Me"
-                },
-                "included": {
-                  "description": "included relationships",
-                  "type": "array",
-                  "items": {
-                    "oneOf": [
-                      {
-                        "$ref": "#/components/schemas/DatabaseToken"
-                      }
-                    ]
-                  }
                 }
               }
             }
