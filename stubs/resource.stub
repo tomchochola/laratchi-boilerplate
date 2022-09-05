@@ -35,7 +35,9 @@ class {{ class }} extends ModelJsonApiResource
     {
         $relationships = parent::getRelationships();
 
-        $relationships['relationship'] = $this->resource->relationship === null ? null : new ModelJsonApiResource($this->resource->relationship);
+        if ($this->resource->relationLoaded('relationship')) {
+            $relationships['relationship'] = $this->resource->relationship === null ? null : new ModelJsonApiResource($this->resource->relationship);
+        }
 
         return $relationships;
     }
