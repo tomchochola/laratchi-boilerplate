@@ -127,7 +127,7 @@ return [
     |
     */
 
-    'cookie' => env(
+    'cookie' => (env('APP_ENV') !== 'local' ? '__Host-' : '').env(
         'SESSION_COOKIE',
         Str::slug(mustEnvString('APP_NAME', 'Laratchi'), '_').'_session',
     ),
@@ -156,7 +156,7 @@ return [
     |
     */
 
-    'domain' => env('SESSION_DOMAIN'),
+    'domain' => null,
 
     /*
     |--------------------------------------------------------------------------
@@ -169,7 +169,7 @@ return [
     |
     */
 
-    'secure' => env('SESSION_SECURE_COOKIE'),
+    'secure' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -197,5 +197,5 @@ return [
     |
     */
 
-    'same_site' => 'lax',
+    'same_site' => env('SESSION_SAME_SITE', 'lax'),
 ];
