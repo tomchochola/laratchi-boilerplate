@@ -4,17 +4,8 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
+use Tomchochola\Laratchi\Providers\BroadcastServiceProvider as LaratchiBroadcastServiceProvider;
 
-class BroadcastServiceProvider extends ServiceProvider
+class BroadcastServiceProvider extends LaratchiBroadcastServiceProvider
 {
-    /**
-     * Bootstrap any application services.
-     */
-    public function boot(): void
-    {
-        resolveBroadcastManager()->routes();
-
-        require resolveApp()->basePath('routes/channels.php');
-    }
 }

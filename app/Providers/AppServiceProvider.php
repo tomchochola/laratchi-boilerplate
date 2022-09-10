@@ -4,22 +4,8 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
+use Tomchochola\Laratchi\Providers\AppServiceProvider as LaratchiAppServiceProvider;
 
-class AppServiceProvider extends ServiceProvider
+class AppServiceProvider extends LaratchiAppServiceProvider
 {
-    /**
-     * @inheritDoc
-     */
-    public function register(): void
-    {
-        parent::register();
-    }
-
-    /**
-     * Bootstrap any application services.
-     */
-    public function boot(): void
-    {
-    }
 }

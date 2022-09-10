@@ -4,26 +4,8 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
-use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Tomchochola\Laratchi\Providers\RouteServiceProvider as LaratchiRouteServiceProvider;
 
-class RouteServiceProvider extends ServiceProvider
+class RouteServiceProvider extends LaratchiRouteServiceProvider
 {
-    /**
-     * @inheritDoc
-     */
-    public function boot(): void
-    {
-        parent::boot();
-
-        $this->routes(static function (): void {
-            $app = resolveApp();
-
-            resolveRouteRegistrar()->middleware('api')
-                ->prefix('api')
-                ->group($app->basePath('routes/api.php'));
-
-            resolveRouteRegistrar()->middleware('web')
-                ->group($app->basePath('routes/web.php'));
-        });
-    }
 }

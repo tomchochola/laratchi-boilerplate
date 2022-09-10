@@ -4,14 +4,8 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
+use Tomchochola\Laratchi\Database\Seeders\DatabaseSeeder as LaratchiDatabaseSeeder;
 
-class DatabaseSeeder extends Seeder
+class DatabaseSeeder extends LaratchiDatabaseSeeder
 {
-    /**
-     * Seed the application's database.
-     */
-    public function run(): void
-    {
-    }
 }

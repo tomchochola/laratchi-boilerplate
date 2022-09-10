@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
-use Tomchochola\Laratchi\Auth\User as BaseUser;
+use Tomchochola\Laratchi\Auth\User as LaratchiUser;
 
-class User extends BaseUser
+class User extends LaratchiUser
 {
     /**
      * @inheritDoc
@@ -75,7 +75,7 @@ class User extends BaseUser
      */
     public static function selectMe(): array
     {
-        return ['*'];
+        return ['users.*'];
     }
 
     /**

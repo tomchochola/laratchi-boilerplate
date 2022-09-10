@@ -4,18 +4,8 @@ declare(strict_types=1);
 
 namespace App\Exceptions;
 
-use Tomchochola\Laratchi\Exceptions\Handler as BaseHandler;
+use Tomchochola\Laratchi\Exceptions\Handler as LaratchiHandler;
 
-class Handler extends BaseHandler
+class Handler extends LaratchiHandler
 {
-    /**
-     * @inheritDoc
-     */
-    protected $dontFlash = [
-        'current_password',
-        'password',
-        'password_confirmation',
-        'new_password',
-        'new_password_confirmation',
-    ];
 }
