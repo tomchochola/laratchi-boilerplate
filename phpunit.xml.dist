@@ -29,20 +29,15 @@
     </include>
   </coverage>
   <php>
-    <env name="APP_KEY" value="base64:k7XaOGDe52ZOY2P77nbS6P1p7b/mMHL+aN0jzV+Usdw=" />
-    <env name="APP_DEBUG" value="true" />
-    <env name="APP_ENV" value="testing" />
-    <env name="BCRYPT_ROUNDS" value="4" />
-    <env name="CACHE_DRIVER" value="array" />
-    <env name="MAIL_MAILER" value="array" />
-    <env name="QUEUE_CONNECTION" value="sync" />
-    <env name="SESSION_DRIVER" value="array" />
+    <env name="APP_NAME" value="'Feature test'" />
+    <env name="APP_ENV" value="'testing'" />
+    <env name="APP_URL" value="'http://localhost:8000'" />
+    <env name="APP_KEY" value="'base64:k7XaOGDe52ZOY2P77nbS6P1p7b/mMHL+aN0jzV+Usdw='" />
+
+    <env name="MAIL_FROM_ADDRESS" value="'hello@localhost:8000'" />
+    <env name="MAIL_FROM_NAME" value="'Feature test'" />
+
     <env name="TELESCOPE_ENABLED" value="false" />
-    <env name="BROADCAST_DRIVER" value="null" />
-    <env name="FILESYSTEM_DISK" value="local" />
-    <env name="LOG_CHANNEL" value="null" />
-    <env name="LOG_DEPRECATIONS_CHANNEL" value="null" />
-    <env name="LOG_LEVEL" value="debug" />
-    <env name="SCOUT_DRIVER" value="collection" />
+    <env name="SCOUT_DRIVER" value="'collection'" />
   </php>
 </phpunit>

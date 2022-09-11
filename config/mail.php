@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+$driver = \in_array(mustEnvString('APP_ENV'), ['development', 'staging', 'production'], true) ? 'smtp' : (mustEnvString('APP_ENV') === 'testing' ? 'array' : 'log');
+
 return [
     /*
     |--------------------------------------------------------------------------
@@ -14,7 +16,7 @@ return [
     |
     */
 
-    'default' => env('MAIL_MAILER', 'array'),
+    'default' => $driver,
 
     /*
     |--------------------------------------------------------------------------
@@ -37,13 +39,13 @@ return [
     'mailers' => [
         'smtp' => [
             'transport' => 'smtp',
-            'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
-            'port' => env('MAIL_PORT', 587),
-            'encryption' => env('MAIL_ENCRYPTION', 'tls'),
-            'username' => env('MAIL_USERNAME'),
-            'password' => env('MAIL_PASSWORD'),
+            'host' => $driver === 'smtp' ? mustEnvString('MAIL_HOST') : envString('MAIL_HOST'),
+            'port' => $driver === 'smtp' ? mustEnvInt('MAIL_PORT') : envInt('MAIL_PORT'),
+            'encryption' => 'tls',
+            'username' => $driver === 'smtp' ? mustEnvString('MAIL_USERNAME') : envString('MAIL_USERNAME'),
+            'password' => $driver === 'smtp' ? mustEnvString('MAIL_PASSWORD') : envString('MAIL_PASSWORD'),
             'timeout' => null,
-            'local_domain' => env('MAIL_EHLO_DOMAIN'),
+            'local_domain' => envString('MAIL_EHLO_DOMAIN'),
         ],
 
         'ses' => [
@@ -65,7 +67,7 @@ return [
 
         'log' => [
             'transport' => 'log',
-            'channel' => env('MAIL_LOG_CHANNEL'),
+            'channel' => 'info',
         ],
 
         'array' => [
@@ -93,8 +95,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'address' => mustEnvString('MAIL_FROM_ADDRESS'),
+        'name' => mustEnvString('MAIL_FROM_NAME'),
     ],
 
     /*

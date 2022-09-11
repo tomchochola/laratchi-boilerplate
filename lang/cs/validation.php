@@ -44,8 +44,8 @@ return [
     'digits_between' => ':Attribute musí být dlouhé nejméně :min a nejvíce :max pozic.',
     'dimensions' => ':Attribute má neplatné rozměry.',
     'distinct' => ':Attribute má duplicitní hodnotu.',
-    'doesnt_end_with' => 'The :attribute may not end with one of the following: :values.',
-    'doesnt_start_with' => 'The :attribute may not start with one of the following: :values.',
+    'doesnt_end_with' => ':Attribute nesmí končit jedním z následujících znaků: :values.',
+    'doesnt_start_with' => ':Attribute nesmí začínat jedním z následujících znaků: :values.',
     'email' => ':Attribute není platný formát.',
     'ends_with' => ':Attribute musí končit jednou z následujících hodnot: :values.',
     'enum' => 'Zvolená hodnota pro :attribute je neplatná.',
@@ -91,7 +91,7 @@ return [
         'numeric' => ':Attribute nemůže být větší než :max.',
         'string' => ':Attribute nemůže být delší než :max znaků.',
     ],
-    'max_digits' => 'The :attribute must not have more than :max digits.',
+    'max_digits' => ':Attribute nesmí mít více než :max číslic.',
     'mimes' => ':Attribute musí být jeden z následujících datových typů :values.',
     'mimetypes' => ':Attribute musí být jeden z následujících datových typů :values.',
     'min' => [
@@ -100,7 +100,7 @@ return [
         'numeric' => ':Attribute musí být větší než :min.',
         'string' => ':Attribute musí být delší než :min znaků.',
     ],
-    'min_digits' => 'The :attribute must have at least :min digits.',
+    'min_digits' => ':Attribute musí mít alespoň :min číslic.',
     'multiple_of' => ':Attribute musí být násobkem :value.',
     'not_in' => 'Zvolená hodnota pro :attribute je neplatná.',
     'not_regex' => ':Attribute musí být regulární výraz.',
@@ -165,11 +165,7 @@ return [
     |
     */
 
-    'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
-        ],
-    ],
+    'custom' => [],
 
     /*
     |--------------------------------------------------------------------------
@@ -182,15 +178,5 @@ return [
     |
     */
 
-    'attributes' => [
-        '*' => 'položka',
-        'remember' => 'zapamatovat přihlášení',
-        'email' => 'e-mail',
-        'password' => 'heslo',
-        'token' => 'kód',
-        'new_password' => 'nové heslo',
-        'name' => 'jméno',
-        'terms_accepted' => 'souhlas s podmínkami',
-        'locale' => 'jazyk',
-    ],
+    'attributes' => [],
 ];

@@ -16,7 +16,7 @@ return [
     |
     */
 
-    'default' => env('CACHE_DRIVER', 'file'),
+    'default' => \in_array(mustEnvString('APP_ENV'), ['development', 'staging', 'production'], true) ? 'redis' : (mustEnvString('APP_ENV') === 'testing' ? 'array' : 'file'),
 
     /*
     |--------------------------------------------------------------------------
@@ -91,6 +91,10 @@ return [
         'octane' => [
             'driver' => 'octane',
         ],
+
+        'null' => [
+            'driver' => 'null',
+        ],
     ],
 
     /*
@@ -104,5 +108,5 @@ return [
     |
     */
 
-    'prefix' => env('CACHE_PREFIX', Str::slug(mustEnvString('APP_NAME', 'Laratchi'), '_').'_cache_'),
+    'prefix' => Str::slug(mustEnvString('APP_NAME'), '_').'_'.mustEnvString('APP_ENV').'_cache_',
 ];

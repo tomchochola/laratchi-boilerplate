@@ -19,7 +19,7 @@ return [
     |
     */
 
-    'driver' => env('SESSION_DRIVER', 'file'),
+    'driver' => \in_array(mustEnvString('APP_ENV'), ['development', 'staging', 'production'], true) ? 'redis' : (mustEnvString('APP_ENV') === 'testing' ? 'array' : 'file'),
 
     /*
     |--------------------------------------------------------------------------
@@ -32,7 +32,7 @@ return [
     |
     */
 
-    'lifetime' => env('SESSION_LIFETIME', 120),
+    'lifetime' => 120,
 
     'expire_on_close' => false,
 
@@ -73,7 +73,7 @@ return [
     |
     */
 
-    'connection' => env('SESSION_CONNECTION'),
+    'connection' => null,
 
     /*
     |--------------------------------------------------------------------------
@@ -101,7 +101,7 @@ return [
     |
     */
 
-    'store' => env('SESSION_STORE'),
+    'store' => null,
 
     /*
     |--------------------------------------------------------------------------
@@ -127,10 +127,7 @@ return [
     |
     */
 
-    'cookie' => (env('APP_ENV') !== 'local' ? '__Host-' : '').env(
-        'SESSION_COOKIE',
-        Str::slug(mustEnvString('APP_NAME', 'Laratchi'), '_').'_session',
-    ),
+    'cookie' => (mustEnvString('APP_ENV') !== 'local' ? '__Host-' : '').Str::slug(mustEnvString('APP_NAME'), '_').'_'.mustEnvString('APP_ENV').'_session',
 
     /*
     |--------------------------------------------------------------------------
@@ -197,5 +194,5 @@ return [
     |
     */
 
-    'same_site' => env('SESSION_SAME_SITE', 'lax'),
+    'same_site' => 'none',
 ];

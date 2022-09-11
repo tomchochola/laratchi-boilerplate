@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'default' => env('FILESYSTEM_DISK', 'local'),
+    'default' => 'local',
 
     /*
     |--------------------------------------------------------------------------
@@ -39,7 +39,7 @@ return [
         'public' => [
             'driver' => 'local',
             'root' => resolveApp()->storagePath('app/public'),
-            'url' => env('APP_URL').'/storage',
+            'url' => mustEnvString('APP_URL').'/storage',
             'visibility' => 'public',
             'throw' => false,
         ],

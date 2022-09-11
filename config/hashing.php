@@ -30,7 +30,7 @@ return [
     */
 
     'bcrypt' => [
-        'rounds' => env('BCRYPT_ROUNDS', 10),
+        'rounds' => mustEnvString('APP_ENV') === 'testing' ? 4 : 10,
     ],
 
     /*

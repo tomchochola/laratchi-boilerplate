@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laratchi'),
+    'name' => mustEnvString('APP_NAME'),
 
     /*
     |--------------------------------------------------------------------------
@@ -27,7 +27,7 @@ return [
     |
     */
 
-    'env' => env('APP_ENV', 'production'),
+    'env' => mustEnvString('APP_ENV', in: ['testing', 'local', 'development', 'staging', 'production']),
 
     /*
     |--------------------------------------------------------------------------
@@ -40,7 +40,7 @@ return [
     |
     */
 
-    'debug' => (bool) env('APP_DEBUG', false),
+    'debug' => \in_array(mustEnvString('APP_ENV'), ['staging', 'production'], true) ? false : true,
 
     /*
     |--------------------------------------------------------------------------
@@ -53,9 +53,9 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost:8000'),
+    'url' => mustEnvString('APP_URL'),
 
-    'asset_url' => env('ASSET_URL'),
+    'asset_url' => null,
 
     /*
     |--------------------------------------------------------------------------
@@ -124,7 +124,7 @@ return [
     |
     */
 
-    'key' => env('APP_KEY'),
+    'key' => mustEnvString('APP_KEY'),
 
     'cipher' => 'AES-256-CBC',
 

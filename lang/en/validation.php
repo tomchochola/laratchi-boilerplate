@@ -165,11 +165,7 @@ return [
     |
     */
 
-    'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
-        ],
-    ],
+    'custom' => [],
 
     /*
     |--------------------------------------------------------------------------
@@ -182,15 +178,5 @@ return [
     |
     */
 
-    'attributes' => [
-        '*' => 'item',
-        'remember' => 'remember login',
-        'email' => 'e-mail',
-        'password' => 'password',
-        'token' => 'code',
-        'new_password' => 'new password',
-        'name' => 'name',
-        'terms_accepted' => 'terms accepted',
-        'locale' => 'locale',
-    ],
+    'attributes' => [],
 ];

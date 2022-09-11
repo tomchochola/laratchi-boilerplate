@@ -81,7 +81,8 @@
                   },
                   "terms_accepted": {
                     "description": "accept terms",
-                    "type": "boolean"
+                    "type": "integer",
+                    "enum": [1]
                   }
                 }
               }
@@ -96,7 +97,7 @@
             "$ref": "#/components/responses/422"
           },
           "427": {
-            "$ref": "#/components/responses/427"
+            "$ref": "#/components/responses/4xx"
           }
         }
       }
@@ -114,7 +115,7 @@
               "schema": {
                 "description": "request data",
                 "type": "object",
-                "required": ["email", "password", "remember"],
+                "required": ["email", "password"],
                 "properties": {
                   "email": {
                     "description": "e-mail",
@@ -134,7 +135,8 @@
                   },
                   "remember": {
                     "description": "remember login",
-                    "type": "boolean"
+                    "type": "integer",
+                    "enum": [0, 1]
                   }
                 }
               }
@@ -149,7 +151,7 @@
             "$ref": "#/components/responses/422"
           },
           "427": {
-            "$ref": "#/components/responses/427"
+            "$ref": "#/components/responses/4xx"
           }
         }
       }
@@ -165,7 +167,7 @@
             "$ref": "#/components/responses/204"
           },
           "401": {
-            "$ref": "#/components/responses/401"
+            "$ref": "#/components/responses/4xx"
           }
         }
       }
@@ -203,7 +205,7 @@
             "$ref": "#/components/responses/Me"
           },
           "401": {
-            "$ref": "#/components/responses/401"
+            "$ref": "#/components/responses/4xx"
           },
           "422": {
             "$ref": "#/components/responses/422"
@@ -222,13 +224,13 @@
             "$ref": "#/components/responses/204"
           },
           "401": {
-            "$ref": "#/components/responses/401"
+            "$ref": "#/components/responses/4xx"
           },
           "403": {
-            "$ref": "#/components/responses/403"
+            "$ref": "#/components/responses/4xx"
           },
           "429": {
-            "$ref": "#/components/responses/429"
+            "$ref": "#/components/responses/4xx"
           }
         }
       }
@@ -267,13 +269,13 @@
             "$ref": "#/components/responses/204"
           },
           "401": {
-            "$ref": "#/components/responses/401"
+            "$ref": "#/components/responses/4xx"
           },
           "403": {
-            "$ref": "#/components/responses/403"
+            "$ref": "#/components/responses/4xx"
           },
           "429": {
-            "$ref": "#/components/responses/429"
+            "$ref": "#/components/responses/4xx"
           }
         }
       }
@@ -314,7 +316,7 @@
             "$ref": "#/components/responses/422"
           },
           "427": {
-            "$ref": "#/components/responses/427"
+            "$ref": "#/components/responses/4xx"
           }
         }
       }
@@ -378,7 +380,7 @@
             "$ref": "#/components/responses/422"
           },
           "427": {
-            "$ref": "#/components/responses/427"
+            "$ref": "#/components/responses/4xx"
           }
         }
       }
@@ -432,10 +434,10 @@
             "$ref": "#/components/responses/Me"
           },
           "401": {
-            "$ref": "#/components/responses/401"
+            "$ref": "#/components/responses/4xx"
           },
           "422": {
-            "$ref": "#/components/responses/422"
+            "$ref": "#/components/responses/4xx"
           }
         }
       }
@@ -500,7 +502,7 @@
             "$ref": "#/components/responses/Me"
           },
           "401": {
-            "$ref": "#/components/responses/401"
+            "$ref": "#/components/responses/4xx"
           },
           "422": {
             "$ref": "#/components/responses/422"
@@ -519,7 +521,7 @@
             "$ref": "#/components/responses/204"
           },
           "401": {
-            "$ref": "#/components/responses/401"
+            "$ref": "#/components/responses/4xx"
           }
         }
       }
@@ -555,11 +557,13 @@
         "properties": {
           "id": {
             "description": "id",
-            "type": "string"
+            "type": "string",
+            "format": "identifier"
           },
           "slug": {
             "description": "slug",
-            "type": "string"
+            "type": "string",
+            "format": "identifier"
           },
           "type": {
             "description": "type",
@@ -639,17 +643,20 @@
                   },
                   "locale": {
                     "description": "locale",
-                    "type": "string"
+                    "type": "string",
+                    "enum": ["en"]
                   },
                   "created_at": {
                     "description": "date-time of creation",
                     "type": "string",
-                    "format": "date-time"
+                    "format": "date-time",
+                    "nullable": true
                   },
                   "updated_at": {
                     "description": "date-time of last update",
                     "type": "string",
-                    "format": "date-time"
+                    "format": "date-time",
+                    "nullable": true
                   },
                   "email_verified_at": {
                     "description": "date-time of e-mail verification",
@@ -698,12 +705,14 @@
                   "created_at": {
                     "description": "date-time of creation",
                     "type": "string",
-                    "format": "date-time"
+                    "format": "date-time",
+                    "nullable": true
                   },
                   "updated_at": {
                     "description": "date-time of last update",
                     "type": "string",
-                    "format": "date-time"
+                    "format": "date-time",
+                    "nullable": true
                   },
                   "bearer": {
                     "description": "bearer token",
@@ -718,14 +727,10 @@
       "Error": {
         "description": "generic error",
         "type": "object",
-        "required": ["message", "title", "status", "code"],
+        "required": ["status", "code"],
         "properties": {
-          "message": {
-            "description": "computer readable message",
-            "type": "string"
-          },
-          "title": {
-            "description": "human readable message",
+          "internal": {
+            "description": "debug only message, internal use only",
             "type": "string"
           },
           "status": {
@@ -754,6 +759,7 @@
                 "additionalProperties": {
                   "type": "array",
                   "items": {
+                    "description": "human readable validation error",
                     "type": "string"
                   }
                 }
@@ -767,18 +773,8 @@
       "204": {
         "description": "Successful operation"
       },
-      "401": {
-        "description": "`Unauthorized` - `0` - User must be authenticated",
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/Error"
-            }
-          }
-        }
-      },
-      "403": {
-        "description": "`Forbidden` - `0` - Sorry, you are forbidden from accessing this page",
+      "4xx": {
+        "description": "Client error",
         "content": {
           "application/json": {
             "schema": {
@@ -788,31 +784,11 @@
         }
       },
       "422": {
-        "description": "`The Given Data Was Invalid` - `0` - Validation errors",
+        "description": "Validation error",
         "content": {
           "application/json": {
             "schema": {
               "$ref": "#/components/schemas/ValidationError"
-            }
-          }
-        }
-      },
-      "427": {
-        "description": "`Must Be Guest` - `0` - User must not be authenticated",
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/Error"
-            }
-          }
-        }
-      },
-      "429": {
-        "description": "`Too Many Requests` - `0` - Throttled",
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/Error"
             }
           }
         }
