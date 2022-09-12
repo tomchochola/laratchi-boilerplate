@@ -9,13 +9,4 @@ use Tomchochola\Laratchi\Validation\SecureValidator;
 
 class LaratchiServiceProvider extends LaratchiLaratchiServiceProvider
 {
-    /**
-     * @inheritDoc
-     */
-    public function register(): void
-    {
-        parent::register();
-
-        SecureValidator::$usePlaceholderAttributes = true;
-    }
 }

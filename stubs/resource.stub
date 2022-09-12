@@ -25,7 +25,13 @@ class {{ class }} extends ModelJsonApiResource
      */
     public function getAttributes(): array
     {
-        return Arr::only(parent::getAttributes(), ['created_at', 'updated_at']);
+        $attributes = [];
+
+        if ($this->resource->attributeLoaded('name')) {
+            $attributes['name'] = $this->resource->getName(); // $this->resource->mustString('name') | $this->resource->string('name')
+        }
+
+        return $attributes;
     }
 
     /**
@@ -33,10 +39,10 @@ class {{ class }} extends ModelJsonApiResource
      */
     public function getRelationships(): array
     {
-        $relationships = parent::getRelationships();
+        $relationships = [];
 
         if ($this->resource->relationLoaded('relationship')) {
-            $relationships['relationship'] = $this->resource->relationship === null ? null : new ModelJsonApiResource($this->resource->relationship);
+            $relationships['relationship'] = $this->resource->getRelationship() === null ? null : new ModelJsonApiResource($this->resource->getRelationship()); // $this->resource->relation('relation', Model::class) | $this->resource->mustRelation('relation', Model::class) | $this->resource->mustRelations('relation', Model::class)
         }
 
         return $relationships;
