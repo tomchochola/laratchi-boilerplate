@@ -103,4 +103,20 @@ return [
     */
 
     'password_timeout' => 10800,
+
+    /*
+    |--------------------------------------------------------------------------
+    | E-mail verification Timeout
+    |--------------------------------------------------------------------------
+    |
+    | Here you may define the amount of seconds before a e-mail verification
+    | times out and the user is prompted to re-enter their e-mail via the
+    | confirmation screen. By default, the timeout lasts for three hours.
+    | Null is also allowed to send never expiring e-mails.
+    |
+    */
+
+    'verification' => [
+        'expire' => 10800,
+    ],
 ];
