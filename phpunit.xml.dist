@@ -32,6 +32,8 @@
     <env name="APP_NAME" value="'Feature test'" />
     <env name="APP_ENV" value="'testing'" />
     <env name="APP_URL" value="'http://localhost:8000'" />
+    <env name="SPA_URL_CS" value="'http://localhost:8000'" />
+    <env name="SPA_URL_EN" value="'http://localhost:8000'" />
     <env name="APP_KEY" value="'base64:k7XaOGDe52ZOY2P77nbS6P1p7b/mMHL+aN0jzV+Usdw='" />
 
     <env name="MAIL_FROM_ADDRESS" value="'hello@localhost:8000'" />

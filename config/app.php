@@ -57,6 +57,11 @@ return [
 
     'asset_url' => null,
 
+    'spa_url' => [
+        'cs' => mustEnvString('SPA_URL_CS'),
+        'en' => mustEnvString('SPA_URL_EN'),
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
@@ -68,7 +73,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Europe/Prague',
 
     /*
     |--------------------------------------------------------------------------
@@ -81,9 +86,10 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'cs',
 
     'locales' => [
+        'cs',
         'en',
     ],
 
@@ -98,7 +104,7 @@ return [
     |
     */
 
-    'fallback_locale' => 'en',
+    'fallback_locale' => 'cs',
 
     /*
     |--------------------------------------------------------------------------
@@ -111,7 +117,7 @@ return [
     |
     */
 
-    'faker_locale' => 'en_US',
+    'faker_locale' => 'cs_CZ',
 
     /*
     |--------------------------------------------------------------------------
@@ -180,7 +186,7 @@ return [
         Illuminate\Redis\RedisServiceProvider::class,
         Illuminate\Auth\Passwords\PasswordResetServiceProvider::class,
         Illuminate\Session\SessionServiceProvider::class,
-        Illuminate\Translation\TranslationServiceProvider::class,
+        Tomchochola\Laratchi\Providers\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 
