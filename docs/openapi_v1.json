@@ -258,8 +258,8 @@
             "schema": {
               "type": "string",
               "pattern": ".+",
-              "minLength": 64,
-              "maxLength": 64
+              "minLength": 1,
+              "maxLength": 255
             },
             "required": true
           }
@@ -348,8 +348,8 @@
                     "description": "token",
                     "type": "string",
                     "pattern": ".+",
-                    "minLength": 64,
-                    "maxLength": 64
+                    "minLength": 1,
+                    "maxLength": 255
                   },
                   "password": {
                     "description": "password",
