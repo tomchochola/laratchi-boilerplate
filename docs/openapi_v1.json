@@ -629,7 +629,7 @@
               "attributes": {
                 "description": "attributes",
                 "type": "object",
-                "required": ["name", "email", "locale", "created_at", "updated_at", "email_verified_at"],
+                "required": ["name", "email", "locale", "email_verified_at"],
                 "properties": {
                   "name": {
                     "description": "user full name",
@@ -644,18 +644,6 @@
                     "description": "locale",
                     "type": "string",
                     "enum": ["cs", "en"]
-                  },
-                  "created_at": {
-                    "description": "date-time of creation",
-                    "type": "string",
-                    "format": "date-time",
-                    "nullable": true
-                  },
-                  "updated_at": {
-                    "description": "date-time of last update",
-                    "type": "string",
-                    "format": "date-time",
-                    "nullable": true
                   },
                   "email_verified_at": {
                     "description": "date-time of e-mail verification",
@@ -691,7 +679,7 @@
               "attributes": {
                 "description": "attributes",
                 "type": "object",
-                "required": ["provider", "auth_id", "created_at", "updated_at"],
+                "required": ["provider", "auth_id"],
                 "properties": {
                   "provider": {
                     "description": "user provider name",
@@ -700,18 +688,6 @@
                   "auth_id": {
                     "description": "authenticatable id",
                     "type": "string"
-                  },
-                  "created_at": {
-                    "description": "date-time of creation",
-                    "type": "string",
-                    "format": "date-time",
-                    "nullable": true
-                  },
-                  "updated_at": {
-                    "description": "date-time of last update",
-                    "type": "string",
-                    "format": "date-time",
-                    "nullable": true
                   },
                   "bearer": {
                     "description": "bearer token",
