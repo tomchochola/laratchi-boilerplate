@@ -13,7 +13,11 @@ return new class() extends Migration {
     {
         resolveSchema()->create('{{ table }}', static function (Blueprint $table): void {
             $table->id();
-            $table->timestamps();
+
+            $table->string('attribute');
+
+            $table->timestamp('created_at');
+            $table->timestamp('updated_at');
         });
     }
 };
