@@ -34,7 +34,7 @@ class {{ class }} extends Model
      */
     public static function selectIndex(): array
     {
-        return ['*'];
+        return ['table.*'];
     }
 
     /**
@@ -54,7 +54,7 @@ class {{ class }} extends Model
      */
     public static function selectDetail(): array
     {
-        return ['*'];
+        return ['table.*'];
     }
 
     /**
