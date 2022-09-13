@@ -726,7 +726,6 @@
           },
           {
             "type": "object",
-            "required": ["errors"],
             "properties": {
               "errors": {
                 "description": "validation errors",
@@ -734,7 +733,7 @@
                 "additionalProperties": {
                   "type": "array",
                   "items": {
-                    "description": "computer readable validation error, do not expose to users",
+                    "description": "computer readable validation error, do not expose to users!",
                     "type": "string",
                     "pattern": "^[_a-z]+(:[^;]+(;[^;]+)?)?$",
                     "enum": [
