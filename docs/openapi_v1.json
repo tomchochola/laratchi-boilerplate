@@ -115,7 +115,7 @@
               "schema": {
                 "description": "request data",
                 "type": "object",
-                "required": ["email", "password"],
+                "required": ["email", "password", "remember"],
                 "properties": {
                   "email": {
                     "description": "e-mail",
