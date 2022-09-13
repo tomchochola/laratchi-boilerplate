@@ -73,7 +73,7 @@ composer:
 	${MAKE_COMPOSER} install ${MAKE_COMPOSER_ARGUMENTS}
 
 .PHONY: clear
-clear:
+clear: vendor
 	${MAKE_ARTISAN} optimize:clear
 	${MAKE_ARTISAN} cache:clear
 	${MAKE_ARTISAN} config:clear
@@ -83,15 +83,15 @@ clear:
 	${MAKE_ARTISAN} clear-compiled
 
 .PHONY: migrate
-migrate:
+migrate: vendor
 	${MAKE_ARTISAN} migrate --force
 
 .PHONY: seed
-seed:
+seed: vendor
 	${MAKE_ARTISAN} db:seed --force
 
 .PHONY: optimize
-optimize:
+optimize: vendor
 	${MAKE_ARTISAN} optimize
 	${MAKE_ARTISAN} config:cache
 	${MAKE_ARTISAN} event:cache
@@ -99,12 +99,20 @@ optimize:
 	${MAKE_ARTISAN} view:cache
 
 .PHONY: storage
-storage:
+storage: vendor
 	${MAKE_ARTISAN} storage:link --force
 
 .PHONY: queue
-queue:
+queue: vendor
 	${MAKE_ARTISAN} queue:restart
+
+.PHONY: down
+down: vendor
+	${MAKE_ARTISAN} down
+
+.PHONY: up
+up: vendor
+	${MAKE_ARTISAN} up
 
 # Aliases
 .PHONY: ci
