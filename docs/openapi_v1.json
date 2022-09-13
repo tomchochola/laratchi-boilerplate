@@ -348,8 +348,8 @@
                     "description": "token",
                     "type": "string",
                     "pattern": ".+",
-                    "minLength": 1,
-                    "maxLength": 255
+                    "minLength": 64,
+                    "maxLength": 64
                   },
                   "password": {
                     "description": "password",
