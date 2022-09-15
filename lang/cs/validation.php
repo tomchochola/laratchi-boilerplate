@@ -154,6 +154,8 @@ return [
     'strlen_min' => ':Attribute musí být delší než :min znaků.',
     'null' => 'Pole :attribute je zakázáno.',
 
+    'throttled' => 'Počkejte prosím a zkuste to znovu.',
+
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines

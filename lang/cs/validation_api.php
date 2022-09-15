@@ -153,4 +153,6 @@ return [
     'strlen_max' => 'strlen_max::max',
     'strlen_min' => 'strlen_min::min',
     'null' => 'null',
+
+    'throttled' => 'throttled::seconds',
 ];

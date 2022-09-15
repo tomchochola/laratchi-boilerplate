@@ -154,6 +154,8 @@ return [
     'strlen_min' => 'The :attribute must be at least :min characters.',
     'null' => 'The :attribute field is prohibited.',
 
+    'throttled' => 'Please wait before retrying.',
+
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines

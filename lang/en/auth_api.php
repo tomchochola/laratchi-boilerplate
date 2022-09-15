@@ -16,5 +16,6 @@ return [
 
     'failed' => 'auth_failed',
     'password' => 'auth_password',
-    'throttle' => 'auth_throttle',
+    'throttle' => 'auth_throttle::seconds',
+    'blocked' => 'auth_blocked',
 ];
