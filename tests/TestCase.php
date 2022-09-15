@@ -27,6 +27,9 @@ abstract class TestCase extends LaratchiTestCase
             'cs' => [
                 'cs',
             ],
+            'en' => [
+                'en',
+            ],
         ];
     }
 
