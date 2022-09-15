@@ -2,7 +2,7 @@
   "openapi": "3.0.3",
   "info": {
     "title": "Laratchi",
-    "description": "API V1 specification",
+    "description": "API V1 specification\n\n## Request data format\n\nAPI expects `multipart/form-data` or `application/x-www-form-urlencoded` on every input and produces `application/json` on most outputs\n\n### JSON to form conversions\n\n#### Boolean\n\n`true` -> `'1'`\n\n`false` -> `'0'`\n\n#### Number\n\n`Number` -> `String`\n\n#### Null\n\n`null` -> `''` (empty string)\n\n#### Object and Array\n\nEncode using exploded and deep object format\n\n\n`{data: [{title: 'a'},{title: 'b'}]}` -> `?data[0][title]=a&data[1][title]=b`\n\nEmpty arrays encode as null\n\n`[]` -> `''` (empty string)\n\nEmpty objects encode as null\n\n`{}` -> `''` (empty string)",
     "version": "0.1.0",
     "contact": {
       "name": "Tomáš Chochola",
@@ -59,25 +59,13 @@
                     "maxLength": 255
                   },
                   "password": {
-                    "description": "password",
-                    "type": "string",
-                    "format": "password",
-                    "pattern": ".+",
-                    "minLength": 8,
-                    "maxLength": 1024
+                    "$ref": "#/components/schemas/password"
                   },
                   "password_confirmation": {
-                    "description": "password confirmation",
-                    "type": "string",
-                    "format": "password",
-                    "pattern": ".+",
-                    "minLength": 8,
-                    "maxLength": 1024
+                    "$ref": "#/components/schemas/password"
                   },
                   "locale": {
-                    "description": "locale",
-                    "type": "string",
-                    "enum": ["cs", "en"]
+                    "$ref": "#/components/schemas/locale"
                   },
                   "terms_accepted": {
                     "description": "accept terms",
@@ -126,12 +114,7 @@
                     "maxLength": 255
                   },
                   "password": {
-                    "description": "password",
-                    "type": "string",
-                    "format": "password",
-                    "pattern": ".+",
-                    "minLength": 8,
-                    "maxLength": 1024
+                    "$ref": "#/components/schemas/password"
                   },
                   "remember": {
                     "description": "remember login",
@@ -185,15 +168,9 @@
               "schema": {
                 "description": "request data",
                 "type": "object",
-                "required": ["password"],
                 "properties": {
                   "password": {
-                    "description": "password",
-                    "type": "string",
-                    "format": "password",
-                    "pattern": ".+",
-                    "minLength": 8,
-                    "maxLength": 1024
+                    "$ref": "#/components/schemas/password"
                   }
                 }
               }
@@ -352,20 +329,10 @@
                     "maxLength": 255
                   },
                   "password": {
-                    "description": "password",
-                    "type": "string",
-                    "format": "password",
-                    "pattern": ".+",
-                    "minLength": 8,
-                    "maxLength": 1024
+                    "$ref": "#/components/schemas/password"
                   },
                   "password_confirmation": {
-                    "description": "password confirmation",
-                    "type": "string",
-                    "format": "password",
-                    "pattern": ".+",
-                    "minLength": 8,
-                    "maxLength": 1024
+                    "$ref": "#/components/schemas/password"
                   }
                 }
               }
@@ -401,28 +368,13 @@
                 "required": ["password", "new_password", "new_password_confirmation"],
                 "properties": {
                   "password": {
-                    "description": "current password",
-                    "type": "string",
-                    "format": "password",
-                    "pattern": ".+",
-                    "minLength": 8,
-                    "maxLength": 1024
+                    "$ref": "#/components/schemas/password"
                   },
                   "new_password": {
-                    "description": "new password",
-                    "type": "string",
-                    "format": "password",
-                    "pattern": ".+",
-                    "minLength": 8,
-                    "maxLength": 1024
+                    "$ref": "#/components/schemas/password"
                   },
                   "new_password_confirmation": {
-                    "description": "new password confirmation",
-                    "type": "string",
-                    "format": "password",
-                    "pattern": ".+",
-                    "minLength": 8,
-                    "maxLength": 1024
+                    "$ref": "#/components/schemas/password"
                   }
                 }
               }
@@ -488,9 +440,7 @@
                     "maxLength": 255
                   },
                   "locale": {
-                    "description": "locale",
-                    "type": "string",
-                    "enum": ["cs", "en"]
+                    "$ref": "#/components/schemas/locale"
                   }
                 }
               }
@@ -543,10 +493,34 @@
         "maximum": 18446744073709551615
       },
       "nullableId": {
-        "description": "id",
+        "description": "id or null",
         "type": "integer",
         "minimum": 1,
         "maximum": 18446744073709551615,
+        "nullable": true
+      },
+      "password": {
+        "description": "password",
+        "type": "string",
+        "format": "password",
+        "pattern": ".+",
+        "minLength": 8,
+        "maxLength": 1024
+      },
+      "locale": {
+        "description": "locale",
+        "type": "string",
+        "enum": ["cs", "en"]
+      },
+      "timestamp": {
+        "description": "timestamp",
+        "type": "string",
+        "format": "date-time"
+      },
+      "nullableTimestamp": {
+        "description": "timestamp or null",
+        "type": "string",
+        "format": "date-time",
         "nullable": true
       },
       "Resource": {
@@ -641,15 +615,10 @@
                     "format": "email"
                   },
                   "locale": {
-                    "description": "locale",
-                    "type": "string",
-                    "enum": ["cs", "en"]
+                    "$ref": "#/components/schemas/locale"
                   },
                   "email_verified_at": {
-                    "description": "date-time of e-mail verification",
-                    "type": "string",
-                    "format": "date-time",
-                    "nullable": true
+                    "$ref": "#/components/schemas/nullableTimestamp"
                   }
                 }
               },
@@ -735,7 +704,6 @@
                   "items": {
                     "description": "computer readable validation error, do not expose to users!",
                     "type": "string",
-                    "pattern": "^[_a-z]+(:[^;]+(;[^;]+)?)?$",
                     "enum": [
                       "isin",
                       "iban",
@@ -773,89 +741,90 @@
                       "country_code",
                       "currency",
                       "delimited_unique",
-                      "delimited_min",
-                      "delimited_max",
+                      "delimited_min:{{ min }}",
+                      "delimited_max:{{ max }}",
                       "auth_failed",
                       "auth_password",
-                      "auth_throttle",
+                      "auth_throttle:{{ seconds }}",
+                      "auth_blocked",
                       "passwords_reset",
                       "passwords_sent",
                       "passwords_throttled",
                       "passwords_token",
                       "passwords_user",
                       "accepted",
-                      "accepted_if",
+                      "accepted_if:{{ attribute }};{{ value }}",
                       "active_url",
-                      "after",
-                      "after_or_equal",
+                      "after:{{ value or attribute }}",
+                      "after_or_equal:{{ value or attribute }}",
                       "alpha",
                       "alpha_dash",
                       "alpha_num",
                       "array",
-                      "before",
-                      "before_or_equal",
-                      "between_array",
-                      "between_file",
-                      "between_numeric",
-                      "between_string",
+                      "before:{{ value or attribute }}",
+                      "before_or_equal:{{ value or attribute }}",
+                      "between_array:{{ min }};{{ max }}",
+                      "between_file:{{ min }};{{ max }}",
+                      "between_numeric:{{ min }};{{ max }}",
+                      "between_string:{{ min }};{{ max }}",
                       "boolean",
                       "confirmed",
                       "current_password",
                       "date",
-                      "date_equals",
-                      "date_format",
+                      "date_equals:{{ value or attribute }}",
+                      "date_format:{{ format }}",
                       "declined",
-                      "declined_if",
-                      "different",
-                      "digits",
-                      "digits_between",
+                      "declined_if:{{ attribute }};{{ value }}",
+                      "different:{{ attribute }}",
+                      "digits:{{ digits }}",
+                      "digits_between:{{ min }};{{ max }}",
                       "dimensions",
                       "distinct",
-                      "doesnt_end_with",
-                      "doesnt_start_with",
+                      "doesnt_end_with:{{ ', ' separated values }}",
+                      "doesnt_start_with:{{ ', ' separated values }}",
                       "email",
-                      "ends_with",
+                      "ends_with:{{ ', ' separated values }}",
                       "exists",
                       "file",
                       "filled",
-                      "gt_array",
-                      "gt_file",
-                      "gt_numeric",
-                      "gt_string",
-                      "gte_array",
-                      "gte_file",
-                      "gte_numeric",
-                      "gte_string",
+                      "gt_array:{{ value or attribute}}",
+                      "gt_file:{{ value or attribute}}",
+                      "gt_numeric:{{ value or attribute}}",
+                      "gt_string:{{ value or attribute}}",
+                      "gte_array:{{ value or attribute}}",
+                      "gte_file:{{ value or attribute}}",
+                      "gte_numeric:{{ value or attribute}}",
+                      "gte_string:{{ value or attribute}}",
                       "image",
                       "in",
-                      "in_array",
+                      "in_array:{{ attribute }}",
                       "integer",
                       "ip",
                       "ipv4",
                       "ipv6",
                       "json",
-                      "lt_array",
-                      "lt_file",
-                      "lt_numeric",
-                      "lt_string",
-                      "lte_array",
-                      "lte_file",
-                      "lte_numeric",
-                      "lte_string",
+                      "lt_array:{{ value or attribute}}",
+                      "lt_file:{{ value or attribute}}",
+                      "lt_numeric:{{ value or attribute}}",
+                      "lt_string:{{ value or attribute}}",
+                      "lte_array:{{ value or attribute}}",
+                      "lte_file:{{ value or attribute}}",
+                      "lte_numeric:{{ value or attribute}}",
+                      "lte_string:{{ value or attribute}}",
                       "mac_address",
-                      "max_array",
-                      "max_file",
-                      "max_numeric",
-                      "max_string",
-                      "max_digits",
-                      "mimes",
-                      "mimetypes",
-                      "min_array",
-                      "min_file",
-                      "min_numeric",
-                      "min_string",
-                      "min_digits",
-                      "multiple_of",
+                      "max_array:{{ max }}",
+                      "max_file:{{ max }}",
+                      "max_numeric:{{ max }}",
+                      "max_string:{{ max }}",
+                      "max_digits:{{ max }}",
+                      "mimes:{{ ', ' separated values }}",
+                      "mimetypes:{{ ', ' separated values }}",
+                      "min_array:{{ min }}",
+                      "min_file:{{ min }}",
+                      "min_numeric:{{ min }}",
+                      "min_string:{{ min }}",
+                      "min_digits:{{ min }}",
+                      "multiple_of:{{ value }}",
                       "not_in",
                       "not_regex",
                       "numeric",
@@ -866,42 +835,43 @@
                       "password_uncompromised",
                       "present",
                       "prohibited",
-                      "prohibited_if",
-                      "prohibited_unless",
-                      "prohibits",
+                      "prohibited_if:{{ attribute }};{{ value }}",
+                      "prohibited_unless:{{ attribute }};{{ ', ' separated values }}",
+                      "prohibits:{{ ' / ' separated attributes }}",
                       "regex",
                       "required",
-                      "required_array_keys",
-                      "required_if",
-                      "required_unless",
-                      "required_with",
-                      "required_with_all",
-                      "required_without",
-                      "required_without_all",
-                      "same",
-                      "size_array",
-                      "size_file",
-                      "size_numeric",
-                      "size_string",
-                      "starts_with",
+                      "required_array_keys:{{ ', ' separated values }}",
+                      "required_if:{{ attribute }};{{ value }}",
+                      "required_unless:{{ attribute }};{{ ', ' separated values }}",
+                      "required_with:{{ ' / ' separated attributes }}",
+                      "required_with_all:{{ ' / ' separated attributes }}",
+                      "required_without:{{ ' / ' separated attributes }}",
+                      "required_without_all:{{ ' / ' separated attributes }}",
+                      "same:{{ attribute }}",
+                      "size_array:{{ value }}",
+                      "size_file:{{ value }}",
+                      "size_numeric:{{ value }}",
+                      "size_string:{{ value }}",
+                      "starts_with:{{ ', ' separated values }}",
                       "string",
                       "timezone",
                       "unique",
                       "uploaded",
                       "url",
                       "uuid",
-                      "prohibited_with",
-                      "prohibited_with_all",
-                      "prohibited_without",
-                      "prohibited_without_all",
-                      "null_with",
-                      "null_with_all",
-                      "null_without",
-                      "null_without_all",
-                      "strlen",
-                      "strlen_max",
-                      "strlen_min",
-                      "null"
+                      "prohibited_with:{{ ', ' separated values }}",
+                      "prohibited_with_all:{{ ', ' separated values }}",
+                      "prohibited_without:{{ ', ' separated values }}",
+                      "prohibited_without_all:{{ ', ' separated values }}",
+                      "null_with:{{ ', ' separated values }}",
+                      "null_with_all:{{ ', ' separated values }}",
+                      "null_without:{{ ', ' separated values }}",
+                      "null_without_all:{{ ', ' separated values }}",
+                      "strlen:{{ value }}",
+                      "strlen_max:{{ max }}",
+                      "strlen_min:{{ min }}",
+                      "null",
+                      "throttled:{{ seconds }}"
                     ]
                   }
                 }
@@ -946,6 +916,17 @@
               "properties": {
                 "data": {
                   "$ref": "#/components/schemas/Me"
+                },
+                "included": {
+                  "description": "included relationships",
+                  "type": "array",
+                  "items": {
+                    "oneOf": [
+                      {
+                        "$ref": "#/components/schemas/DatabaseToken"
+                      }
+                    ]
+                  }
                 }
               }
             }
