@@ -15,11 +15,11 @@ class {{ class }} extends TestCase
 
     public function test_(): void
     {
-        $user = UserFactory::new()->createOne();
+        $me = UserFactory::new()->createOne();
 
-        \assert($user instanceof User);
+        \assert($me instanceof User);
 
-        $response = $this->be($user, 'users')->get(resolveUrlFactory()->action(Controller::class));
+        $response = $this->be($me, 'users')->get(resolveUrlFactory()->action(Controller::class));
 
         $response->assertOk();
 

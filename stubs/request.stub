@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace {{ namespace }};
 
+use App\Models\User;
 use Illuminate\Auth\Access\Response;
 use Tomchochola\Laratchi\Http\Requests\SecureFormRequest;
 
@@ -14,6 +15,12 @@ class {{ class }} extends SecureFormRequest
      */
     public function authorize(): Response|bool
     {
+        $me = User::mustResolve();
+
+        if ($me->getKey() === 0) {
+            return true;
+        }
+
         return false;
     }
 
@@ -24,6 +31,6 @@ class {{ class }} extends SecureFormRequest
      */
     public function rules(): array
     {
-        return [];
+        return \array_merge(parent::rules(), []);
     }
 }
