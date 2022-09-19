@@ -40,7 +40,7 @@ return [
     |
     */
 
-    'debug' => \in_array(mustEnvString('APP_ENV'), ['staging', 'production'], true) ? false : true,
+    'debug' => \in_array(mustEnvString('APP_ENV'), ['development', 'staging', 'production'], true) ? false : true,
 
     /*
     |--------------------------------------------------------------------------
