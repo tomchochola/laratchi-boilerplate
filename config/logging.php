@@ -62,13 +62,13 @@ return [
 
         'single' => [
             'driver' => 'single',
-            'path' => resolveApp()->storagePath('logs/laravel_single.log'),
+            'path' => resolveApp()->storagePath('logs/laravel.log'),
             'level' => $level,
         ],
 
         'daily' => [
             'driver' => 'daily',
-            'path' => resolveApp()->storagePath('logs/laravel_daily.log'),
+            'path' => resolveApp()->storagePath('logs/laravel.log'),
             'level' => $level,
             'days' => 14,
         ],
@@ -118,7 +118,7 @@ return [
         ],
 
         'emergency' => [
-            'path' => resolveApp()->storagePath('logs/laravel_emergency.log'),
+            'path' => resolveApp()->storagePath('logs/laravel.log'),
         ],
     ],
 ];
