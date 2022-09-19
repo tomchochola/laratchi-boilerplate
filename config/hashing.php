@@ -47,6 +47,6 @@ return [
     'argon' => [
         'memory' => 65536,
         'threads' => 1,
-        'time' => 4,
+        'time' => mustEnvString('APP_ENV') === 'testing' ? 1 : 4,
     ],
 ];
