@@ -41,7 +41,7 @@
               "schema": {
                 "description": "request data",
                 "type": "object",
-                "required": ["name", "email", "password", "password_confirmation", "locale", "terms_accepted"],
+                "required": ["name", "email", "password", "password_confirmation", "locale"],
                 "properties": {
                   "name": {
                     "description": "user full name",
@@ -66,11 +66,6 @@
                   },
                   "locale": {
                     "$ref": "#/components/schemas/locale"
-                  },
-                  "terms_accepted": {
-                    "description": "accept terms",
-                    "type": "integer",
-                    "enum": [1]
                   }
                 }
               }
