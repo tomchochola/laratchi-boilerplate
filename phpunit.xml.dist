@@ -36,8 +36,5 @@
 
     <env name="MAIL_FROM_ADDRESS" value="'hello@localhost:8000'" />
     <env name="MAIL_FROM_NAME" value="'Feature test'" />
-
-    <env name="TELESCOPE_ENABLED" value="false" />
-    <env name="SCOUT_DRIVER" value="'collection'" />
   </php>
 </phpunit>
