@@ -62,6 +62,7 @@ development: MAKE_COMPOSER_ARGUMENTS := -a
 development: composer clear migrate seed optimize storage queue
 
 .PHONY: local
+local: MAKE_COMPOSER_ARGUMENTS := -o
 local: composer clear migrate seed storage queue
 
 .PHONY: testing
@@ -73,7 +74,7 @@ composer:
 	${MAKE_COMPOSER} install ${MAKE_COMPOSER_ARGUMENTS}
 
 .PHONY: clear
-clear:
+clear: vendor
 	${MAKE_ARTISAN} optimize:clear
 	${MAKE_ARTISAN} cache:clear
 	${MAKE_ARTISAN} config:clear
@@ -83,15 +84,15 @@ clear:
 	${MAKE_ARTISAN} clear-compiled
 
 .PHONY: migrate
-migrate:
+migrate: vendor
 	${MAKE_ARTISAN} migrate --force
 
 .PHONY: seed
-seed:
+seed: vendor
 	${MAKE_ARTISAN} db:seed --force
 
 .PHONY: optimize
-optimize:
+optimize: vendor
 	${MAKE_ARTISAN} optimize
 	${MAKE_ARTISAN} config:cache
 	${MAKE_ARTISAN} event:cache
@@ -99,12 +100,20 @@ optimize:
 	${MAKE_ARTISAN} view:cache
 
 .PHONY: storage
-storage:
+storage: vendor
 	${MAKE_ARTISAN} storage:link --force
 
 .PHONY: queue
-queue:
+queue: vendor
 	${MAKE_ARTISAN} queue:restart
+
+.PHONY: down
+down: vendor
+	${MAKE_ARTISAN} down
+
+.PHONY: up
+up: vendor
+	${MAKE_ARTISAN} up
 
 # Aliases
 .PHONY: ci
@@ -117,19 +126,19 @@ tools/prettier/node_modules/.bin/prettier:
 	npm --prefix=tools/prettier update
 
 composer.lock vendor:
-	${MAKE_COMPOSER} install
+	${MAKE_COMPOSER} install -o
 
 tools/phpstan/vendor/bin/phpstan:
-	${MAKE_COMPOSER} --working-dir=tools/phpstan update
+	${MAKE_COMPOSER} --working-dir=tools/phpstan update -o
 
 tools/php-cs-fixer/vendor/bin/php-cs-fixer:
-	${MAKE_COMPOSER} --working-dir=tools/php-cs-fixer update
+	${MAKE_COMPOSER} --working-dir=tools/php-cs-fixer update -o
 
 tools/composer-normalize/vendor/bin/composer-normalize:
-	${MAKE_COMPOSER} --working-dir=tools/composer-normalize update
+	${MAKE_COMPOSER} --working-dir=tools/composer-normalize update -o
 
 tools/local-php-security-checker/vendor/bin/local-php-security-checker:
-	${MAKE_COMPOSER} --working-dir=tools/local-php-security-checker update
+	${MAKE_COMPOSER} --working-dir=tools/local-php-security-checker update -o
 
 tools/spectral/node_modules/.bin/spectral:
 	npm --prefix=tools/spectral update
