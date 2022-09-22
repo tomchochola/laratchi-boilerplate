@@ -62,6 +62,7 @@ development: MAKE_COMPOSER_ARGUMENTS := -a
 development: composer clear migrate seed optimize storage queue
 
 .PHONY: local
+local: MAKE_COMPOSER_ARGUMENTS := -o
 local: composer clear migrate seed storage queue
 
 .PHONY: testing
@@ -125,19 +126,19 @@ tools/prettier/node_modules/.bin/prettier:
 	npm --prefix=tools/prettier update
 
 composer.lock vendor:
-	${MAKE_COMPOSER} install
+	${MAKE_COMPOSER} install -o
 
 tools/phpstan/vendor/bin/phpstan:
-	${MAKE_COMPOSER} --working-dir=tools/phpstan update
+	${MAKE_COMPOSER} --working-dir=tools/phpstan update -o
 
 tools/php-cs-fixer/vendor/bin/php-cs-fixer:
-	${MAKE_COMPOSER} --working-dir=tools/php-cs-fixer update
+	${MAKE_COMPOSER} --working-dir=tools/php-cs-fixer update -o
 
 tools/composer-normalize/vendor/bin/composer-normalize:
-	${MAKE_COMPOSER} --working-dir=tools/composer-normalize update
+	${MAKE_COMPOSER} --working-dir=tools/composer-normalize update -o
 
 tools/local-php-security-checker/vendor/bin/local-php-security-checker:
-	${MAKE_COMPOSER} --working-dir=tools/local-php-security-checker update
+	${MAKE_COMPOSER} --working-dir=tools/local-php-security-checker update -o
 
 tools/spectral/node_modules/.bin/spectral:
 	npm --prefix=tools/spectral update
