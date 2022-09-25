@@ -536,10 +536,6 @@
           "type": {
             "description": "type",
             "type": "string"
-          },
-          "meta": {
-            "description": "meta",
-            "type": "object"
           }
         }
       },
