@@ -48,7 +48,11 @@ clean:
 
 .PHONY: cold
 cold:
-	git clean -xfd tools composer.lock vendor package-lock.json node_modules public bootstrap storage/framework
+	git clean -xfd tools composer.lock vendor package-lock.json node_modules public bootstrap storage/framework .phpunit.result.cache
+
+.PHONY: lukewarm
+lukewarm:
+	git clean -xfd composer.lock vendor package-lock.json node_modules public bootstrap storage/framework .phpunit.result.cache
 
 .PHONY: production
 production: MAKE_COMPOSER_ARGUMENTS := --no-dev -a

@@ -54,6 +54,9 @@ make testing
 # remove re-creatable files
 make cold
 
+# clean install vendor, clear bootstrap files
+make lukewarm
+
 # check code
 make check
 make ci
