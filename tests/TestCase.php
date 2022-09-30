@@ -48,7 +48,7 @@ abstract class TestCase extends LaratchiTestCase
         ]);
 
         if ($includeDatabaseToken !== false) {
-            Arr::set($structure, 'relationships.database_token', $includeDatabaseToken === null ? ['data' => null] : $this->jsonStructureRelationship());
+            Arr::set($structure, 'relationships.database_token', $includeDatabaseToken === null ? ['data' => []] : $this->jsonStructureRelationship());
         }
 
         return $structure;
