@@ -14,5 +14,14 @@ class {{ class }} extends Seeder
      */
     public function run(): void
     {
+        if (resolveApp()->environment(['staging', 'production']) === true) {
+            return;
+        }
+
+        if (Model::query()->getQuery()->exists()) {
+            return;
+        }
+
+        ModelFactory::new()->count(100)->create();
     }
 }

@@ -28,7 +28,7 @@ class {{ class }} extends ModelJsonApiResource
         $attributes = [];
 
         if ($this->resource->attributeLoaded('name')) {
-            $attributes['name'] = $this->resource->getName(); // $this->resource->mustString('name') | $this->resource->string('name')
+            $attributes['name'] = $this->resource->getName();
         }
 
         return $attributes;
@@ -42,7 +42,7 @@ class {{ class }} extends ModelJsonApiResource
         $relationships = [];
 
         if ($this->resource->relationLoaded('relationship')) {
-            $relationships['relationship'] = $this->resource->getRelationship() === null ? null : new ModelJsonApiResource($this->resource->getRelationship()); // $this->resource->relation('relation', Model::class) | $this->resource->mustRelation('relation', Model::class) | $this->resource->mustRelations('relation', Model::class)
+            $relationships['relationship'] = $this->resource->getRelationship() === null ? null : new ModelJsonApiResource($this->resource->getRelationship());
         }
 
         return $relationships;

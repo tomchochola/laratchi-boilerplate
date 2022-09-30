@@ -19,10 +19,14 @@ class {{ class }} extends TestCase
 
         \assert($me instanceof User);
 
-        $response = $this->be($me, 'users')->get(resolveUrlFactory()->action(Controller::class));
+        $query = [];
+        $data = [];
+
+        $response = $this->be($me, 'users')->post(resolveUrlFactory()->action(Controller::class, $query), $data);
 
         $response->assertOk();
 
-        $this->assertJsonApiResponse($response, $this->jsonStructureResource());
+        $this->assertJsonApiResponse($response, $this->jsonStructureResource(), 0);
+        $this->assertJsonApiCollectionResponse($response, $this->jsonStructureResource(), 1, 0);
     }
 }
