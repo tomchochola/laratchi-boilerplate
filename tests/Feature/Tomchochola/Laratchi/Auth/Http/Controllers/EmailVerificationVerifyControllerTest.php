@@ -30,7 +30,7 @@ class EmailVerificationVerifyControllerTest extends TestCase
             'hash' => \hash('sha256', $me->getEmailForVerification()),
         ];
 
-        $signedUrl = SignedUrlSupport::make(inject(EmailVerificationVerifyController::class)::class, $parameters, 0);
+        $signedUrl = SignedUrlSupport::make(EmailVerificationVerifyController::class, $parameters, 0);
 
         $response = $this->be($me, 'users')->post($signedUrl);
 

@@ -24,7 +24,7 @@ class LogoutCurrentDeviceControllerTest extends TestCase
 
         \assert($me instanceof User);
 
-        $response = $this->be($me, 'users')->post(resolveUrlFactory()->action(inject(LogoutCurrentDeviceController::class)::class));
+        $response = $this->be($me, 'users')->post(resolveUrlFactory()->action(LogoutCurrentDeviceController::class));
 
         $response->assertNoContent();
 

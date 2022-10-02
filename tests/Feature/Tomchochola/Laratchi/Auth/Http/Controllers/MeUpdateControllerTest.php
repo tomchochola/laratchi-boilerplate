@@ -21,7 +21,7 @@ class MeUpdateControllerTest extends TestCase
 
         \assert($me instanceof User && $newMe instanceof User);
 
-        $response = $this->be($me, 'users')->post(resolveUrlFactory()->action(inject(MeUpdateController::class)::class), [
+        $response = $this->be($me, 'users')->post(resolveUrlFactory()->action(MeUpdateController::class), [
             'email' => $newMe->getEmail(),
             'name' => $newMe->getName(),
             'locale' => $newMe->getLocale(),
@@ -38,7 +38,7 @@ class MeUpdateControllerTest extends TestCase
 
         \assert($me instanceof User);
 
-        $response = $this->be($me, 'users')->post(resolveUrlFactory()->action(inject(MeUpdateController::class)::class), [
+        $response = $this->be($me, 'users')->post(resolveUrlFactory()->action(MeUpdateController::class), [
             'email' => $me->getEmail(),
             'name' => $me->getName(),
             'locale' => $me->getLocale(),

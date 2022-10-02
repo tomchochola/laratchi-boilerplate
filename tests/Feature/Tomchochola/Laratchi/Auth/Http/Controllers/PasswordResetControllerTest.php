@@ -31,7 +31,7 @@ class PasswordResetControllerTest extends TestCase
 
         \assert($broker instanceof PasswordBroker);
 
-        $response = $this->post(resolveUrlFactory()->action(inject(PasswordResetController::class)::class), [
+        $response = $this->post(resolveUrlFactory()->action(PasswordResetController::class), [
             'email' => $me->getEmailForPasswordReset(),
             'token' => $broker->createToken($me),
             'password' => UserFactory::VALID_PASSWORD,

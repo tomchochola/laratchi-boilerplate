@@ -26,7 +26,7 @@ class RegisterControllerTest extends TestCase
 
         \assert($me instanceof User);
 
-        $response = $this->post(resolveUrlFactory()->action(inject(RegisterController::class)::class), [
+        $response = $this->post(resolveUrlFactory()->action(RegisterController::class), [
             'email' => $me->getEmail(),
             'name' => $me->getName(),
             'locale' => $me->getLocale(),
@@ -57,7 +57,7 @@ class RegisterControllerTest extends TestCase
 
         \assert($me instanceof User);
 
-        $response = $this->post(resolveUrlFactory()->action(inject(RegisterController::class)::class), [
+        $response = $this->post(resolveUrlFactory()->action(RegisterController::class), [
             'email' => $me->getEmail(),
             'name' => $me->getName(),
             'locale' => $me->getLocale(),

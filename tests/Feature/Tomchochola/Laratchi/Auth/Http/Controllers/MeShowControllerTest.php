@@ -20,7 +20,7 @@ class MeShowControllerTest extends TestCase
 
         \assert($me instanceof User);
 
-        $response = $this->be($me, 'users')->get(resolveUrlFactory()->action(inject(MeShowController::class)::class));
+        $response = $this->be($me, 'users')->get(resolveUrlFactory()->action(MeShowController::class));
 
         $response->assertOk();
 

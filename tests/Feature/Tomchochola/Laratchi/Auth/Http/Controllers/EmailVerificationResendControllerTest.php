@@ -24,7 +24,7 @@ class EmailVerificationResendControllerTest extends TestCase
 
         \assert($me instanceof User);
 
-        $response = $this->be($me, 'users')->post(resolveUrlFactory()->action(inject(EmailVerificationResendController::class)::class));
+        $response = $this->be($me, 'users')->post(resolveUrlFactory()->action(EmailVerificationResendController::class));
 
         $response->assertNoContent();
 

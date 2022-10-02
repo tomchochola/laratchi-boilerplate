@@ -27,7 +27,7 @@ class LoginControllerTest extends TestCase
 
         \assert($me instanceof User);
 
-        $response = $this->post(resolveUrlFactory()->action(inject(LoginController::class)::class), [
+        $response = $this->post(resolveUrlFactory()->action(LoginController::class), [
             'email' => $me->getEmail(),
             'password' => UserFactory::VALID_PASSWORD,
             'remember' => true,

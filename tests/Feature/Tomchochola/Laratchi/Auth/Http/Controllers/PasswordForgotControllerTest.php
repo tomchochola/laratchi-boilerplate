@@ -24,7 +24,7 @@ class PasswordForgotControllerTest extends TestCase
 
         \assert($me instanceof User);
 
-        $response = $this->post(resolveUrlFactory()->action(inject(PasswordForgotController::class)::class), [
+        $response = $this->post(resolveUrlFactory()->action(PasswordForgotController::class), [
             'email' => $me->getEmail(),
         ]);
 

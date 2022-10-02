@@ -25,7 +25,7 @@ class LogoutOtherDevicesControllerTest extends TestCase
 
         \assert($me instanceof User);
 
-        $response = $this->be($me, 'users')->post(resolveUrlFactory()->action(inject(LogoutOtherDevicesController::class)::class), [
+        $response = $this->be($me, 'users')->post(resolveUrlFactory()->action(LogoutOtherDevicesController::class), [
             'password' => UserFactory::VALID_PASSWORD,
         ]);
 

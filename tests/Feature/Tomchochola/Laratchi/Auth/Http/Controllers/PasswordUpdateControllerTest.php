@@ -25,7 +25,7 @@ class PasswordUpdateControllerTest extends TestCase
 
         \assert($me instanceof User);
 
-        $response = $this->be($me, 'users')->post(resolveUrlFactory()->action(inject(PasswordUpdateController::class)::class), [
+        $response = $this->be($me, 'users')->post(resolveUrlFactory()->action(PasswordUpdateController::class), [
             'password' => UserFactory::VALID_PASSWORD,
             'new_password' => UserFactory::VALID_PASSWORD,
             'new_password_confirmation' => UserFactory::VALID_PASSWORD,

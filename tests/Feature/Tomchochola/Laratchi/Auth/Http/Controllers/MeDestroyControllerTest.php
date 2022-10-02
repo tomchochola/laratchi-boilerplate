@@ -20,7 +20,7 @@ class MeDestroyControllerTest extends TestCase
 
         \assert($me instanceof User);
 
-        $response = $this->be($me, 'users')->post(resolveUrlFactory()->action(inject(MeDestroyController::class)::class));
+        $response = $this->be($me, 'users')->post(resolveUrlFactory()->action(MeDestroyController::class));
 
         $response->assertNoContent();
     }
