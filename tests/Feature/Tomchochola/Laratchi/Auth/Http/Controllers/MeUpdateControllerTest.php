@@ -32,7 +32,7 @@ class MeUpdateControllerTest extends TestCase
         $this->assertJsonApiResponse($response, $this->jsonStructureMe(false), 0);
     }
 
-    public function test_user_can_not_update_to_duplicate_credentials(): void
+    public function test_user_can_update_to_duplicate_credentials_if_its_the_same_user(): void
     {
         $me = UserFactory::new()->createOne();
 
@@ -42,6 +42,24 @@ class MeUpdateControllerTest extends TestCase
             'email' => $me->getEmail(),
             'name' => $me->getName(),
             'locale' => $me->getLocale(),
+        ]);
+
+        $response->assertOk();
+
+        $this->assertJsonApiResponse($response, $this->jsonStructureMe(false), 0);
+    }
+
+    public function test_user_can_not_update_to_duplicate_credentials(): void
+    {
+        $me = UserFactory::new()->createOne();
+        $newUser = UserFactory::new()->createOne();
+
+        \assert($me instanceof User && $newUser instanceof User);
+
+        $response = $this->be($me, 'users')->post(resolveUrlFactory()->action(MeUpdateController::class), [
+            'email' => $newUser->getEmail(),
+            'name' => $newUser->getName(),
+            'locale' => $newUser->getLocale(),
         ]);
 
         $this->assertJsonValidationError($response, ['email']);
