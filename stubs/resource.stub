@@ -25,7 +25,7 @@ class {{ class }} extends ModelJsonApiResource
      */
     public function getAttributes(): array
     {
-        $attributes = [];
+        $attributes = parent::getAttributes();
 
         if ($this->resource->attributeLoaded('name')) {
             $attributes['name'] = $this->resource->getName();
@@ -39,7 +39,7 @@ class {{ class }} extends ModelJsonApiResource
      */
     public function getRelationships(): array
     {
-        $relationships = [];
+        $relationships = parent::getRelationships();
 
         if ($this->resource->relationLoaded('relationship')) {
             $relationships['relationship'] = $this->resource->getRelationship() === null ? null : new ModelJsonApiResource($this->resource->getRelationship());
