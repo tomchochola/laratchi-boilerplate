@@ -28,6 +28,7 @@ class EmailVerificationVerifyControllerTest extends TestCase
         $parameters = [
             'id' => $me->getAuthIdentifier(),
             'hash' => \hash('sha256', $me->getEmailForVerification()),
+            'guard' => $me->getUserProviderName(),
         ];
 
         $signedUrl = SignedUrlSupport::make(EmailVerificationVerifyController::class, $parameters, 0);
