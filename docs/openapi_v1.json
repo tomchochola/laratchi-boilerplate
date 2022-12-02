@@ -211,7 +211,7 @@
       "post": {
         "tags": ["auth"],
         "summary": "Verify e-mail",
-        "description": "Verify e-mail via link from e-mail\n\nUser must be authenticated\n\nThrottled",
+        "description": "Verify e-mail via link from e-mail\n\nThrottled",
         "operationId": "post_auth_email_verification_verify_id_hash",
         "parameters": [
           {
