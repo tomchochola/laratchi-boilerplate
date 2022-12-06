@@ -30,4 +30,21 @@ class EmailVerificationResendControllerTest extends TestCase
 
         Notification::assertSentToTimes($me, VerifyEmailNotification::class);
     }
+
+    public function test_user_can_request_another_email_verification_as_guest(): void
+    {
+        Notification::fake();
+
+        $me = UserFactory::new()->unverified()->createOne();
+
+        \assert($me instanceof User);
+
+        $response = $this->post(resolveUrlFactory()->action(EmailVerificationResendController::class), [
+            'email' => $me->getEmailForVerification(),
+        ]);
+
+        $response->assertNoContent();
+
+        Notification::assertSentToTimes($me, VerifyEmailNotification::class);
+    }
 }

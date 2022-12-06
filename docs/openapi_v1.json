@@ -189,8 +189,29 @@
       "post": {
         "tags": ["auth"],
         "summary": "Resend e-mail verification",
-        "description": "Resend e-mail verification notification\n\nUser must be authenticated\n\nThrottled",
+        "description": "Resend e-mail verification notification\n\nUser must be authenticated or email field must be provided\n\nThrottled",
         "operationId": "post_auth_email_verification_resend",
+        "requestBody": {
+          "required": false,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "description": "request data",
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "description": "e-mail",
+                    "type": "string",
+                    "format": "email",
+                    "pattern": ".+",
+                    "minLength": 1,
+                    "maxLength": 255
+                  }
+                }
+              }
+            }
+          }
+        },
         "responses": {
           "204": {
             "$ref": "#/components/responses/204"
@@ -207,12 +228,12 @@
         }
       }
     },
-    "/auth/email_verification/verify/{id}/{hash}": {
+    "/auth/email_verification/verify/{id}/{email}": {
       "post": {
         "tags": ["auth"],
         "summary": "Verify e-mail",
         "description": "Verify e-mail via link from e-mail\n\nThrottled",
-        "operationId": "post_auth_email_verification_verify_id_hash",
+        "operationId": "post_auth_email_verification_verify_id_email",
         "parameters": [
           {
             "description": "user id",
@@ -224,8 +245,8 @@
             "required": true
           },
           {
-            "description": "verification hash",
-            "name": "hash",
+            "description": "verification email",
+            "name": "email",
             "in": "path",
             "schema": {
               "type": "string",
