@@ -222,13 +222,16 @@
           "403": {
             "$ref": "#/components/responses/4xx"
           },
+          "422": {
+            "$ref": "#/components/responses/422"
+          },
           "429": {
             "$ref": "#/components/responses/4xx"
           }
         }
       }
     },
-    "/auth/email_verification/verify/{id}/{email}": {
+    "/auth/email_verification/verify": {
       "post": {
         "tags": ["auth"],
         "summary": "Verify e-mail",
@@ -238,7 +241,7 @@
           {
             "description": "user id",
             "name": "id",
-            "in": "path",
+            "in": "query",
             "schema": {
               "$ref": "#/components/schemas/slug"
             },
@@ -247,7 +250,7 @@
           {
             "description": "verification email",
             "name": "email",
-            "in": "path",
+            "in": "query",
             "schema": {
               "type": "string",
               "pattern": ".+",
@@ -266,6 +269,9 @@
           },
           "403": {
             "$ref": "#/components/responses/4xx"
+          },
+          "422": {
+            "$ref": "#/components/responses/422"
           },
           "429": {
             "$ref": "#/components/responses/4xx"
