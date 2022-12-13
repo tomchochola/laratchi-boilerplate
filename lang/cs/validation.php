@@ -23,6 +23,7 @@ return [
     'alpha_dash' => ':Attribute může obsahovat pouze písmena, číslice, pomlčky a podtržítka. České znaky (á, é, í, ó, ú, ů, ž, š, č, ř, ď, ť, ň) nejsou podporovány.',
     'alpha_num' => ':Attribute může obsahovat pouze písmena a číslice.',
     'array' => ':Attribute musí být pole.',
+    'ascii' => 'The :attribute must only contain single-byte alphanumeric characters and symbols.',
     'before' => ':Attribute musí být datum před :date.',
     'before_or_equal' => 'Datum :attribute musí být před nebo rovno :date.',
     'between' => [
@@ -72,6 +73,7 @@ return [
     'ipv4' => ':Attribute musí být platná IPv4 adresa.',
     'ipv6' => ':Attribute musí být platná IPv6 adresa.',
     'json' => ':Attribute musí být platný JSON řetězec.',
+    'lowercase' => 'The :attribute must be lowercase.',
     'lt' => [
         'array' => ':Attribute by měl obsahovat méně než :value položek.',
         'file' => 'Velikost souboru :attribute musí být menší než :value kB.',
@@ -121,6 +123,7 @@ return [
     'required' => ':Attribute musí být vyplněno.',
     'required_array_keys' => 'Pole :attribute musí obsahovat položky pro: :values.',
     'required_if' => ':Attribute musí být vyplněno pokud :other je :value.',
+    'required_if_accepted' => 'The :attribute field is required when :other is accepted.',
     'required_unless' => ':Attribute musí být vyplněno dokud :other je v :values.',
     'required_with' => ':Attribute musí být vyplněno pokud :values je vyplněno.',
     'required_with_all' => ':Attribute musí být vyplněno pokud :values je zvoleno.',
@@ -138,7 +141,9 @@ return [
     'timezone' => ':Attribute musí být platná časová zóna.',
     'unique' => ':Attribute musí být unikátní.',
     'uploaded' => 'Nahrávání :attribute se nezdařilo.',
+    'uppercase' => 'The :attribute must be uppercase.',
     'url' => 'Formát :attribute je neplatný.',
+    'ulid' => 'The :attribute must be a valid ULID.',
     'uuid' => ':Attribute musí být validní UUID.',
 
     'prohibited_with' => 'Pole :attribute je zakázáno pokud :values je vyplněno.',

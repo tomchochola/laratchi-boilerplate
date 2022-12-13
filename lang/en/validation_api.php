@@ -23,6 +23,7 @@ return [
     'alpha_dash' => 'alpha_dash',
     'alpha_num' => 'alpha_num',
     'array' => 'array',
+    'ascii' => 'ascii',
     'before' => 'before::date',
     'before_or_equal' => 'before_or_equal::date',
     'between' => [
@@ -72,6 +73,7 @@ return [
     'ipv4' => 'ipv4',
     'ipv6' => 'ipv6',
     'json' => 'json',
+    'lowercase' => 'lowercase',
     'lt' => [
         'array' => 'lt_array::value',
         'file' => 'lt_file::value',
@@ -121,6 +123,7 @@ return [
     'required' => 'required',
     'required_array_keys' => 'required_array_keys::values',
     'required_if' => 'required_if::other;:value',
+    'required_if_accepted' => 'required_if_accepted::other',
     'required_unless' => 'required_unless::other;:values',
     'required_with' => 'required_with::values',
     'required_with_all' => 'required_with_all::values',
@@ -138,7 +141,9 @@ return [
     'timezone' => 'timezone',
     'unique' => 'unique',
     'uploaded' => 'uploaded',
+    'uppercase' => 'uppercase',
     'url' => 'url',
+    'ulid' => 'ulid',
     'uuid' => 'uuid',
 
     'prohibited_with' => 'prohibited_with::values',
