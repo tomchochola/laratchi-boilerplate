@@ -17,15 +17,15 @@ MAKE_ARTISAN ?= ${MAKE_PHP} artisan
 check: audit lint test
 
 .PHONY: audit
-audit: composer.lock tools
+audit: vendor tools
 	tools/local-php-security-checker/vendor/bin/local-php-security-checker
+	${MAKE_COMPOSER} audit
 
 .PHONY: lint
 lint: vendor tools
 	tools/prettier/node_modules/.bin/prettier --ignore-path .gitignore -c . '!**/*.svg'
 	${MAKE_COMPOSER} validate --strict
 	${MAKE_PHP} tools/phpstan/vendor/bin/phpstan analyse
-	set -e; for file in composer.json tools/*/composer.json; do ${MAKE_PHP} tools/composer-normalize/vendor/bin/composer-normalize $$file --dry-run --diff --indent-size=2 --indent-style=space; done
 	${MAKE_PHP} tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --dry-run --diff
 	tools/spectral/node_modules/.bin/spectral lint --fail-severity=hint docs/openapi*
 
@@ -37,10 +37,6 @@ test: vendor clear
 fix: tools
 	tools/prettier/node_modules/.bin/prettier --ignore-path .gitignore -w . '!**/*.svg'
 	${MAKE_PHP} tools/php-cs-fixer/vendor/bin/php-cs-fixer fix
-
-.PHONY: composer-normalize
-composer-normalize: tools
-	set -e; for file in composer.json tools/*/composer.json; do ${MAKE_PHP} tools/composer-normalize/vendor/bin/composer-normalize $$file --indent-size=2 --indent-style=space; done
 
 .PHONY: clean
 clean:
@@ -119,27 +115,50 @@ down: vendor
 up: vendor
 	${MAKE_ARTISAN} up
 
+.PHONY: tinker
+tinker: vendor
+	${MAKE_ARTISAN} tinker
+
+.PHONY: serve
+serve: vendor
+	${MAKE_ARTISAN} serve
+
+.PHONY: update
+update:
+	${MAKE_COMPOSER} update ${MAKE_COMPOSER_ARGUMENTS}
+
+.PHONY: remove-tools
+remove-tools:
+	rm -rf tools/*/vendor
+	rm -rf tools/*/node_modules
+
+.PHONY: update-tools
+update-tools: remove-tools tools
+
 # Aliases
 .PHONY: ci
 ci: check
 
+.PHONY: start
+start: serve
+
+.PHONY: update-composer
+update-composer: update
+
 # Dependencies
-tools: tools/prettier/node_modules/.bin/prettier tools/phpstan/vendor/bin/phpstan tools/php-cs-fixer/vendor/bin/php-cs-fixer tools/composer-normalize/vendor/bin/composer-normalize tools/local-php-security-checker/vendor/bin/local-php-security-checker tools/spectral/node_modules/.bin/spectral
+tools: tools/prettier/node_modules/.bin/prettier tools/phpstan/vendor/bin/phpstan tools/php-cs-fixer/vendor/bin/php-cs-fixer tools/local-php-security-checker/vendor/bin/local-php-security-checker tools/spectral/node_modules/.bin/spectral
 
 tools/prettier/node_modules/.bin/prettier:
 	npm --prefix=tools/prettier update
 
-composer.lock vendor:
-	${MAKE_COMPOSER} install -o
+vendor:
+	${MAKE_COMPOSER} install ${MAKE_COMPOSER_ARGUMENTS}
 
 tools/phpstan/vendor/bin/phpstan:
 	${MAKE_COMPOSER} --working-dir=tools/phpstan update -o
 
 tools/php-cs-fixer/vendor/bin/php-cs-fixer:
 	${MAKE_COMPOSER} --working-dir=tools/php-cs-fixer update -o
-
-tools/composer-normalize/vendor/bin/composer-normalize:
-	${MAKE_COMPOSER} --working-dir=tools/composer-normalize update -o
 
 tools/local-php-security-checker/vendor/bin/local-php-security-checker:
 	${MAKE_COMPOSER} --working-dir=tools/local-php-security-checker update -o
