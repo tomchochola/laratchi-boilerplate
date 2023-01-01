@@ -46,3 +46,6 @@ phpstan.neon
 
 # public
 /public/vendor
+
+# stubs
+/stubs
