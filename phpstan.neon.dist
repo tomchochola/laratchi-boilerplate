@@ -4,7 +4,7 @@ includes:
     - tools/phpstan/vendor/spaze/phpstan-disallowed-calls/disallowed-insecure-calls.neon
     - tools/phpstan/vendor/spaze/phpstan-disallowed-calls/disallowed-loose-calls.neon
     - tools/phpstan/vendor/phpstan/phpstan/conf/bleedingEdge.neon
-    - tools/phpstan/vendor/tomchochola/phpstan-rules/phpstan-strict.neon
+    - tools/phpstan/vendor/tomchochola/phpstan-rules/phpstan-rules.neon
     - vendor/tomchochola/laratchi/phpstan.bans.neon
 
 parameters:
