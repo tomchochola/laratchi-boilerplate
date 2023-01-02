@@ -26,7 +26,8 @@ make local
 make testing
 
 # start server or direct webserver to `public/index.php`
-php artisan serve
+make start
+make serve
 ```
 
 ## CLI
@@ -73,9 +74,11 @@ make test
 # fix code
 make fix
 
-# normalize composer.json files
-make composer-normalize
-
 # remove ignored files
 make clean
+
+# update
+make update
+make update-tools
+make update-composer
 ```
