@@ -29,7 +29,7 @@ class MeUpdateControllerTest extends TestCase
 
         $response->assertOk();
 
-        $this->assertJsonApiResponse($response, $this->jsonStructureMe(false), 0);
+        $this->validateJsonApiResponse($response, $this->jsonApiValidatorMe(false), []);
     }
 
     public function test_user_can_update_to_duplicate_credentials_if_its_the_same_user(): void
@@ -46,7 +46,7 @@ class MeUpdateControllerTest extends TestCase
 
         $response->assertOk();
 
-        $this->assertJsonApiResponse($response, $this->jsonStructureMe(false), 0);
+        $this->validateJsonApiResponse($response, $this->jsonApiValidatorMe(false), []);
     }
 
     public function test_user_can_not_update_to_duplicate_credentials(): void

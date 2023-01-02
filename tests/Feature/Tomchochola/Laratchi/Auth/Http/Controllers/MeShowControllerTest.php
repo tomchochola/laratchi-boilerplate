@@ -24,6 +24,6 @@ class MeShowControllerTest extends TestCase
 
         $response->assertOk();
 
-        $this->assertJsonApiResponse($response, $this->jsonStructureMe(false), 0);
+        $this->validateJsonApiResponse($response, $this->jsonApiValidatorMe(false), []);
     }
 }

@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Tests;
 
-use Illuminate\Support\Arr;
+use Tomchochola\Laratchi\Auth\Http\Validation\AuthValidity;
+use Tomchochola\Laratchi\Testing\JsonApiValidator;
 use Tomchochola\Laratchi\Testing\TestCase as LaratchiTestCase;
+use Tomchochola\Laratchi\Validation\Validity;
 
 abstract class TestCase extends LaratchiTestCase
 {
@@ -34,40 +36,29 @@ abstract class TestCase extends LaratchiTestCase
     }
 
     /**
-     * Me json structure resource.
-     *
-     * @return array<mixed>
+     * Me json api validator.
      */
-    protected function jsonStructureMe(?bool $includeDatabaseToken): array
+    protected function jsonApiValidatorMe(?bool $includeDatabaseToken): JsonApiValidator
     {
-        $structure = $this->jsonStructureResource([
-            'email',
-            'name',
-            'locale',
-            'email_verified_at',
-        ]);
+        $authValidity = inject(AuthValidity::class);
 
-        if ($includeDatabaseToken !== false) {
-            Arr::set($structure, 'relationships.database_token', $includeDatabaseToken === null ? ['data' => []] : $this->jsonStructureRelationship());
-        }
-
-        return $structure;
+        return $this->jsonApiValidator('users', [
+            'email' => $authValidity->email('users')->required(),
+            'name' => $authValidity->name('users')->required(),
+            'locale' => $authValidity->locale('users')->required(),
+            'email_verified_at' => Validity::make()->nullable()->raw()->date(),
+        ])->relationship('database_token', $this->jsonApiValidatorDatabaseToken(), $includeDatabaseToken);
     }
 
     /**
-     * Database token json structure resource.
-     *
-     * @return array<mixed>
+     * Database token json api validator.
      */
-    protected function jsonStructureDatabaseToken(bool $includeBearer): array
+    protected function jsonApiValidatorDatabaseToken(): JsonApiValidator
     {
-        return $this->jsonStructureResource($includeBearer ? [
-            'auth_id',
-            'provider',
-            'bearer',
-        ] : [
-            'auth_id',
-            'provider',
+        return $this->jsonApiValidator('database_tokens', [
+            'auth_id' => Validity::make()->required()->raw(),
+            'provider' => Validity::make()->required()->raw(),
+            'bearer' => Validity::make()->nullable()->raw(),
         ]);
     }
 }
