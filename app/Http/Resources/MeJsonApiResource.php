@@ -25,11 +25,11 @@ class MeJsonApiResource extends LaratchiMeJsonApiResource
      */
     public function getAttributes(): array
     {
-        return \array_merge(parent::getAttributes(), [
+        return [
             'email' => $this->resource->getEmail(),
             'name' => $this->resource->getName(),
             'locale' => $this->resource->getLocale(),
             'email_verified_at' => $this->resource->getEmailVerifiedAt(),
-        ]);
+        ];
     }
 }
