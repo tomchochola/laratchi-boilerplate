@@ -13,4 +13,4 @@ declare(strict_types=1);
 |
 */
 
-resolveRouter()->get('api/v1/spec', Tomchochola\Laratchi\Swagger\Http\Controllers\SwaggerUiController::class)->defaults('file', resolveApp()->basePath('docs/openapi_v1.json'));
+resolveRouter()->get('api/v1/spec', Tomchochola\Laratchi\Swagger\Http\Controllers\SwaggerUiController::class)->defaults('url', resolveUrlFactory()->asset('openapi/openapi_v1.json'));

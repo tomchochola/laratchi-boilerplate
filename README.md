@@ -2,7 +2,7 @@
 
 Available at `/api/v1/spec`.
 
-Source files are located in [./docs/openapi_v1.json](./docs/openapi_v1.json).
+Source files are located in [./public/openapi/openapi_v1.json](./public/openapi/openapi_v1.json).
 
 ## How to setup
 
