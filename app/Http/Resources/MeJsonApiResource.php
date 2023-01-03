@@ -32,4 +32,12 @@ class MeJsonApiResource extends LaratchiMeJsonApiResource
             'email_verified_at' => $this->resource->getEmailVerifiedAt(),
         ];
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function getRelationships(): array
+    {
+        return [];
+    }
 }

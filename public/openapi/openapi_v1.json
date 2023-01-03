@@ -639,15 +639,6 @@
                     "$ref": "#/components/schemas/nullableTimestamp"
                   }
                 }
-              },
-              "relationships": {
-                "description": "relationships",
-                "type": "object",
-                "properties": {
-                  "database_token": {
-                    "$ref": "#/components/schemas/Relationship"
-                  }
-                }
               }
             }
           }
@@ -666,7 +657,7 @@
               "attributes": {
                 "description": "attributes",
                 "type": "object",
-                "required": ["provider", "auth_id"],
+                "required": ["provider", "auth_id", "bearer"],
                 "properties": {
                   "provider": {
                     "description": "user provider name",
@@ -678,7 +669,8 @@
                   },
                   "bearer": {
                     "description": "bearer token",
-                    "type": "string"
+                    "type": "string",
+                    "nullable": true
                   }
                 }
               }
@@ -934,17 +926,6 @@
               "properties": {
                 "data": {
                   "$ref": "#/components/schemas/Me"
-                },
-                "included": {
-                  "description": "included relationships",
-                  "type": "array",
-                  "items": {
-                    "oneOf": [
-                      {
-                        "$ref": "#/components/schemas/DatabaseToken"
-                      }
-                    ]
-                  }
                 }
               }
             }
