@@ -12,5 +12,3 @@ declare(strict_types=1);
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-resolveRouter()->get('api/v1/spec', Tomchochola\Laratchi\Swagger\Http\Controllers\SwaggerUiController::class)->defaults('url', resolveUrlFactory()->asset('openapi/openapi_v1.json'));
