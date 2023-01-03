@@ -42,11 +42,13 @@ abstract class TestCase extends LaratchiTestCase
     {
         $authValidity = inject(AuthValidity::class);
 
+        \assert($includeDatabaseToken === false);
+
         return $this->jsonApiValidator('users', [
             'email' => $authValidity->email('users')->required(),
             'name' => $authValidity->name('users')->required(),
             'locale' => $authValidity->locale('users')->required(),
-            'email_verified_at' => Validity::make()->nullable()->raw()->date(),
+            'email_verified_at' => $authValidity->emailVerifiedAt('users')->nullable()->present(),
         ])->relationship('database_token', $this->jsonApiValidatorDatabaseToken(), $includeDatabaseToken);
     }
 
@@ -56,9 +58,9 @@ abstract class TestCase extends LaratchiTestCase
     protected function jsonApiValidatorDatabaseToken(): JsonApiValidator
     {
         return $this->jsonApiValidator('database_tokens', [
-            'auth_id' => Validity::make()->required()->raw(),
-            'provider' => Validity::make()->required()->raw(),
-            'bearer' => Validity::make()->nullable()->raw(),
+            'auth_id' => Validity::make()->required()->string(),
+            'provider' => Validity::make()->required()->string(),
+            'bearer' => Validity::make()->nullable()->present()->string(),
         ]);
     }
 }

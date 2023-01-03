@@ -10,6 +10,7 @@ use Illuminate\Auth\Events\Verified;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
+use Tomchochola\Laratchi\Auth\Http\Controllers\EmailVerificationVerifyController;
 use Tomchochola\Laratchi\Auth\Notifications\VerifyEmailNotification;
 
 class EmailVerificationVerifyControllerTest extends TestCase
@@ -24,7 +25,7 @@ class EmailVerificationVerifyControllerTest extends TestCase
 
         \assert($me instanceof User);
 
-        $signedUrl = (new VerifyEmailNotification($me->getUserProviderName()))->signedUrl($me);
+        $signedUrl = (new VerifyEmailNotification($me->getUserProviderName(), EmailVerificationVerifyController::class))->signedUrl($me);
 
         $response = $this->be($me, 'users')->post($signedUrl);
 
@@ -41,7 +42,7 @@ class EmailVerificationVerifyControllerTest extends TestCase
 
         \assert($me instanceof User);
 
-        $signedUrl = (new VerifyEmailNotification($me->getUserProviderName()))->signedUrl($me);
+        $signedUrl = (new VerifyEmailNotification($me->getUserProviderName(), EmailVerificationVerifyController::class))->signedUrl($me);
 
         $response = $this->post($signedUrl);
 

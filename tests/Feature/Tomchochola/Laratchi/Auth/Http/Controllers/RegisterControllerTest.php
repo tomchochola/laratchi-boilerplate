@@ -36,7 +36,7 @@ class RegisterControllerTest extends TestCase
 
         $response->assertCreated();
 
-        $this->validateJsonApiResponse($response, $this->jsonApiValidatorMe(true), [$this->jsonApiValidatorDatabaseToken()]);
+        $this->validateJsonApiResponse($response, $this->jsonApiValidatorMe(false), []);
 
         $me = User::query()->sole();
 
@@ -65,7 +65,7 @@ class RegisterControllerTest extends TestCase
             'password_confirmation' => UserFactory::VALID_PASSWORD,
         ]);
 
-        $this->assertJsonValidationError($response, ['email']);
+        $this->validateJsonApiValidationError($response, ['email']);
 
         $this->assertGuest('users');
 

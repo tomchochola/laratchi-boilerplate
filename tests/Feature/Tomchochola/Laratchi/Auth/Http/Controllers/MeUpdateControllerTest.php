@@ -62,6 +62,6 @@ class MeUpdateControllerTest extends TestCase
             'locale' => $newUser->getLocale(),
         ]);
 
-        $this->assertJsonValidationError($response, ['email']);
+        $this->validateJsonApiValidationError($response, ['email']);
     }
 }
