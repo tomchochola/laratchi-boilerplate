@@ -38,6 +38,7 @@ return [
     'date' => ':Attribute musí být platné datum.',
     'date_equals' => ':Attribute musí být datum shodné s :date.',
     'date_format' => ':Attribute není platný formát data podle :format.',
+    'decimal' => ':Attribute musí mít :decimal desetinných míst.',
     'declined' => ':Attribute musí být odmítnut.',
     'declined_if' => ':Attribute musí být odmítnut pokud :other je :value.',
     'different' => ':Attribute a :other se musí lišit.',
