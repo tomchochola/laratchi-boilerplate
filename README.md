@@ -1,8 +1,16 @@
+## Application documentation
+
+Available at [./docs/application_documentation.md](./docs/application_documentation.md).
+
 ## API specification
 
-Available at `/api/v1/spec`.
+Available at URL `/api/v1/spec`.
 
 Source files are located in [./public/openapi/openapi_v1.json](./public/openapi/openapi_v1.json).
+
+## Database schema
+
+Available at [./docs/database_schema.md](./docs/database_schema.md).
 
 ## How to setup
 
