@@ -44,19 +44,10 @@
                 "required": ["name", "email", "password", "password_confirmation", "locale"],
                 "properties": {
                   "name": {
-                    "description": "user full name",
-                    "type": "string",
-                    "pattern": ".+",
-                    "minLength": 1,
-                    "maxLength": 255
+                    "$ref": "#/components/schemas/varchar"
                   },
                   "email": {
-                    "description": "unique e-mail",
-                    "type": "string",
-                    "format": "email",
-                    "pattern": ".+",
-                    "minLength": 1,
-                    "maxLength": 255
+                    "$ref": "#/components/schemas/email"
                   },
                   "password": {
                     "$ref": "#/components/schemas/password"
@@ -101,20 +92,13 @@
                 "required": ["email", "password", "remember"],
                 "properties": {
                   "email": {
-                    "description": "e-mail",
-                    "type": "string",
-                    "format": "email",
-                    "pattern": ".+",
-                    "minLength": 1,
-                    "maxLength": 255
+                    "$ref": "#/components/schemas/email"
                   },
                   "password": {
                     "$ref": "#/components/schemas/password"
                   },
                   "remember": {
-                    "description": "remember login",
-                    "type": "integer",
-                    "enum": [0, 1]
+                    "$ref": "#/components/schemas/boolean"
                   }
                 }
               }
@@ -200,12 +184,7 @@
                 "type": "object",
                 "properties": {
                   "email": {
-                    "description": "e-mail",
-                    "type": "string",
-                    "format": "email",
-                    "pattern": ".+",
-                    "minLength": 1,
-                    "maxLength": 255
+                    "$ref": "#/components/schemas/email"
                   }
                 }
               }
@@ -243,7 +222,7 @@
             "name": "id",
             "in": "query",
             "schema": {
-              "$ref": "#/components/schemas/slug"
+              "$ref": "#/components/schemas/identifier"
             },
             "required": true
           },
@@ -252,10 +231,7 @@
             "name": "email",
             "in": "query",
             "schema": {
-              "type": "string",
-              "pattern": ".+",
-              "minLength": 1,
-              "maxLength": 255
+              "$ref": "#/components/schemas/email"
             },
             "required": true
           }
@@ -295,12 +271,7 @@
                 "required": ["email"],
                 "properties": {
                   "email": {
-                    "description": "e-mail",
-                    "type": "string",
-                    "format": "email",
-                    "pattern": ".+",
-                    "minLength": 1,
-                    "maxLength": 255
+                    "$ref": "#/components/schemas/email"
                   }
                 }
               }
@@ -336,19 +307,10 @@
                 "required": ["email", "token", "password", "password_confirmation"],
                 "properties": {
                   "email": {
-                    "description": "e-mail",
-                    "type": "string",
-                    "format": "email",
-                    "pattern": ".+",
-                    "minLength": 1,
-                    "maxLength": 255
+                    "$ref": "#/components/schemas/email"
                   },
                   "token": {
-                    "description": "token",
-                    "type": "string",
-                    "pattern": ".+",
-                    "minLength": 1,
-                    "maxLength": 255
+                    "$ref": "#/components/schemas/varchar"
                   },
                   "password": {
                     "$ref": "#/components/schemas/password"
@@ -447,19 +409,10 @@
                 "type": "object",
                 "properties": {
                   "name": {
-                    "description": "user full name",
-                    "type": "string",
-                    "pattern": ".+",
-                    "minLength": 1,
-                    "maxLength": 255
+                    "$ref": "#/components/schemas/varchar"
                   },
                   "email": {
-                    "description": "unique e-mail",
-                    "type": "string",
-                    "format": "email",
-                    "pattern": ".+",
-                    "minLength": 1,
-                    "maxLength": 255
+                    "$ref": "#/components/schemas/email"
                   },
                   "locale": {
                     "$ref": "#/components/schemas/locale"
@@ -501,8 +454,8 @@
   },
   "components": {
     "schemas": {
-      "slug": {
-        "description": "slug",
+      "identifier": {
+        "description": "identifier",
         "type": "string",
         "format": "identifier",
         "minLength": 1,
@@ -545,24 +498,62 @@
         "format": "date-time",
         "nullable": true
       },
+      "boolean": {
+        "description": "boolean",
+        "type": "integer",
+        "enum": [0, 1]
+      },
+      "nullableBoolean": {
+        "description": "boolean",
+        "type": "integer",
+        "enum": [0, 1],
+        "nullable": true
+      },
+      "email": {
+        "description": "e-mail",
+        "type": "string",
+        "format": "email",
+        "pattern": ".+",
+        "minLength": 1,
+        "maxLength": 255
+      },
+      "nullableEmail": {
+        "description": "e-mail or null",
+        "type": "string",
+        "format": "email",
+        "pattern": ".+",
+        "minLength": 1,
+        "maxLength": 255,
+        "nullable": true
+      },
+      "varchar": {
+        "description": "varchar",
+        "type": "string",
+        "pattern": ".+",
+        "minLength": 1,
+        "maxLength": 255
+      },
+      "nullableVarchar": {
+        "description": "varchar or null",
+        "type": "string",
+        "pattern": ".+",
+        "minLength": 1,
+        "maxLength": 255,
+        "nullable": true
+      },
       "Resource": {
         "description": "json:api resource",
         "type": "object",
         "required": ["id", "slug", "type"],
         "properties": {
           "id": {
-            "description": "id",
-            "type": "string",
-            "format": "identifier"
+            "$ref": "#/components/schemas/identifier"
           },
           "slug": {
-            "description": "slug",
-            "type": "string",
-            "format": "identifier"
+            "$ref": "#/components/schemas/identifier"
           },
           "type": {
-            "description": "type",
-            "type": "string"
+            "$ref": "#/components/schemas/varchar"
           }
         }
       },
@@ -624,13 +615,10 @@
                 "required": ["name", "email", "locale", "email_verified_at"],
                 "properties": {
                   "name": {
-                    "description": "user full name",
-                    "type": "string"
+                    "$ref": "#/components/schemas/varchar"
                   },
                   "email": {
-                    "description": "e-mail",
-                    "type": "string",
-                    "format": "email"
+                    "$ref": "#/components/schemas/email"
                   },
                   "locale": {
                     "$ref": "#/components/schemas/locale"
@@ -669,16 +657,13 @@
                 "required": ["provider", "auth_id"],
                 "properties": {
                   "provider": {
-                    "description": "user provider name",
-                    "type": "string"
+                    "$ref": "#/components/schemas/varchar"
                   },
                   "auth_id": {
-                    "description": "authenticatable id",
-                    "type": "string"
+                    "$ref": "#/components/schemas/identifier"
                   },
                   "bearer": {
-                    "description": "bearer token",
-                    "type": "string"
+                    "$ref": "#/components/schemas/varchar"
                   }
                 }
               }
@@ -691,17 +676,17 @@
         "type": "object",
         "required": ["status", "code"],
         "properties": {
-          "internal": {
-            "description": "debug only message, internal use only, do not expose to users!",
-            "type": "string"
-          },
           "status": {
             "description": "HTTP status code",
-            "type": "integer"
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 599
           },
           "code": {
             "description": "error code",
-            "type": "integer"
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9223372036854775807
           }
         }
       },
@@ -740,36 +725,23 @@
                       "luhn",
                       "base64",
                       "issn",
-                      "lowercase",
-                      "uppercase",
                       "titlecase",
                       "snakecase",
                       "kebabcase",
                       "camelcase",
                       "cidr",
                       "datauri",
-                      "ulid",
                       "ean",
                       "gtin",
                       "postalcode",
                       "mimetype",
                       "authorized",
-                      "enum",
                       "model_ids",
                       "country_code",
                       "currency",
                       "delimited_unique",
                       "delimited_min:{{ min }}",
                       "delimited_max:{{ max }}",
-                      "auth_failed",
-                      "auth_password",
-                      "auth_throttle:{{ seconds }}",
-                      "auth_blocked",
-                      "passwords_reset",
-                      "passwords_sent",
-                      "passwords_throttled",
-                      "passwords_token",
-                      "passwords_user",
                       "accepted",
                       "accepted_if:{{ attribute }};{{ value }}",
                       "active_url",
@@ -779,6 +751,7 @@
                       "alpha_dash",
                       "alpha_num",
                       "array",
+                      "ascii",
                       "before:{{ value or attribute }}",
                       "before_or_equal:{{ value or attribute }}",
                       "between_array:{{ min }};{{ max }}",
@@ -802,6 +775,7 @@
                       "doesnt_start_with:{{ ', ' separated values }}",
                       "email",
                       "ends_with:{{ ', ' separated values }}",
+                      "enum",
                       "exists",
                       "file",
                       "filled",
@@ -821,6 +795,7 @@
                       "ipv4",
                       "ipv6",
                       "json",
+                      "lowercase",
                       "lt_array:{{ value or attribute}}",
                       "lt_file:{{ value or attribute}}",
                       "lt_numeric:{{ value or attribute}}",
@@ -860,6 +835,7 @@
                       "required",
                       "required_array_keys:{{ ', ' separated values }}",
                       "required_if:{{ attribute }};{{ value }}",
+                      "required_if_accepted:{{ attribute }}",
                       "required_unless:{{ attribute }};{{ ', ' separated values }}",
                       "required_with:{{ ' / ' separated attributes }}",
                       "required_with_all:{{ ' / ' separated attributes }}",
@@ -875,7 +851,9 @@
                       "timezone",
                       "unique",
                       "uploaded",
+                      "uppercase",
                       "url",
+                      "ulid",
                       "uuid",
                       "prohibited_with:{{ ', ' separated values }}",
                       "prohibited_with_all:{{ ', ' separated values }}",
@@ -889,7 +867,18 @@
                       "strlen_max:{{ max }}",
                       "strlen_min:{{ min }}",
                       "null",
-                      "throttled:{{ seconds }}"
+                      "throttled:{{ seconds }}",
+                      "invalid",
+                      "fallback",
+                      "auth_failed",
+                      "auth_password",
+                      "auth_throttle:{{ seconds }}",
+                      "auth_blocked",
+                      "passwords_reset",
+                      "passwords_sent",
+                      "passwords_throttled",
+                      "passwords_token",
+                      "passwords_user"
                     ]
                   }
                 }
