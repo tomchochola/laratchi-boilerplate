@@ -16,3 +16,5 @@ parameters:
     - resources
     - routes
     - tests
+  stubFiles:
+    - phpstan.stub
