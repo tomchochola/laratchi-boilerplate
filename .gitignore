@@ -43,6 +43,9 @@ phpstan.neon
 
 # tools
 /tools/*/vendor
+/tools/*/node_modules
+/tools/*/package-lock.json
+/tools/*/composer.lock
 
 # public
 /public/vendor
