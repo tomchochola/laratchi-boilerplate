@@ -31,7 +31,11 @@ lint: vendor tools
 
 .PHONY: test
 test: vendor clear
-	${MAKE_ARTISAN} test
+	${MAKE_ARTISAN} test --exclude-group large
+
+.PHONY: test-large
+test-large: vendor clear
+	${MAKE_ARTISAN} test --group large
 
 .PHONY: fix
 fix: tools

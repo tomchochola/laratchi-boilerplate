@@ -76,8 +76,11 @@ make audit
 # lint code
 make lint
 
-# run unit tests
+# run unit tests without large group
 make test
+
+# run only large group unit tests
+make test-large
 
 # fix code
 make fix
