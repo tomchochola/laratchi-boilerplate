@@ -62,11 +62,11 @@
   "scripts": {
     "post-install-cmd": [
       "@php artisan vendor:publish --tag=laravel-assets --ansi --force",
-      "@php -r \"file_exists('stubs') || symlink(implode(DIRECTORY_SEPARATOR, [__DIR__, 'vendor', 'tomchochola', 'laratchi', 'stubs']), 'stubs');\""
+      "@php -r \"file_exists('stubs') || (PHP_OS_FAMILY === 'Windows' ? exec('mklink /J '.escapeshellarg('stubs').' '.escapeshellarg('vendor/tomchochola/laratchi/stubs')) : symlink('vendor/tomchochola/laratchi/stubs', 'stubs'));\""
     ],
     "post-update-cmd": [
       "@php artisan vendor:publish --tag=laravel-assets --ansi --force",
-      "@php -r \"file_exists('stubs') || symlink(implode(DIRECTORY_SEPARATOR, [__DIR__, 'vendor', 'tomchochola', 'laratchi', 'stubs']), 'stubs');\""
+      "@php -r \"file_exists('stubs') || (PHP_OS_FAMILY === 'Windows' ? exec('mklink /J '.escapeshellarg('stubs').' '.escapeshellarg('vendor/tomchochola/laratchi/stubs')) : symlink('vendor/tomchochola/laratchi/stubs', 'stubs'));\""
     ],
     "post-autoload-dump": [
       "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
