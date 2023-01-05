@@ -670,7 +670,7 @@
           "status": {
             "description": "HTTP status code",
             "type": "integer",
-            "minimum": 100,
+            "minimum": 400,
             "maximum": 599
           },
           "code": {
