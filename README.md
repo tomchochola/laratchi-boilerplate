@@ -89,4 +89,5 @@ make clean
 make update
 make update-tools
 make update-composer
+make update-full
 ```
