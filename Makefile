@@ -131,13 +131,15 @@ serve: vendor
 update:
 	${MAKE_COMPOSER} update ${MAKE_COMPOSER_ARGUMENTS}
 
-.PHONY: remove-tools
-remove-tools:
-	rm -rf tools/*/vendor
-	rm -rf tools/*/node_modules
+.PHONY: clean-tools
+clean-tools:
+	git clean -xfd tools
 
 .PHONY: update-tools
-update-tools: remove-tools tools
+update-tools: clean-tools tools
+
+.PHONY: update-full
+update-full: update-tools update
 
 # Aliases
 .PHONY: ci
