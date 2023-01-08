@@ -161,6 +161,8 @@ return [
     'null' => 'The :attribute field is prohibited.',
 
     'throttled' => 'Please wait before retrying.',
+    'invalid' => 'The :attribute is invalid.',
+    'fallback' => 'The :attribute is invalid.',
 
     /*
     |--------------------------------------------------------------------------

@@ -161,6 +161,8 @@ return [
     'null' => 'Pole :attribute je zakázáno.',
 
     'throttled' => 'Počkejte prosím a zkuste to znovu.',
+    'invalid' => ':Attribute není platný.',
+    'fallback' => ':Attribute není platný.',
 
     /*
     |--------------------------------------------------------------------------
