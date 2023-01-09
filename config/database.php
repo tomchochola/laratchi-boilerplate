@@ -51,7 +51,7 @@ return [
             'database' => mustEnvString('DB_DATABASE'),
             'username' => mustEnvString('DB_USERNAME'),
             'password' => envString('DB_PASSWORD'),
-            'unix_socket' => \in_array(mustEnvString('APP_ENV'), ['development', 'staging', 'production'], true) ? mustEnvString('DB_SOCKET') : envString('DB_SOCKET'),
+            'unix_socket' => \in_array(mustEnvString('APP_ENV'), ['development', 'staging', 'production'], true) ? mustEnvString('DB_SOCKET', '/var/run/mysqld/mysqld.sock') : envString('DB_SOCKET'),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_0900_ai_ci',
             'prefix' => '',
