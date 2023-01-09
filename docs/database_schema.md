@@ -31,6 +31,17 @@ database_tokens {
   timestamp updated_at
 }
 
+notifications {
+  uuid id PK
+  string type
+  string notifiable_type
+  id notifiable_id
+  text data
+  timestamp read_at "nullable"
+  timestamp created_at
+  timestamp updated_at
+}
+
 failed_jobs {
   id id PK
   string uuid "unique"
