@@ -69,6 +69,6 @@ return [
     */
 
     'links' => [
-        resolveApp()->publicPath().\DIRECTORY_SEPARATOR.'storage' => resolveApp()->storagePath('app/public'),
+        resolveApp()->publicPath().'/storage' => resolveApp()->storagePath('app/public'),
     ],
 ];
