@@ -500,13 +500,11 @@
       },
       "boolean": {
         "description": "boolean",
-        "type": "integer",
-        "enum": [0, 1]
+        "type": "boolean"
       },
       "nullableBoolean": {
         "description": "boolean",
-        "type": "integer",
-        "enum": [0, 1],
+        "type": "boolean",
         "nullable": true
       },
       "email": {
