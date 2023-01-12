@@ -19,7 +19,13 @@ return [
     |
     */
 
-    'driver' => \in_array(mustEnvString('APP_ENV'), ['development', 'staging', 'production'], true) ? 'redis' : (mustEnvString('APP_ENV') === 'testing' ? 'array' : 'file'),
+    'driver' => mapEnvEnv([
+        'local' => 'file',
+        'testing' => 'array',
+        'development' => 'redis',
+        'staging' => 'redis',
+        'production' => 'redis',
+    ]),
 
     /*
     |--------------------------------------------------------------------------
@@ -127,7 +133,7 @@ return [
     |
     */
 
-    'cookie' => (mustEnvString('APP_ENV') !== 'local' ? '__Host-' : '').Str::slug(mustEnvString('APP_NAME'), '_').'_'.mustEnvString('APP_ENV').'_session',
+    'cookie' => (isEnvEnv(['local', 'testing']) ? '' : '__Host-').Str::slug(mustEnvString('APP_NAME'), '_').'_'.currentEnvEnv().'_session',
 
     /*
     |--------------------------------------------------------------------------

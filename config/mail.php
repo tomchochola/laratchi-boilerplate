@@ -2,7 +2,13 @@
 
 declare(strict_types=1);
 
-$driver = \in_array(mustEnvString('APP_ENV'), ['development', 'staging', 'production'], true) ? 'smtp' : (mustEnvString('APP_ENV') === 'testing' ? 'array' : 'log');
+$driver = mapEnvEnv([
+    'local' => 'log',
+    'testing' => 'array',
+    'development' => 'smtp',
+    'staging' => 'smtp',
+    'production' => 'mailgun',
+]);
 
 return [
     /*

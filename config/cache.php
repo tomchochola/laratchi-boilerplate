@@ -16,7 +16,13 @@ return [
     |
     */
 
-    'default' => \in_array(mustEnvString('APP_ENV'), ['development', 'staging', 'production'], true) ? 'redis' : (mustEnvString('APP_ENV') === 'testing' ? 'array' : 'file'),
+    'default' => mapEnvEnv([
+        'local' => 'file',
+        'testing' => 'array',
+        'development' => 'redis',
+        'staging' => 'redis',
+        'production' => 'redis',
+    ]),
 
     /*
     |--------------------------------------------------------------------------
@@ -108,5 +114,5 @@ return [
     |
     */
 
-    'prefix' => Str::slug(mustEnvString('APP_NAME'), '_').'_'.mustEnvString('APP_ENV').'_cache_',
+    'prefix' => Str::slug(mustEnvString('APP_NAME'), '_').'_'.currentEnvEnv().'_cache_',
 ];

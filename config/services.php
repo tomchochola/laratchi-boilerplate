@@ -2,6 +2,10 @@
 
 declare(strict_types=1);
 
+$config = envConfig();
+
+$mailer = $config->get('mail.default');
+
 return [
     /*
     |--------------------------------------------------------------------------
@@ -16,9 +20,9 @@ return [
     */
 
     'mailgun' => [
-        'domain' => env('MAILGUN_DOMAIN'),
-        'secret' => env('MAILGUN_SECRET'),
-        'endpoint' => env('MAILGUN_ENDPOINT', 'api.mailgun.net'),
+        'domain' => $mailer === 'mailgun' ? mustEnvString('MAILGUN_DOMAIN') : env('MAILGUN_DOMAIN'),
+        'secret' => $mailer === 'mailgun' ? mustEnvString('MAILGUN_SECRET') : env('MAILGUN_SECRET'),
+        'endpoint' => $mailer === 'mailgun' ? mustEnvString('MAILGUN_ENDPOINT', 'api.eu.mailgun.net') : env('MAILGUN_ENDPOINT', 'api.eu.mailgun.net'),
         'scheme' => 'https',
     ],
 

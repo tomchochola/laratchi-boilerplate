@@ -14,7 +14,13 @@ return [
     |
     */
 
-    'default' => \in_array(mustEnvString('APP_ENV'), ['development', 'staging', 'production'], true) ? 'redis' : 'sync',
+    'default' => mapEnvEnv([
+        'local' => 'sync',
+        'testing' => 'sync',
+        'development' => 'redis',
+        'staging' => 'redis',
+        'production' => 'redis',
+    ]),
 
     /*
     |--------------------------------------------------------------------------

@@ -6,7 +6,13 @@ use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\SyslogUdpHandler;
 
-$level = \in_array(mustEnvString('APP_ENV'), ['staging', 'production'], true) ? 'warning' : 'debug';
+$level = mapEnvEnv([
+    'local' => 'debug',
+    'testing' => 'debug',
+    'development' => 'debug',
+    'staging' => 'debug',
+    'production' => 'warning',
+]);
 
 return [
     /*
@@ -20,7 +26,13 @@ return [
     |
     */
 
-    'default' => \in_array(mustEnvString('APP_ENV'), ['staging', 'production'], true) ? 'daily' : 'single',
+    'default' => mapEnvEnv([
+        'local' => 'single',
+        'testing' => 'single',
+        'development' => 'single',
+        'staging' => 'single',
+        'production' => 'daily',
+    ]),
 
     /*
     |--------------------------------------------------------------------------
@@ -34,7 +46,13 @@ return [
     */
 
     'deprecations' => [
-        'channel' => \in_array(mustEnvString('APP_ENV'), ['staging', 'production'], true) ? 'daily' : 'single',
+        'channel' => mapEnvEnv([
+            'local' => 'single',
+            'testing' => 'single',
+            'development' => 'single',
+            'staging' => 'single',
+            'production' => 'daily',
+        ]),
         'trace' => false,
     ],
 

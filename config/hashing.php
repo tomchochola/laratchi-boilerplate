@@ -30,7 +30,7 @@ return [
     */
 
     'bcrypt' => [
-        'rounds' => mustEnvString('APP_ENV') === 'testing' ? 4 : 10,
+        'rounds' => isEnvEnv(['local', 'testing']) ? 1 : 10,
     ],
 
     /*
@@ -47,6 +47,6 @@ return [
     'argon' => [
         'memory' => 65536,
         'threads' => 1,
-        'time' => mustEnvString('APP_ENV') === 'testing' ? 1 : 4,
+        'time' => isEnvEnv(['local', 'testing']) ? 1 : 4,
     ],
 ];
