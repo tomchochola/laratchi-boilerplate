@@ -164,6 +164,21 @@ return [
     'invalid' => ':Attribute není platný.',
     'fallback' => ':Attribute není platný.',
 
+    'auth' => [
+        'failed' => 'Tyto přihlašovací údaje neodpovídají žadnému záznamu.',
+        'password' => 'Zadané heslo je neplatné.',
+        'throttle' => 'Příliš mnoho pokusů o přihlášení. Zkuste to prosím znovu za :seconds sekund.',
+        'blocked' => 'Účet je zablokovaný.',
+    ],
+
+    'passwords' => [
+        'reset' => 'Heslo bylo obnoveno!',
+        'sent' => 'E-mail s instrukcemi k obnovení hesla byl odeslán!',
+        'throttled' => 'Počkejte prosím a zkuste to znovu.',
+        'token' => 'Klíč pro obnovu hesla je nesprávný.',
+        'user' => 'Nepodařilo se najít uživatele s touto e-mailovou adresou.',
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines

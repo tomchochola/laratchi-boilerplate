@@ -164,6 +164,21 @@ return [
     'invalid' => 'The :attribute is invalid.',
     'fallback' => 'The :attribute is invalid.',
 
+    'auth' => [
+        'failed' => 'These credentials do not match our records.',
+        'password' => 'The provided password is incorrect.',
+        'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
+        'blocked' => 'Account is blocked.',
+    ],
+
+    'passwords' => [
+        'reset' => 'Your password has been reset!',
+        'sent' => 'We have emailed your password reset link!',
+        'throttled' => 'Please wait before retrying.',
+        'token' => 'This password reset token is invalid.',
+        'user' => 'We can\'t find a user with that email address.',
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines
