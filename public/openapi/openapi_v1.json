@@ -71,7 +71,7 @@
             "$ref": "#/components/responses/422"
           },
           "427": {
-            "$ref": "#/components/responses/4xx"
+            "$ref": "#/components/responses/427"
           }
         }
       }
@@ -113,7 +113,7 @@
             "$ref": "#/components/responses/422"
           },
           "427": {
-            "$ref": "#/components/responses/4xx"
+            "$ref": "#/components/responses/427"
           }
         }
       }
@@ -222,7 +222,7 @@
             "name": "id",
             "in": "query",
             "schema": {
-              "$ref": "#/components/schemas/identifier"
+              "$ref": "#/components/schemas/id"
             },
             "required": true
           },
@@ -286,7 +286,7 @@
             "$ref": "#/components/responses/422"
           },
           "427": {
-            "$ref": "#/components/responses/4xx"
+            "$ref": "#/components/responses/427"
           }
         }
       }
@@ -331,7 +331,7 @@
             "$ref": "#/components/responses/422"
           },
           "427": {
-            "$ref": "#/components/responses/4xx"
+            "$ref": "#/components/responses/427"
           }
         }
       }
@@ -453,13 +453,32 @@
     }
   },
   "components": {
+    "parameters": {
+      "slug": {
+        "description": "slug",
+        "in": "path",
+        "name": "slug",
+        "schema": {
+          "$ref": "#/components/schemas/slug"
+        },
+        "required": true
+      }
+    },
     "schemas": {
-      "identifier": {
-        "description": "identifier",
+      "slug": {
+        "description": "slug",
         "type": "string",
         "format": "identifier",
         "minLength": 1,
         "maxLength": 255
+      },
+      "nullableSlug": {
+        "description": "slug or null",
+        "type": "string",
+        "format": "identifier",
+        "minLength": 1,
+        "maxLength": 255,
+        "nullable": true
       },
       "id": {
         "description": "id",
@@ -482,29 +501,24 @@
         "minLength": 8,
         "maxLength": 1024
       },
+      "nullablePassword": {
+        "description": "password or null",
+        "type": "string",
+        "format": "password",
+        "pattern": ".+",
+        "minLength": 8,
+        "maxLength": 1024,
+        "nullable": true
+      },
       "locale": {
         "description": "locale",
         "type": "string",
         "enum": ["cs", "en"]
       },
-      "timestamp": {
-        "description": "timestamp",
+      "nullableLocale": {
+        "description": "locale or null",
         "type": "string",
-        "format": "date-time"
-      },
-      "nullableTimestamp": {
-        "description": "timestamp or null",
-        "type": "string",
-        "format": "date-time",
-        "nullable": true
-      },
-      "boolean": {
-        "description": "boolean",
-        "type": "boolean"
-      },
-      "nullableBoolean": {
-        "description": "boolean",
-        "type": "boolean",
+        "enum": ["cs", "en"],
         "nullable": true
       },
       "email": {
@@ -539,21 +553,297 @@
         "maxLength": 255,
         "nullable": true
       },
+      "tinyText": {
+        "description": "tiny text",
+        "type": "string",
+        "pattern": ".+",
+        "minLength": 1,
+        "maxLength": 256
+      },
+      "nullableTinyText": {
+        "description": "tiny text or null",
+        "type": "string",
+        "pattern": ".+",
+        "minLength": 1,
+        "maxLength": 256,
+        "nullable": true
+      },
+      "text": {
+        "description": "text",
+        "type": "string",
+        "pattern": ".+",
+        "minLength": 1,
+        "maxLength": 65535
+      },
+      "nullableText": {
+        "description": "text or null",
+        "type": "string",
+        "pattern": ".+",
+        "minLength": 1,
+        "maxLength": 65535,
+        "nullable": true
+      },
+      "mediumText": {
+        "description": "medium text",
+        "type": "string",
+        "pattern": ".+",
+        "minLength": 1,
+        "maxLength": 16777215
+      },
+      "nullableMediumText": {
+        "description": "medium text or null",
+        "type": "string",
+        "pattern": ".+",
+        "minLength": 1,
+        "maxLength": 16777215,
+        "nullable": true
+      },
+      "longText": {
+        "description": "long text",
+        "type": "string",
+        "pattern": ".+",
+        "minLength": 1,
+        "maxLength": 4294967295
+      },
+      "nullableLongText": {
+        "description": "long text or null",
+        "type": "string",
+        "pattern": ".+",
+        "minLength": 1,
+        "maxLength": 4294967295,
+        "nullable": true
+      },
+      "tinyInt": {
+        "description": "tiny int",
+        "type": "integer",
+        "minimum": -128,
+        "maximum": 127
+      },
+      "nullableTinyInt": {
+        "description": "tiny int or null",
+        "type": "integer",
+        "minimum": -128,
+        "maximum": 127,
+        "nullable": true
+      },
+      "unsignedTinyInt": {
+        "description": "unsigned tiny int",
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 255
+      },
+      "nullableUnsignedTinyInt": {
+        "description": "unsigned tiny int or null",
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 255,
+        "nullable": true
+      },
+      "smallInt": {
+        "description": "small int",
+        "type": "integer",
+        "minimum": -32768,
+        "maximum": 32767
+      },
+      "nullableSmallInt": {
+        "description": "small int or null",
+        "type": "integer",
+        "minimum": -32768,
+        "maximum": 32767,
+        "nullable": true
+      },
+      "unsignedSmallInt": {
+        "description": "unsigned small int",
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 65535
+      },
+      "nullableUnsignedSmallInt": {
+        "description": "unsigned small int or null",
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 65535,
+        "nullable": true
+      },
+      "mediumInt": {
+        "description": "medium int",
+        "type": "integer",
+        "minimum": -8388608,
+        "maximum": 8388607
+      },
+      "nullableMediumInt": {
+        "description": "medium int or null",
+        "type": "integer",
+        "minimum": -8388608,
+        "maximum": 8388607,
+        "nullable": true
+      },
+      "unsignedMediumInt": {
+        "description": "unsigned medium int",
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 16777215
+      },
+      "nullableUnsignedMediumInt": {
+        "description": "unsigned medium int or null",
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 16777215,
+        "nullable": true
+      },
+      "int": {
+        "description": "int",
+        "type": "integer",
+        "minimum": -2147483648,
+        "maximum": 2147483647
+      },
+      "nullableInt": {
+        "description": "int or null",
+        "type": "integer",
+        "minimum": -2147483648,
+        "maximum": 2147483647,
+        "nullable": true
+      },
+      "unsignedInt": {
+        "description": "unsigned int",
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 4294967295
+      },
+      "nullableUnsignedInt": {
+        "description": "unsigned int or null",
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 4294967295,
+        "nullable": true
+      },
+      "bigInt": {
+        "description": "big int",
+        "type": "integer",
+        "minimum": -9223372036854775808,
+        "maximum": 9223372036854775807
+      },
+      "nullableBigInt": {
+        "description": "big int or null",
+        "type": "integer",
+        "minimum": -9223372036854775808,
+        "maximum": 9223372036854775807,
+        "nullable": true
+      },
+      "unsignedBigInt": {
+        "description": "unsigned big int",
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 9223372036854775807
+      },
+      "nullableUnsignedBigInt": {
+        "description": "unsigned big int or null",
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 9223372036854775807,
+        "nullable": true
+      },
+      "string": {
+        "description": "string",
+        "type": "string"
+      },
+      "nullableString": {
+        "description": "string or null",
+        "type": "string",
+        "nullable": true
+      },
+      "integer": {
+        "description": "integer",
+        "type": "integer"
+      },
+      "nullableInteger": {
+        "description": "integer or null",
+        "type": "integer",
+        "nullable": true
+      },
+      "number": {
+        "description": "number",
+        "type": "number"
+      },
+      "nullableNumber": {
+        "description": "number or null",
+        "type": "number",
+        "nullable": true
+      },
+      "double": {
+        "description": "double",
+        "type": "number",
+        "format": "double"
+      },
+      "nullableDouble": {
+        "description": "double or null",
+        "type": "number",
+        "format": "double",
+        "nullable": true
+      },
+      "timestamp": {
+        "description": "timestamp",
+        "type": "string",
+        "format": "date-time"
+      },
+      "nullableTimestamp": {
+        "description": "timestamp or null",
+        "type": "string",
+        "format": "date-time",
+        "nullable": true
+      },
+      "date": {
+        "description": "date",
+        "type": "string",
+        "format": "date"
+      },
+      "nullableDate": {
+        "description": "date or null",
+        "type": "string",
+        "format": "date",
+        "nullable": true
+      },
+      "boolean": {
+        "description": "boolean",
+        "type": "boolean"
+      },
+      "nullableBoolean": {
+        "description": "boolean",
+        "type": "boolean",
+        "nullable": true
+      },
       "Resource": {
         "description": "json:api resource",
         "type": "object",
         "required": ["id", "slug", "type"],
         "properties": {
           "id": {
-            "$ref": "#/components/schemas/identifier"
+            "$ref": "#/components/schemas/string"
           },
           "slug": {
-            "$ref": "#/components/schemas/identifier"
+            "$ref": "#/components/schemas/string"
           },
           "type": {
-            "$ref": "#/components/schemas/varchar"
+            "$ref": "#/components/schemas/string"
           }
         }
+      },
+      "NullableResource": {
+        "description": "json:api resource",
+        "type": "object",
+        "required": ["id", "slug", "type"],
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/string"
+          },
+          "slug": {
+            "$ref": "#/components/schemas/string"
+          },
+          "type": {
+            "$ref": "#/components/schemas/string"
+          }
+        },
+        "nullable": true
       },
       "Relationship": {
         "description": "json:api relationship",
@@ -571,15 +861,7 @@
         "required": ["data"],
         "properties": {
           "data": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Resource"
-              },
-              {
-                "type": "object",
-                "nullable": true
-              }
-            ]
+            "$ref": "#/components/schemas/NullableResource"
           }
         }
       },
@@ -613,10 +895,10 @@
                 "required": ["name", "email", "locale", "email_verified_at"],
                 "properties": {
                   "name": {
-                    "$ref": "#/components/schemas/varchar"
+                    "$ref": "#/components/schemas/string"
                   },
                   "email": {
-                    "$ref": "#/components/schemas/email"
+                    "$ref": "#/components/schemas/string"
                   },
                   "locale": {
                     "$ref": "#/components/schemas/locale"
@@ -646,13 +928,13 @@
                 "required": ["provider", "auth_id", "bearer"],
                 "properties": {
                   "provider": {
-                    "$ref": "#/components/schemas/varchar"
+                    "$ref": "#/components/schemas/string"
                   },
                   "auth_id": {
-                    "$ref": "#/components/schemas/identifier"
+                    "$ref": "#/components/schemas/string"
                   },
                   "bearer": {
-                    "$ref": "#/components/schemas/nullableVarchar"
+                    "$ref": "#/components/schemas/nullableString"
                   }
                 }
               }
@@ -694,7 +976,7 @@
                 "additionalProperties": {
                   "type": "array",
                   "items": {
-                    "description": "computer readable validation error, do not expose to users!",
+                    "description": "computer readable validation error",
                     "type": "string",
                     "enum": [
                       "accepted",
@@ -863,6 +1145,16 @@
           "application/json": {
             "schema": {
               "$ref": "#/components/schemas/ValidationError"
+            }
+          }
+        }
+      },
+      "427": {
+        "description": "Must not be authenticated",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
             }
           }
         }
