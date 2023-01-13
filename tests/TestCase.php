@@ -18,6 +18,7 @@ abstract class TestCase extends LaratchiTestCase
      */
     protected $defaultHeaders = [
         'Accept-Language' => 'cs',
+        'Accept' => 'application/json',
     ];
 
     /**
