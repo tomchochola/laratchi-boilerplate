@@ -22,14 +22,15 @@ yarn-error.log
 .DS_Store
 .idea
 .vscode
+.fleet
 
 # node
-node_modules
-package-lock.json
+/node_modules
+/package-lock.json
 
 # composer
 /vendor
-composer.lock
+/composer.lock
 
 # phpunit
 phpunit.xml
