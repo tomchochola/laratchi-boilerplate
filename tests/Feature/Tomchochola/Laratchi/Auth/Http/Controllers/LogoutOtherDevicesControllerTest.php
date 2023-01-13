@@ -17,17 +17,25 @@ class LogoutOtherDevicesControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_user_can_logout_on_other_devices(): void
+    /**
+     * @dataProvider localeDataProvider
+     */
+    public function test_user_can_logout_on_other_devices(string $locale): void
     {
+        $this->locale($locale);
+
         Event::fake([OtherDeviceLogout::class, Validated::class]);
 
         $me = UserFactory::new()->withValidPassword()->createOne();
 
         \assert($me instanceof User);
 
-        $response = $this->be($me, 'users')->post(resolveUrlFactory()->action(LogoutOtherDevicesController::class), [
+        $query = [];
+        $data = [
             'password' => UserFactory::VALID_PASSWORD,
-        ]);
+        ];
+
+        $response = $this->be($me, 'users')->post(resolveUrlFactory()->action(LogoutOtherDevicesController::class, $query), $data);
 
         $response->assertOk();
 

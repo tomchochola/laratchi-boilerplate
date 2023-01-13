@@ -16,14 +16,6 @@ abstract class TestCase extends LaratchiTestCase
     /**
      * @inheritDoc
      */
-    protected $defaultHeaders = [
-        'Accept-Language' => 'cs',
-        'Accept' => 'application/json',
-    ];
-
-    /**
-     * @inheritDoc
-     */
     public function localeDataProvider(): array
     {
         return [

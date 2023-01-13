@@ -17,19 +17,27 @@ class PasswordUpdateControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_user_can_update_his_password(): void
+    /**
+     * @dataProvider localeDataProvider
+     */
+    public function test_user_can_update_his_password(string $locale): void
     {
+        $this->locale($locale);
+
         Event::fake([PasswordUpdateEvent::class, Validated::class]);
 
         $me = UserFactory::new()->withValidPassword()->createOne();
 
         \assert($me instanceof User);
 
-        $response = $this->be($me, 'users')->post(resolveUrlFactory()->action(PasswordUpdateController::class), [
+        $query = [];
+        $data = [
             'password' => UserFactory::VALID_PASSWORD,
             'new_password' => UserFactory::VALID_PASSWORD,
             'new_password_confirmation' => UserFactory::VALID_PASSWORD,
-        ]);
+        ];
+
+        $response = $this->be($me, 'users')->post(resolveUrlFactory()->action(PasswordUpdateController::class, $query), $data);
 
         $response->assertOk();
 

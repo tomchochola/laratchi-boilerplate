@@ -14,16 +14,37 @@ class MeShowControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_user_can_view_his_profile(): void
+    /**
+     * @dataProvider localeDataProvider
+     */
+    public function test_user_can_view_his_profile(string $locale): void
     {
+        $this->locale($locale);
+
         $me = UserFactory::new()->createOne();
 
         \assert($me instanceof User);
 
-        $response = $this->be($me, 'users')->get(resolveUrlFactory()->action(MeShowController::class));
+        $query = [];
+
+        $response = $this->be($me, 'users')->get(resolveUrlFactory()->action(MeShowController::class, $query));
 
         $response->assertOk();
 
         $this->validateJsonApiResponse($response, $this->jsonApiValidatorMe(false), []);
+    }
+
+    /**
+     * @dataProvider localeDataProvider
+     */
+    public function test_guest_user_gets_no_content(string $locale): void
+    {
+        $this->locale($locale);
+
+        $query = [];
+
+        $response = $this->get(resolveUrlFactory()->action(MeShowController::class, $query));
+
+        $response->assertNoContent();
     }
 }

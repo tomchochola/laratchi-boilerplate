@@ -15,8 +15,13 @@ class UserObserverTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_user_gets_password_init_notification_after_creation(): void
+    /**
+     * @dataProvider localeDataProvider
+     */
+    public function test_user_gets_password_init_notification_after_creation(string $locale): void
     {
+        $this->locale($locale);
+
         Notification::fake();
 
         $me = UserFactory::new()->createOne([

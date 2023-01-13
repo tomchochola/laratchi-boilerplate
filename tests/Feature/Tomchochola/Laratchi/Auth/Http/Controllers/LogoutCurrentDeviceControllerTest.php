@@ -16,15 +16,23 @@ class LogoutCurrentDeviceControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_user_can_logout_on_current_device(): void
+    /**
+     * @dataProvider localeDataProvider
+     */
+    public function test_user_can_logout_on_current_device(string $locale): void
     {
+        $this->locale($locale);
+
         Event::fake([CurrentDeviceLogout::class]);
 
         $me = UserFactory::new()->createOne();
 
         \assert($me instanceof User);
 
-        $response = $this->be($me, 'users')->post(resolveUrlFactory()->action(LogoutCurrentDeviceController::class));
+        $query = [];
+        $data = [];
+
+        $response = $this->be($me, 'users')->post(resolveUrlFactory()->action(LogoutCurrentDeviceController::class, $query), $data);
 
         $response->assertNoContent();
 

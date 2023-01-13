@@ -14,13 +14,21 @@ class MeDestroyControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_user_can_delete_his_account(): void
+    /**
+     * @dataProvider localeDataProvider
+     */
+    public function test_user_can_delete_his_account(string $locale): void
     {
+        $this->locale($locale);
+
         $me = UserFactory::new()->createOne();
 
         \assert($me instanceof User);
 
-        $response = $this->be($me, 'users')->post(resolveUrlFactory()->action(MeDestroyController::class));
+        $query = [];
+        $data = [];
+
+        $response = $this->be($me, 'users')->post(resolveUrlFactory()->action(MeDestroyController::class, $query), $data);
 
         $response->assertNoContent();
     }

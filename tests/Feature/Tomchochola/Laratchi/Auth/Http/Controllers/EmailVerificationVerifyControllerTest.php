@@ -17,8 +17,13 @@ class EmailVerificationVerifyControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_user_can_verify_email_from_notification(): void
+    /**
+     * @dataProvider localeDataProvider
+     */
+    public function test_user_can_verify_email_from_notification(string $locale): void
     {
+        $this->locale($locale);
+
         Event::fake(Verified::class);
 
         $me = UserFactory::new()->unverified()->createOne();
@@ -27,15 +32,22 @@ class EmailVerificationVerifyControllerTest extends TestCase
 
         $signedUrl = (new VerifyEmailNotification($me->getUserProviderName(), EmailVerificationVerifyController::class))->signedUrl($me);
 
-        $response = $this->be($me, 'users')->post($signedUrl);
+        $data = [];
+
+        $response = $this->be($me, 'users')->post($signedUrl, $data);
 
         $response->assertNoContent();
 
         Event::assertDispatchedTimes(Verified::class);
     }
 
-    public function test_user_can_verify_email_from_notification_as_guest(): void
+    /**
+     * @dataProvider localeDataProvider
+     */
+    public function test_user_can_verify_email_from_notification_as_guest(string $locale): void
     {
+        $this->locale($locale);
+
         Event::fake(Verified::class);
 
         $me = UserFactory::new()->unverified()->createOne();
@@ -44,7 +56,9 @@ class EmailVerificationVerifyControllerTest extends TestCase
 
         $signedUrl = (new VerifyEmailNotification($me->getUserProviderName(), EmailVerificationVerifyController::class))->signedUrl($me);
 
-        $response = $this->post($signedUrl);
+        $data = [];
+
+        $response = $this->post($signedUrl, $data);
 
         $response->assertNoContent();
 

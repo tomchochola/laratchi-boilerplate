@@ -18,21 +18,29 @@ class RegisterControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_user_can_register(): void
+    /**
+     * @dataProvider localeDataProvider
+     */
+    public function test_user_can_register(string $locale): void
     {
+        $this->locale($locale);
+
         Event::fake([Registered::class, Login::class, Authenticated::class]);
 
         $me = UserFactory::new()->makeOne();
 
         \assert($me instanceof User);
 
-        $response = $this->post(resolveUrlFactory()->action(RegisterController::class), [
+        $query = [];
+        $data = [
             'email' => $me->getEmail(),
             'name' => $me->getName(),
             'locale' => $me->getLocale(),
             'password' => UserFactory::VALID_PASSWORD,
             'password_confirmation' => UserFactory::VALID_PASSWORD,
-        ]);
+        ];
+
+        $response = $this->post(resolveUrlFactory()->action(RegisterController::class, $query), $data);
 
         $response->assertCreated();
 
@@ -49,21 +57,29 @@ class RegisterControllerTest extends TestCase
         Event::assertDispatchedTimes(Authenticated::class);
     }
 
-    public function test_user_can_not_register_with_duplicate_credentials(): void
+    /**
+     * @dataProvider localeDataProvider
+     */
+    public function test_user_can_not_register_with_duplicate_credentials(string $locale): void
     {
+        $this->locale($locale);
+
         Event::fake([Registered::class, Login::class, Authenticated::class]);
 
         $me = UserFactory::new()->createOne();
 
         \assert($me instanceof User);
 
-        $response = $this->post(resolveUrlFactory()->action(RegisterController::class), [
+        $query = [];
+        $data = [
             'email' => $me->getEmail(),
             'name' => $me->getName(),
             'locale' => $me->getLocale(),
             'password' => UserFactory::VALID_PASSWORD,
             'password_confirmation' => UserFactory::VALID_PASSWORD,
-        ]);
+        ];
+
+        $response = $this->post(resolveUrlFactory()->action(RegisterController::class, $query), $data);
 
         $this->validateJsonApiValidationError($response, ['email']);
 

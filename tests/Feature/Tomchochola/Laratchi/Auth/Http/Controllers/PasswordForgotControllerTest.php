@@ -16,17 +16,25 @@ class PasswordForgotControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_user_can_request_password_reset_email(): void
+    /**
+     * @dataProvider localeDataProvider
+     */
+    public function test_user_can_request_password_reset_email(string $locale): void
     {
+        $this->locale($locale);
+
         Notification::fake();
 
         $me = UserFactory::new()->createOne();
 
         \assert($me instanceof User);
 
-        $response = $this->post(resolveUrlFactory()->action(PasswordForgotController::class), [
+        $query = [];
+        $data = [
             'email' => $me->getEmail(),
-        ]);
+        ];
+
+        $response = $this->post(resolveUrlFactory()->action(PasswordForgotController::class, $query), $data);
 
         $response->assertNoContent();
 

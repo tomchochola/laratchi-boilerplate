@@ -19,19 +19,27 @@ class LoginControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_user_can_login(): void
+    /**
+     * @dataProvider localeDataProvider
+     */
+    public function test_user_can_login(string $locale): void
     {
+        $this->locale($locale);
+
         Event::fake([Attempting::class, Validated::class, Login::class, Authenticated::class]);
 
         $me = UserFactory::new()->withValidPassword()->createOne();
 
         \assert($me instanceof User);
 
-        $response = $this->post(resolveUrlFactory()->action(LoginController::class), [
+        $query = [];
+        $data = [
             'email' => $me->getEmail(),
             'password' => UserFactory::VALID_PASSWORD,
             'remember' => true,
-        ]);
+        ];
+
+        $response = $this->post(resolveUrlFactory()->action(LoginController::class, $query), $data);
 
         $response->assertOk();
 

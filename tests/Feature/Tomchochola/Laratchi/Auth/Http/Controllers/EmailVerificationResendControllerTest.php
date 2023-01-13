@@ -16,32 +16,48 @@ class EmailVerificationResendControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_user_can_request_another_email_verification(): void
+    /**
+     * @dataProvider localeDataProvider
+     */
+    public function test_user_can_request_another_email_verification(string $locale): void
     {
+        $this->locale($locale);
+
         Notification::fake();
 
         $me = UserFactory::new()->unverified()->createOne();
 
         \assert($me instanceof User);
 
-        $response = $this->be($me, 'users')->post(resolveUrlFactory()->action(EmailVerificationResendController::class));
+        $query = [];
+        $data = [];
+
+        $response = $this->be($me, 'users')->post(resolveUrlFactory()->action(EmailVerificationResendController::class, $query), $data);
 
         $response->assertNoContent();
 
         Notification::assertSentToTimes($me, VerifyEmailNotification::class);
     }
 
-    public function test_user_can_request_another_email_verification_as_guest(): void
+    /**
+     * @dataProvider localeDataProvider
+     */
+    public function test_user_can_request_another_email_verification_as_guest(string $locale): void
     {
+        $this->locale($locale);
+
         Notification::fake();
 
         $me = UserFactory::new()->unverified()->createOne();
 
         \assert($me instanceof User);
 
-        $response = $this->post(resolveUrlFactory()->action(EmailVerificationResendController::class), [
+        $query = [];
+        $data = [
             'email' => $me->getEmailForVerification(),
-        ]);
+        ];
+
+        $response = $this->post(resolveUrlFactory()->action(EmailVerificationResendController::class, $query), $data);
 
         $response->assertNoContent();
 

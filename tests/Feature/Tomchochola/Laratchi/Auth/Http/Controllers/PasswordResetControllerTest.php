@@ -19,8 +19,13 @@ class PasswordResetControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_user_can_reset_password_from_email_link(): void
+    /**
+     * @dataProvider localeDataProvider
+     */
+    public function test_user_can_reset_password_from_email_link(string $locale): void
     {
+        $this->locale($locale);
+
         Event::fake([PasswordReset::class, Login::class, Authenticated::class]);
 
         $me = UserFactory::new()->createOne();
@@ -31,12 +36,15 @@ class PasswordResetControllerTest extends TestCase
 
         \assert($broker instanceof PasswordBroker);
 
-        $response = $this->post(resolveUrlFactory()->action(PasswordResetController::class), [
+        $query = [];
+        $data = [
             'email' => $me->getEmailForPasswordReset(),
             'token' => $broker->createToken($me),
             'password' => UserFactory::VALID_PASSWORD,
             'password_confirmation' => UserFactory::VALID_PASSWORD,
-        ]);
+        ];
+
+        $response = $this->post(resolveUrlFactory()->action(PasswordResetController::class, $query), $data);
 
         $response->assertOk();
 
