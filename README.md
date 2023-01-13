@@ -38,6 +38,16 @@ make start
 make serve
 ```
 
+## Artisan
+
+```sh
+# make validity class
+php artisan make:validity SharedValidity
+
+# test mail
+php artisan test:mail
+```
+
 ## CLI
 
 ```sh
