@@ -11,8 +11,10 @@ use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 use Tomchochola\Laratchi\Auth\Http\Controllers\RegisterController;
+use Tomchochola\Laratchi\Auth\Notifications\VerifyEmailNotification;
 
 class RegisterControllerTest extends TestCase
 {
@@ -88,5 +90,42 @@ class RegisterControllerTest extends TestCase
         Event::assertNotDispatched(Registered::class);
         Event::assertNotDispatched(Login::class);
         Event::assertNotDispatched(Authenticated::class);
+    }
+
+    /**
+     * @dataProvider localeDataProvider
+     */
+    public function test_user_gets_email_verification_notification(string $locale): void
+    {
+        Notification::fake();
+
+        $this->locale($locale);
+
+        $me = UserFactory::new()->makeOne();
+
+        \assert($me instanceof User);
+
+        $query = [];
+        $data = [
+            'email' => $me->getEmail(),
+            'name' => $me->getName(),
+            'locale' => $me->getLocale(),
+            'password' => UserFactory::VALID_PASSWORD,
+            'password_confirmation' => UserFactory::VALID_PASSWORD,
+        ];
+
+        $response = $this->post(resolveUrlFactory()->action(RegisterController::class, $query), $data);
+
+        $response->assertCreated();
+
+        $this->validateJsonApiResponse($response, $this->jsonApiValidatorMe(false), []);
+
+        $me = User::query()->sole();
+
+        \assert($me instanceof User);
+
+        $this->assertAuthenticatedAs($me, 'users');
+
+        Notification::assertSentToTimes($me, VerifyEmailNotification::class);
     }
 }
