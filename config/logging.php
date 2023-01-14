@@ -11,7 +11,7 @@ $level = mapEnvEnv([
     'testing' => 'debug',
     'development' => 'debug',
     'staging' => 'debug',
-    'production' => 'warning',
+    'production' => 'info',
 ]);
 
 return [
@@ -31,7 +31,7 @@ return [
         'testing' => 'single',
         'development' => 'single',
         'staging' => 'single',
-        'production' => 'daily',
+        'production' => 'single',
     ]),
 
     /*
@@ -51,7 +51,7 @@ return [
             'testing' => 'single',
             'development' => 'single',
             'staging' => 'single',
-            'production' => 'daily',
+            'production' => 'single',
         ]),
         'trace' => false,
     ],
