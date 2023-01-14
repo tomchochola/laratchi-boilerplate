@@ -21,71 +21,11 @@ class User extends LaratchiUser implements MustVerifyEmailContract
     ];
 
     /**
-     * What is loaded on index.
-     *
-     * @return array<mixed>
-     */
-    public static function loadIndex(): array
-    {
-        return [];
-    }
-
-    /**
-     * What is selected on index.
-     *
-     * @return array<mixed>
-     */
-    public static function selectIndex(): array
-    {
-        return ['users.id'];
-    }
-
-    /**
-     * What is loaded on detail.
-     *
-     * @return array<mixed>
-     */
-    public static function loadDetail(): array
-    {
-        return [];
-    }
-
-    /**
-     * What is selected on detail.
-     *
-     * @return array<mixed>
-     */
-    public static function selectDetail(): array
-    {
-        return ['users.id'];
-    }
-
-    /**
-     * What is loaded on me.
-     *
-     * @return array<mixed>
-     */
-    public static function loadMe(): array
-    {
-        return [];
-    }
-
-    /**
-     * What is selected on me.
-     *
-     * @return array<mixed>
-     */
-    public static function selectMe(): array
-    {
-        return ['users.*'];
-    }
-
-    /**
      * Modify index query.
      */
     public static function queryIndex(Builder $builder): void
     {
-        $builder->with(static::loadIndex())->getQuery()->select(static::selectIndex());
+        $builder->with([])->getQuery()->select($builder->qualifyColumns(['id']));
     }
 
     /**
@@ -93,7 +33,7 @@ class User extends LaratchiUser implements MustVerifyEmailContract
      */
     public static function queryDetail(Builder $builder): void
     {
-        $builder->with(static::loadDetail())->getQuery()->select(static::selectDetail());
+        $builder->with([])->getQuery()->select($builder->qualifyColumns(['id']));
     }
 
     /**
@@ -101,7 +41,7 @@ class User extends LaratchiUser implements MustVerifyEmailContract
      */
     public static function queryMe(Builder $builder): void
     {
-        $builder->with(static::loadMe())->getQuery()->select(static::selectMe());
+        $builder->with([])->getQuery()->select($builder->qualifyColumns(['*']));
     }
 
     /**
