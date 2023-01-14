@@ -33,7 +33,6 @@ class LaratchiServiceProvider extends LaratchiLaratchiServiceProvider
         // Review Tomchochola\Laratchi\Auth\Http\Controllers\*::class static properties
         // Review Tomchochola\Laratchi\Auth\Http\Validation\AuthValidity::class static properties
         // Review Tomchochola\Laratchi\Validation\SecureValidator::class static properties
-        // Review Tomchochola\Laratchi\Validation\ValidatedInput::class static properties
 
         // See nice validation rules Tomchochola\Laratchi\Validation\Rules\*::class and their static properties
         // See nice middlewares Tomchochola\Laratchi\Http\Middleware\*::class
