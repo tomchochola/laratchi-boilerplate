@@ -462,6 +462,25 @@
           "$ref": "#/components/schemas/slug"
         },
         "required": true
+      },
+      "search": {
+        "description": "fulltext search",
+        "in": "query",
+        "name": "filter[search]",
+        "schema": {
+          "$ref": "#/components/schemas/varchar"
+        }
+      },
+      "take": {
+        "description": "limit count or per page count",
+        "in": "query",
+        "name": "take",
+        "schema": {
+          "description": "limit count or per page count",
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100
+        }
       }
     },
     "schemas": {
@@ -1170,6 +1189,61 @@
               "properties": {
                 "data": {
                   "$ref": "#/components/schemas/Me"
+                }
+              }
+            }
+          }
+        }
+      },
+      "Resource": {
+        "description": "Successful operation",
+        "content": {
+          "application/json": {
+            "schema": {
+              "description": "response data",
+              "type": "object",
+              "required": ["data"],
+              "properties": {
+                "data": {
+                  "$ref": "#/components/schemas/Resource"
+                }
+              }
+            }
+          }
+        }
+      },
+      "NullableResource": {
+        "description": "Successful operation",
+        "content": {
+          "application/json": {
+            "schema": {
+              "description": "response data",
+              "type": "object",
+              "required": ["data"],
+              "properties": {
+                "data": {
+                  "$ref": "#/components/schemas/NullableResource"
+                }
+              }
+            }
+          }
+        }
+      },
+      "Resources": {
+        "description": "Successful operation",
+        "content": {
+          "application/json": {
+            "schema": {
+              "description": "response data",
+              "type": "object",
+              "required": ["data"],
+              "properties": {
+                "data": {
+                  "description": "resources",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Resource"
+                  }
                 }
               }
             }
