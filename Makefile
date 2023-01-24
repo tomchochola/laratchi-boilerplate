@@ -27,7 +27,7 @@ lint: vendor tools
 	${MAKE_COMPOSER} validate --strict
 	${MAKE_PHP} tools/phpstan/vendor/bin/phpstan analyse
 	${MAKE_PHP} tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --dry-run --diff
-	tools/spectral/node_modules/.bin/spectral lint --fail-severity=hint public/openapi/*
+	tools/spectral/node_modules/.bin/spectral lint --fail-severity=hint public/docs/*
 
 .PHONY: test
 test: vendor clear

@@ -6,7 +6,7 @@ Available at [./docs/application_documentation.md](./docs/application_documentat
 
 Available at URL `/api/v1/spec`.
 
-Source files are located in [./public/openapi/openapi_v1.json](./public/openapi/openapi_v1.json).
+Source files are located in [./public/docs/openapi_v1.json](./public/docs/openapi_v1.json).
 
 ## Database schema
 
