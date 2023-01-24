@@ -37,14 +37,6 @@ class User extends LaratchiUser implements MustVerifyEmailContract
     }
 
     /**
-     * Modify me query.
-     */
-    public static function queryMe(Builder $builder): void
-    {
-        $builder->with([])->getQuery()->select($builder->qualifyColumns(['*']));
-    }
-
-    /**
      * E-mail getter.
      */
     public function getEmail(): string
