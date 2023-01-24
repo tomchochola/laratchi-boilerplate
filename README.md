@@ -73,9 +73,6 @@ make testing
 # remove re-creatable files
 make cold
 
-# clean install vendor, clear bootstrap files
-make lukewarm
-
 # check code
 make check
 make ci
@@ -94,9 +91,6 @@ make test-large
 
 # fix code
 make fix
-
-# remove ignored files
-make clean
 
 # update
 make update

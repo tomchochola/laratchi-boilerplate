@@ -42,17 +42,9 @@ fix: tools
 	tools/prettier/node_modules/.bin/prettier --ignore-path .gitignore -w . '!**/*.svg'
 	${MAKE_PHP} tools/php-cs-fixer/vendor/bin/php-cs-fixer fix
 
-.PHONY: clean
-clean:
-	git clean -Xfd
-
 .PHONY: cold
-cold:
-	git clean -xfd tools composer.lock vendor package-lock.json node_modules public bootstrap storage/framework .phpunit.result.cache
-
-.PHONY: lukewarm
-lukewarm:
-	git clean -xfd composer.lock vendor package-lock.json node_modules public bootstrap storage/framework .phpunit.result.cache
+cold: clean-tools clean-composer
+	git clean -xfd package-lock.json node_modules public bootstrap storage/framework .phpunit.result.cache
 
 .PHONY: production
 production: MAKE_COMPOSER_ARGUMENTS := --no-dev -a
@@ -127,19 +119,23 @@ tinker: vendor
 serve: vendor
 	${MAKE_ARTISAN} serve
 
-.PHONY: update
-update:
+.PHONY: update-composer
+update-composer: clean-composer
 	${MAKE_COMPOSER} update ${MAKE_COMPOSER_ARGUMENTS}
 
 .PHONY: clean-tools
 clean-tools:
 	git clean -xfd tools
 
+.PHONY: clean-composer
+clean-composer:
+	git clean -xfd vendor composer.lock
+
 .PHONY: update-tools
 update-tools: clean-tools tools
 
 .PHONY: update-full
-update-full: update-tools update
+update-full: update-tools update-composer
 
 # Aliases
 .PHONY: ci
@@ -148,8 +144,8 @@ ci: check
 .PHONY: start
 start: serve
 
-.PHONY: update-composer
-update-composer: update
+.PHONY: update
+update: update-composer
 
 # Dependencies
 tools: tools/prettier/node_modules/.bin/prettier tools/phpstan/vendor/bin/phpstan tools/php-cs-fixer/vendor/bin/php-cs-fixer tools/local-php-security-checker/vendor/bin/local-php-security-checker tools/spectral/node_modules/.bin/spectral
