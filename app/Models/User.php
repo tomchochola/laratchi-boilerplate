@@ -25,7 +25,7 @@ class User extends LaratchiUser implements MustVerifyEmailContract
      */
     public static function queryIndex(Builder $builder): void
     {
-        $builder->with([])->getQuery()->select($builder->qualifyColumns(['id']));
+        $builder->getQuery()->select($builder->qualifyColumns(['id']));
     }
 
     /**
@@ -33,7 +33,7 @@ class User extends LaratchiUser implements MustVerifyEmailContract
      */
     public static function queryDetail(Builder $builder): void
     {
-        $builder->with([])->getQuery()->select($builder->qualifyColumns(['id']));
+        $builder->getQuery()->select($builder->qualifyColumns(['id']));
     }
 
     /**
