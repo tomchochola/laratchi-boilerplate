@@ -43,7 +43,7 @@ class LoginControllerTest extends TestCase
 
         $response->assertOk();
 
-        $this->validateJsonApiResponse($response, $this->jsonApiValidatorMe(false), []);
+        $this->validateJsonApiResponse($response, $this->jsonApiValidatorMe(), []);
 
         $this->assertAuthenticatedAs($me, 'users');
 

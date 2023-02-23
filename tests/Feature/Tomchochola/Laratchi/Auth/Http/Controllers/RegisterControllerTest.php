@@ -46,7 +46,7 @@ class RegisterControllerTest extends TestCase
 
         $response->assertCreated();
 
-        $this->validateJsonApiResponse($response, $this->jsonApiValidatorMe(false), []);
+        $this->validateJsonApiResponse($response, $this->jsonApiValidatorMe(), []);
 
         $me = User::query()->sole();
 
@@ -118,7 +118,7 @@ class RegisterControllerTest extends TestCase
 
         $response->assertCreated();
 
-        $this->validateJsonApiResponse($response, $this->jsonApiValidatorMe(false), []);
+        $this->validateJsonApiResponse($response, $this->jsonApiValidatorMe(), []);
 
         $me = User::query()->sole();
 
