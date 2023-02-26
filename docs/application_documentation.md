@@ -103,11 +103,11 @@ No notifications are sent.
 
 ## Required frontend endpoints
 
-| cs path          | en path             | arguments                  | description        |
-| ---------------- | ------------------- | -------------------------- | ------------------ |
-| /nastaveni-hesla | /password-init      | ?token=String&email=String | password init      |
-| /obnoveni-hesla  | /password-reset     | ?token=String&email=String | password reset     |
-| /overeni-emailu  | /email-verification | ?url=String                | email verification |
+| cs path          | en path             | arguments                               | description        |
+| ---------------- | ------------------- | --------------------------------------- | ------------------ |
+| /nastaveni-hesla | /password-init      | ?token=String&email=String&guard=String | password init      |
+| /obnoveni-hesla  | /password-reset     | ?token=String&email=String&guard=String | password reset     |
+| /overeni-emailu  | /email-verification | ?url=String&guard=String                | email verification |
 
 ## Cookies
 
@@ -126,4 +126,4 @@ No notifications are sent.
 
 | name    | cores | tries | sleep | memory | timeout | max time |
 | ------- | ----- | ----- | ----- | ------ | ------- | -------- |
-| default | max   | 1     | 3     | -1     | 300     | 900      |
+| default | max   | 1     | 3     | 8192   | 300     | 900      |

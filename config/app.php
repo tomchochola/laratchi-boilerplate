@@ -40,7 +40,7 @@ return [
     |
     */
 
-    'debug' => isEnvEnv(['local', 'testing']) ? true : false,
+    'debug' => isEnvEnv(['local', 'testing']),
 
     /*
     |--------------------------------------------------------------------------

@@ -28,7 +28,7 @@ return [
 
     'default' => mapEnvEnv([
         'local' => 'single',
-        'testing' => 'single',
+        'testing' => 'null',
         'development' => 'single',
         'staging' => 'single',
         'production' => 'single',
@@ -48,7 +48,7 @@ return [
     'deprecations' => [
         'channel' => mapEnvEnv([
             'local' => 'single',
-            'testing' => 'single',
+            'testing' => 'null',
             'development' => 'single',
             'staging' => 'single',
             'production' => 'single',

@@ -25,6 +25,18 @@
     {
       "name": "auth",
       "description": "Auth system"
+    },
+    {
+      "name": "password",
+      "description": "Password"
+    },
+    {
+      "name": "email_verification",
+      "description": "E-mail verification"
+    },
+    {
+      "name": "me",
+      "description": "Me"
     }
   ],
   "paths": {
@@ -118,7 +130,7 @@
         }
       }
     },
-    "/auth/logout/current": {
+    "/auth/logout_current": {
       "post": {
         "tags": ["auth"],
         "summary": "Logout current device",
@@ -134,7 +146,7 @@
         }
       }
     },
-    "/auth/logout/other": {
+    "/auth/logout_other": {
       "post": {
         "tags": ["auth"],
         "summary": "Logout other devices",
@@ -169,12 +181,12 @@
         }
       }
     },
-    "/auth/email_verification/resend": {
+    "/email_verification/resend": {
       "post": {
-        "tags": ["auth"],
+        "tags": ["email_verification"],
         "summary": "Resend e-mail verification",
         "description": "Resend e-mail verification notification\n\nUser must be authenticated or email field must be provided\n\nThrottled",
-        "operationId": "post_auth_email_verification_resend",
+        "operationId": "post_email_verification_resend",
         "requestBody": {
           "required": false,
           "content": {
@@ -210,12 +222,12 @@
         }
       }
     },
-    "/auth/email_verification/verify": {
+    "/email_verification/verify": {
       "post": {
-        "tags": ["auth"],
+        "tags": ["email_verification"],
         "summary": "Verify e-mail",
         "description": "Verify e-mail via link from e-mail\n\nThrottled",
-        "operationId": "post_auth_email_verification_verify_id_email",
+        "operationId": "post_email_verification_verify",
         "parameters": [
           {
             "description": "user id",
@@ -255,12 +267,12 @@
         }
       }
     },
-    "/auth/password/forgot": {
+    "/password/forgot": {
       "post": {
-        "tags": ["auth"],
+        "tags": ["password"],
         "summary": "Send password forgot e-mail",
         "description": "Send password forgot e-mail\n\nUser must not be authenticated\n\nThrottled",
-        "operationId": "post_auth_password_forgot",
+        "operationId": "post_password_forgot",
         "requestBody": {
           "required": true,
           "content": {
@@ -291,12 +303,12 @@
         }
       }
     },
-    "/auth/password/reset": {
+    "/password/reset": {
       "post": {
-        "tags": ["auth"],
+        "tags": ["password"],
         "summary": "Reset password",
         "description": "Reset password and login user\n\nUser must not be authenticated\n\nThrottled",
-        "operationId": "post_auth_password_reset",
+        "operationId": "post_password_reset",
         "requestBody": {
           "required": true,
           "content": {
@@ -336,12 +348,12 @@
         }
       }
     },
-    "/auth/password/update": {
+    "/password/update": {
       "post": {
-        "tags": ["auth"],
+        "tags": ["password"],
         "summary": "Update password",
         "description": "Update password\n\nUser must be authenticated\n\nThrottled",
-        "operationId": "post_auth_password_update",
+        "operationId": "post_password_update",
         "requestBody": {
           "required": true,
           "content": {
@@ -378,12 +390,12 @@
         }
       }
     },
-    "/auth/me": {
+    "/me/show": {
       "get": {
-        "tags": ["auth"],
+        "tags": ["me"],
         "summary": "Get currently authenticated user",
         "description": "Get currently authenticated user\n\n200 -> Authenticated, 204 -> Unauthenticated",
-        "operationId": "get_auth_me",
+        "operationId": "get_me_show",
         "responses": {
           "200": {
             "$ref": "#/components/responses/Me"
@@ -394,12 +406,12 @@
         }
       }
     },
-    "/auth/me/update": {
+    "/me/update": {
       "post": {
-        "tags": ["auth"],
+        "tags": ["me"],
         "summary": "Update currently authenticated user",
         "description": "Update currently authenticated user\n\nUser must be authenticated\n\nThrottled if updating credentials",
-        "operationId": "post_auth_me_update",
+        "operationId": "post_me_update",
         "requestBody": {
           "required": true,
           "content": {
@@ -435,12 +447,12 @@
         }
       }
     },
-    "/auth/me/destroy": {
+    "/me/destroy": {
       "post": {
-        "tags": ["auth"],
+        "tags": ["me"],
         "summary": "Destroy currently authenticated user",
         "description": "Destroy currently authenticated user\n\nUser must be authenticated",
-        "operationId": "post_auth_me_destroy",
+        "operationId": "post_me_destroy",
         "responses": {
           "204": {
             "$ref": "#/components/responses/204"
@@ -456,7 +468,7 @@
     "parameters": {
       "slug": {
         "description": "slug",
-        "in": "path",
+        "in": "query",
         "name": "slug",
         "schema": {
           "$ref": "#/components/schemas/slug"
@@ -1074,6 +1086,11 @@
                       "min_string:{{ min }}",
                       "min_digits:{{ min }}",
                       "multiple_of:{{ value }}",
+                      "missing",
+                      "missing_if:{{ attribute }};{{ value }}",
+                      "missing_unless:{{ attribute }};{{ ', ' separated values }}",
+                      "missing_with:{{ ' / ' separated attributes }}",
+                      "missing_with_all:{{ ' / ' separated attributes }}",
                       "not_in",
                       "not_regex",
                       "numeric",
@@ -1115,14 +1132,9 @@
                       "prohibited_with_all:{{ ', ' separated values }}",
                       "prohibited_without:{{ ', ' separated values }}",
                       "prohibited_without_all:{{ ', ' separated values }}",
-                      "null_with:{{ ', ' separated values }}",
-                      "null_with_all:{{ ', ' separated values }}",
-                      "null_without:{{ ', ' separated values }}",
-                      "null_without_all:{{ ', ' separated values }}",
                       "strlen:{{ value }}",
                       "strlen_max:{{ max }}",
                       "strlen_min:{{ min }}",
-                      "null",
                       "throttled:{{ seconds }}",
                       "invalid",
                       "fallback",

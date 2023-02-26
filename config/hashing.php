@@ -30,7 +30,7 @@ return [
     */
 
     'bcrypt' => [
-        'rounds' => isEnvEnv(['local', 'testing']) ? 1 : 10,
+        'rounds' => isEnvEnv(['local', 'testing']) ? 4 : 10,
     ],
 
     /*

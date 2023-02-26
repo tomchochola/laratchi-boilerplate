@@ -7,6 +7,7 @@ namespace Tests\Feature\Tomchochola\Laratchi\Auth\Notifications;
 use App\Models\User;
 use Database\Factories\UserFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 use Tomchochola\Laratchi\Auth\Notifications\ResetPasswordNotification;
 
@@ -25,7 +26,7 @@ class ResetPasswordNotificationTest extends TestCase
 
         \assert($me instanceof User);
 
-        $notification = new ResetPasswordNotification(fake()->randomAscii());
+        $notification = new ResetPasswordNotification($me->getUserProviderName(), Str::random(10));
         $notification->locale($locale);
 
         $me->notify($notification);
