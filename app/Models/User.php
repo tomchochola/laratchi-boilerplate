@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail as MustVerifyEmailContract;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Carbon;
 use Tomchochola\Laratchi\Auth\User as LaratchiUser;
 
@@ -19,22 +18,6 @@ class User extends LaratchiUser implements MustVerifyEmailContract
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-    /**
-     * Modify index query.
-     */
-    public static function queryIndex(Builder $builder): void
-    {
-        $builder->getQuery()->select($builder->qualifyColumns(['id']));
-    }
-
-    /**
-     * Modify detail query.
-     */
-    public static function queryDetail(Builder $builder): void
-    {
-        $builder->getQuery()->select($builder->qualifyColumns(['id']));
-    }
 
     /**
      * E-mail getter.

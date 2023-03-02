@@ -2,7 +2,7 @@
   "openapi": "3.0.3",
   "info": {
     "title": "Laratchi",
-    "description": "API V1 specification\n\n## Request data format\n\nAPI expects `multipart/form-data` or `application/x-www-form-urlencoded` on every input and produces `application/json` on most outputs\n\n### JSON to form conversions\n\n#### Boolean\n\n`true` -> `'1'`\n\n`false` -> `'0'`\n\n#### Number\n\n`Number` -> `String`\n\n#### Null\n\n`null` -> `''` (empty string)\n\n#### Object and Array\n\nEncode using exploded and deep object format\n\n\n`{data: [{title: 'a'},{title: 'b'}]}` -> `?data[0][title]=a&data[1][title]=b`\n\nEmpty arrays encode as null\n\n`[]` -> `''` (empty string)\n\nEmpty objects encode as null\n\n`{}` -> `''` (empty string)",
+    "description": "API V1 specification\n\n## Request data format\n\nAPI expects `multipart/form-data` or `application/x-www-form-urlencoded` on every input and produces `application/json` on most outputs\n\n### JSON to form conversions\n\n#### Boolean\n\n`true` -> `1`\n\n`false` -> `0`\n\n#### Number\n\n`Number` -> `String`\n\n#### Null\n\n`null` -> `_` (empty string)\n\n#### Object and Array\n\nEncode using exploded and deep object format\n\n\n`{data: [{title: 'a'},{title: null}], collection: [], object: {}}` -> `?data[0][title]=a&data[1][title]=&collection=&object=`\n\nEmpty arrays encode as null\n\n`[]` -> `_` (empty string)\n\nEmpty objects encode as null\n\n`{}` -> `_` (empty string)",
     "version": "0.1.0",
     "contact": {
       "name": "Tomáš Chochola",
@@ -16,7 +16,6 @@
     }
   ],
   "security": [
-    {},
     {
       "bearer": []
     }
@@ -493,6 +492,15 @@
           "minimum": 1,
           "maximum": 100
         }
+      },
+      "select": {
+        "description": "enable select mode",
+        "in": "query",
+        "name": "select",
+        "schema": {
+          "description": "enable select mode",
+          "type": "boolean"
+        }
       }
     },
     "schemas": {
@@ -923,7 +931,7 @@
               "attributes": {
                 "description": "attributes",
                 "type": "object",
-                "required": ["name", "email", "locale", "email_verified_at"],
+                "required": ["name", "email", "locale", "email_verified_at", "created_at", "updated_at"],
                 "properties": {
                   "name": {
                     "$ref": "#/components/schemas/string"
@@ -936,6 +944,12 @@
                   },
                   "email_verified_at": {
                     "$ref": "#/components/schemas/nullableTimestamp"
+                  },
+                  "created_at": {
+                    "$ref": "#/components/schemas/timestamp"
+                  },
+                  "updated_at": {
+                    "$ref": "#/components/schemas/timestamp"
                   }
                 }
               }
@@ -993,7 +1007,7 @@
         }
       },
       "ValidationError": {
-        "description": "validation error",
+        "description": "validation error\n\nsample response: `{errors: {title: [\"required_unless:{{ type }};{{ 0 }},{{ 1 }}\"]}}`\n\nsample response: `{errors: {date: [\"before:{{ 2023-01-01 }}\"]}}`\n\nsample response: `{errors: {event_date: [\"before:{{ registration_date }}\"]}}`",
         "allOf": [
           {
             "$ref": "#/components/schemas/Error"
@@ -1013,15 +1027,15 @@
                       "accepted",
                       "accepted_if:{{ attribute }};{{ value }}",
                       "active_url",
-                      "after:{{ value or attribute }}",
-                      "after_or_equal:{{ value or attribute }}",
+                      "after:{{ value_or_attribute }}",
+                      "after_or_equal:{{ value_or_attribute }}",
                       "alpha",
                       "alpha_dash",
                       "alpha_num",
                       "array",
                       "ascii",
-                      "before:{{ value or attribute }}",
-                      "before_or_equal:{{ value or attribute }}",
+                      "before:{{ value_or_attribute }}",
+                      "before_or_equal:{{ value_or_attribute }}",
                       "between_array:{{ min }};{{ max }}",
                       "between_file:{{ min }};{{ max }}",
                       "between_numeric:{{ min }};{{ max }}",
@@ -1030,7 +1044,7 @@
                       "confirmed",
                       "current_password",
                       "date",
-                      "date_equals:{{ value or attribute }}",
+                      "date_equals:{{ value_or_attribute }}",
                       "date_format:{{ format }}",
                       "declined",
                       "declined_if:{{ attribute }};{{ value }}",
@@ -1039,22 +1053,22 @@
                       "digits_between:{{ min }};{{ max }}",
                       "dimensions",
                       "distinct",
-                      "doesnt_end_with:{{ ', ' separated values }}",
-                      "doesnt_start_with:{{ ', ' separated values }}",
+                      "doesnt_end_with:{{ value }},{{ value }}..",
+                      "doesnt_start_with:{{ value }},{{ value }}..",
                       "email",
-                      "ends_with:{{ ', ' separated values }}",
+                      "ends_with:{{ value }},{{ value }}..",
                       "enum",
                       "exists",
                       "file",
                       "filled",
-                      "gt_array:{{ value or attribute}}",
-                      "gt_file:{{ value or attribute}}",
-                      "gt_numeric:{{ value or attribute}}",
-                      "gt_string:{{ value or attribute}}",
-                      "gte_array:{{ value or attribute}}",
-                      "gte_file:{{ value or attribute}}",
-                      "gte_numeric:{{ value or attribute}}",
-                      "gte_string:{{ value or attribute}}",
+                      "gt_array:{{ value_or_attribute}}",
+                      "gt_file:{{ value_or_attribute}}",
+                      "gt_numeric:{{ value_or_attribute}}",
+                      "gt_string:{{ value_or_attribute}}",
+                      "gte_array:{{ value_or_attribute}}",
+                      "gte_file:{{ value_or_attribute}}",
+                      "gte_numeric:{{ value_or_attribute}}",
+                      "gte_string:{{ value_or_attribute}}",
                       "image",
                       "in",
                       "in_array:{{ attribute }}",
@@ -1064,22 +1078,22 @@
                       "ipv6",
                       "json",
                       "lowercase",
-                      "lt_array:{{ value or attribute}}",
-                      "lt_file:{{ value or attribute}}",
-                      "lt_numeric:{{ value or attribute}}",
-                      "lt_string:{{ value or attribute}}",
-                      "lte_array:{{ value or attribute}}",
-                      "lte_file:{{ value or attribute}}",
-                      "lte_numeric:{{ value or attribute}}",
-                      "lte_string:{{ value or attribute}}",
+                      "lt_array:{{ value_or_attribute}}",
+                      "lt_file:{{ value_or_attribute}}",
+                      "lt_numeric:{{ value_or_attribute}}",
+                      "lt_string:{{ value_or_attribute}}",
+                      "lte_array:{{ value_or_attribute}}",
+                      "lte_file:{{ value_or_attribute}}",
+                      "lte_numeric:{{ value_or_attribute}}",
+                      "lte_string:{{ value_or_attribute}}",
                       "mac_address",
                       "max_array:{{ max }}",
                       "max_file:{{ max }}",
                       "max_numeric:{{ max }}",
                       "max_string:{{ max }}",
                       "max_digits:{{ max }}",
-                      "mimes:{{ ', ' separated values }}",
-                      "mimetypes:{{ ', ' separated values }}",
+                      "mimes:{{ value }},{{ value }}..",
+                      "mimetypes:{{ value }},{{ value }}..",
                       "min_array:{{ min }}",
                       "min_file:{{ min }}",
                       "min_numeric:{{ min }}",
@@ -1088,9 +1102,9 @@
                       "multiple_of:{{ value }}",
                       "missing",
                       "missing_if:{{ attribute }};{{ value }}",
-                      "missing_unless:{{ attribute }};{{ ', ' separated values }}",
-                      "missing_with:{{ ' / ' separated attributes }}",
-                      "missing_with_all:{{ ' / ' separated attributes }}",
+                      "missing_unless:{{ attribute }};{{ value }},{{ value }}..",
+                      "missing_with:{{ attribute }},{{ attribute }}..",
+                      "missing_with_all:{{ attribute }},{{ attribute }}..",
                       "not_in",
                       "not_regex",
                       "numeric",
@@ -1102,24 +1116,24 @@
                       "present",
                       "prohibited",
                       "prohibited_if:{{ attribute }};{{ value }}",
-                      "prohibited_unless:{{ attribute }};{{ ', ' separated values }}",
-                      "prohibits:{{ ' / ' separated attributes }}",
+                      "prohibited_unless:{{ attribute }};{{ value }},{{ value }}..",
+                      "prohibits:{{ attribute }},{{ attribute }}..",
                       "regex",
                       "required",
-                      "required_array_keys:{{ ', ' separated values }}",
+                      "required_array_keys:{{ value }},{{ value }}..",
                       "required_if:{{ attribute }};{{ value }}",
                       "required_if_accepted:{{ attribute }}",
-                      "required_unless:{{ attribute }};{{ ', ' separated values }}",
-                      "required_with:{{ ' / ' separated attributes }}",
-                      "required_with_all:{{ ' / ' separated attributes }}",
-                      "required_without:{{ ' / ' separated attributes }}",
-                      "required_without_all:{{ ' / ' separated attributes }}",
+                      "required_unless:{{ attribute }};{{ value }},{{ value }}..",
+                      "required_with:{{ attribute }},{{ attribute }}..",
+                      "required_with_all:{{ attribute }},{{ attribute }}..",
+                      "required_without:{{ attribute }},{{ attribute }}..",
+                      "required_without_all:{{ attribute }},{{ attribute }}..",
                       "same:{{ attribute }}",
                       "size_array:{{ value }}",
                       "size_file:{{ value }}",
                       "size_numeric:{{ value }}",
                       "size_string:{{ value }}",
-                      "starts_with:{{ ', ' separated values }}",
+                      "starts_with:{{ value }},{{ value }}..",
                       "string",
                       "timezone",
                       "unique",
@@ -1128,10 +1142,10 @@
                       "url",
                       "ulid",
                       "uuid",
-                      "prohibited_with:{{ ', ' separated values }}",
-                      "prohibited_with_all:{{ ', ' separated values }}",
-                      "prohibited_without:{{ ', ' separated values }}",
-                      "prohibited_without_all:{{ ', ' separated values }}",
+                      "prohibited_with:{{ value }},{{ value }}..",
+                      "prohibited_with_all:{{ value }},{{ value }}..",
+                      "prohibited_without:{{ value }},{{ value }}..",
+                      "prohibited_without_all:{{ value }},{{ value }}..",
                       "strlen:{{ value }}",
                       "strlen_max:{{ max }}",
                       "strlen_min:{{ min }}",

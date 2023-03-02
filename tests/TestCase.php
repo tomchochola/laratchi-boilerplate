@@ -39,6 +39,8 @@ abstract class TestCase extends LaratchiTestCase
             'name' => $authValidity->name('users')->required(),
             'locale' => $authValidity->locale('users')->required(),
             'email_verified_at' => $authValidity->emailVerifiedAt('users')->nullable()->present(),
+            'created_at' => $authValidity->createdAt('users')->required(),
+            'updated_at' => $authValidity->updatedAt('users')->required(),
         ]);
     }
 }

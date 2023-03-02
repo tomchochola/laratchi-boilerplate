@@ -30,6 +30,8 @@ class MeJsonApiResource extends LaratchiMeJsonApiResource
             'name' => $this->resource->getName(),
             'locale' => $this->resource->getLocale(),
             'email_verified_at' => $this->resource->getEmailVerifiedAt(),
+            'created_at' => $this->resource->getCreatedAt(),
+            'updated_at' => $this->resource->getUpdatedAt(),
         ];
     }
 
