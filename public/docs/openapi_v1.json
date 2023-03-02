@@ -184,7 +184,7 @@
       "post": {
         "tags": ["email_verification"],
         "summary": "Resend e-mail verification",
-        "description": "Resend e-mail verification notification\n\nUser must be authenticated or email field must be provided\n\nThrottled",
+        "description": "Resend e-mail verification notification\n\nUser must be authenticated or email field must be provided\n\nThrottled\n\n(cs) `{$SPA}/overeni-emailu?url=String&guard=String `\n\n(en) `{$SPA}/email-verification?url=String&guard=String `",
         "operationId": "post_email_verification_resend",
         "requestBody": {
           "required": false,
@@ -270,7 +270,7 @@
       "post": {
         "tags": ["password"],
         "summary": "Send password forgot e-mail",
-        "description": "Send password forgot e-mail\n\nUser must not be authenticated\n\nThrottled",
+        "description": "Send password forgot e-mail\n\nUser must not be authenticated\n\nThrottled\n\nPassword not set\n\n(cs) `{$SPA}/nastaveni-hesla?token=String&email=String&guard=String`\n\n(en) `{$SPA}/password-init?token=String&email=String&guard=String`\n\nPassword set\n\n(cs) `{$SPA}/obnoveni-hesla?token=String&email=String&guard=String`\n\n(en) `{$SPA}/password-reset?token=String&email=String&guard=String`",
         "operationId": "post_password_forgot",
         "requestBody": {
           "required": true,
@@ -393,14 +393,14 @@
       "get": {
         "tags": ["me"],
         "summary": "Get currently authenticated user",
-        "description": "Get currently authenticated user\n\n200 -> Authenticated, 204 -> Unauthenticated",
+        "description": "Get currently authenticated user\n\n`200` -> Authenticated\n\n`204` -> Unauthenticated",
         "operationId": "get_me_show",
         "responses": {
           "200": {
             "$ref": "#/components/responses/Me"
           },
           "204": {
-            "description": "User is not authenticated"
+            "$ref": "#/components/responses/204"
           }
         }
       }
