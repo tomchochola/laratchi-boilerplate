@@ -15,7 +15,7 @@ return [
     */
 
     'accepted' => ':Attribute musí být přijat.',
-    'accepted_if' => 'Attribute musí být přijat pokud :other je :value.',
+    'accepted_if' => ':Attribute musí být přijat pokud :other je :value.',
     'active_url' => ':Attribute není platnou URL adresou.',
     'after' => ':Attribute musí být datum po :date.',
     'after_or_equal' => ':Attribute musí být datum :date nebo pozdější.',
@@ -23,7 +23,7 @@ return [
     'alpha_dash' => ':Attribute může obsahovat pouze písmena, číslice, pomlčky a podtržítka. České znaky (á, é, í, ó, ú, ů, ž, š, č, ř, ď, ť, ň) nejsou podporovány.',
     'alpha_num' => ':Attribute může obsahovat pouze písmena a číslice.',
     'array' => ':Attribute musí být pole.',
-    'ascii' => 'The :attribute must only contain single-byte alphanumeric characters and symbols.',
+    'ascii' => ':Attribute může obsahovat pouze písmena a číslice.',
     'before' => ':Attribute musí být datum před :date.',
     'before_or_equal' => 'Datum :attribute musí být před nebo rovno :date.',
     'between' => [
@@ -48,7 +48,7 @@ return [
     'distinct' => ':Attribute má duplicitní hodnotu.',
     'doesnt_end_with' => ':Attribute nesmí končit jedním z následujících znaků: :values.',
     'doesnt_start_with' => ':Attribute nesmí začínat jedním z následujících znaků: :values.',
-    'email' => ':Attribute není platný formát.',
+    'email' => ':Attribute nemá správný formát.',
     'ends_with' => ':Attribute musí končit jednou z následujících hodnot: :values.',
     'enum' => 'Zvolená hodnota pro :attribute je neplatná.',
     'exists' => 'Zvolená hodnota pro :attribute není platná.',
@@ -74,7 +74,7 @@ return [
     'ipv4' => ':Attribute musí být platná IPv4 adresa.',
     'ipv6' => ':Attribute musí být platná IPv6 adresa.',
     'json' => ':Attribute musí být platný JSON řetězec.',
-    'lowercase' => 'The :attribute must be lowercase.',
+    'lowercase' => ':Attribute musí být malá písmena.',
     'lt' => [
         'array' => ':Attribute by měl obsahovat méně než :value položek.',
         'file' => 'Velikost souboru :attribute musí být menší než :value kB.',
@@ -111,7 +111,7 @@ return [
     'missing_with' => 'Pole :attribute je zakázáno pokud :values je vyplněno.',
     'missing_with_all' => 'Pole :attribute je zakázáno pokud :values je zvoleno.',
     'not_in' => 'Zvolená hodnota pro :attribute je neplatná.',
-    'not_regex' => ':Attribute musí být regulární výraz.',
+    'not_regex' => ':Attribute nemá správný formát.',
     'numeric' => ':Attribute musí být číslo.',
     'password' => [
         'letters' => ':Attribute musí obsahovat alespoň jedno písmeno.',
@@ -129,7 +129,7 @@ return [
     'required' => ':Attribute musí být vyplněno.',
     'required_array_keys' => 'Pole :attribute musí obsahovat položky pro: :values.',
     'required_if' => ':Attribute musí být vyplněno pokud :other je :value.',
-    'required_if_accepted' => 'The :attribute field is required when :other is accepted.',
+    'required_if_accepted' => 'Pole :attribute je povinné, pokud je přijato :other.',
     'required_unless' => ':Attribute musí být vyplněno dokud :other je v :values.',
     'required_with' => ':Attribute musí být vyplněno pokud :values je vyplněno.',
     'required_with_all' => ':Attribute musí být vyplněno pokud :values je zvoleno.',
@@ -147,9 +147,9 @@ return [
     'timezone' => ':Attribute musí být platná časová zóna.',
     'unique' => ':Attribute musí být unikátní.',
     'uploaded' => 'Nahrávání :attribute se nezdařilo.',
-    'uppercase' => 'The :attribute must be uppercase.',
+    'uppercase' => ':Attribute musí být velká písmena.',
     'url' => 'Formát :attribute je neplatný.',
-    'ulid' => 'The :attribute must be a valid ULID.',
+    'ulid' => ':Attribute musí být platný ULID.',
     'uuid' => ':Attribute musí být validní UUID.',
 
     'prohibited_with' => 'Pole :attribute je zakázáno pokud :values je vyplněno.',
@@ -161,8 +161,8 @@ return [
     'strlen_min' => ':Attribute musí být delší než :min znaků.',
 
     'throttled' => 'Počkejte prosím a zkuste to znovu.',
-    'invalid' => ':Attribute není platný.',
-    'fallback' => ':Attribute není platný.',
+    'invalid' => 'Zvolená hodnota pro :attribute je neplatná.',
+    'fallback' => 'Zvolená hodnota pro :attribute je neplatná.',
 
     'auth' => [
         'failed' => 'Tyto přihlašovací údaje neodpovídají žadnému záznamu.',

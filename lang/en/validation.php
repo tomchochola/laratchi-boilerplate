@@ -161,8 +161,8 @@ return [
     'strlen_min' => 'The :attribute must be at least :min characters.',
 
     'throttled' => 'Please wait before retrying.',
-    'invalid' => 'The :attribute is invalid.',
-    'fallback' => 'The :attribute is invalid.',
+    'invalid' => 'The selected :attribute is invalid.',
+    'fallback' => 'The selected :attribute is invalid.',
 
     'auth' => [
         'failed' => 'These credentials do not match our records.',
