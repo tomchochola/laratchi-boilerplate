@@ -41,7 +41,7 @@ class PasswordUpdateControllerTest extends TestCase
 
         $response->assertOk();
 
-        $this->validateJsonApiResponse($response, $this->jsonApiValidatorMe(), []);
+        $this->validateJsonApiResponse($response, $this->embedMe(), []);
 
         Event::assertDispatchedTimes(Validated::class);
         Event::assertDispatchedTimes(PasswordUpdateEvent::class);

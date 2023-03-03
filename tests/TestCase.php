@@ -28,9 +28,9 @@ abstract class TestCase extends LaratchiTestCase
     }
 
     /**
-     * Me json api validator.
+     * Embed me.
      */
-    protected function jsonApiValidatorMe(): JsonApiValidator
+    protected function embedMe(): JsonApiValidator
     {
         $authValidity = inject(AuthValidity::class);
 

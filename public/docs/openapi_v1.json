@@ -465,17 +465,24 @@
   },
   "components": {
     "parameters": {
+      "id": {
+        "description": "id",
+        "in": "query",
+        "name": "id",
+        "schema": {
+          "$ref": "#/components/schemas/id"
+        }
+      },
       "slug": {
         "description": "slug",
         "in": "query",
         "name": "slug",
         "schema": {
           "$ref": "#/components/schemas/slug"
-        },
-        "required": true
+        }
       },
-      "search": {
-        "description": "fulltext search",
+      "filterSearch": {
+        "description": "search filter",
         "in": "query",
         "name": "filter[search]",
         "schema": {
@@ -500,6 +507,19 @@
         "schema": {
           "description": "enable select mode",
           "type": "boolean"
+        }
+      },
+      "filterId": {
+        "description": "id filter",
+        "in": "query",
+        "name": "filter[id]",
+        "explode": false,
+        "schema": {
+          "description": "id",
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/id"
+          }
         }
       }
     },

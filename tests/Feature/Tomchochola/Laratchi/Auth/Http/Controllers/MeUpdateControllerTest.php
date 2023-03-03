@@ -37,7 +37,7 @@ class MeUpdateControllerTest extends TestCase
 
         $response->assertOk();
 
-        $this->validateJsonApiResponse($response, $this->jsonApiValidatorMe(), []);
+        $this->validateJsonApiResponse($response, $this->embedMe(), []);
     }
 
     /**
@@ -62,7 +62,7 @@ class MeUpdateControllerTest extends TestCase
 
         $response->assertOk();
 
-        $this->validateJsonApiResponse($response, $this->jsonApiValidatorMe(), []);
+        $this->validateJsonApiResponse($response, $this->embedMe(), []);
     }
 
     /**

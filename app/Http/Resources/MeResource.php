@@ -10,7 +10,7 @@ use Tomchochola\Laratchi\Auth\Http\Resources\MeJsonApiResource as LaratchiMeJson
 /**
  * @property User $resource
  */
-class MeJsonApiResource extends LaratchiMeJsonApiResource
+class MeResource extends LaratchiMeJsonApiResource
 {
     /**
      * @inheritDoc

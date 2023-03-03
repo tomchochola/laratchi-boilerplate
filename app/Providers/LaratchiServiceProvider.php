@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
-use App\Http\Resources\MeJsonApiResource;
+use App\Http\Resources\MeResource;
 use Tomchochola\Laratchi\Providers\LaratchiServiceProvider as LaratchiLaratchiServiceProvider;
 use Tomchochola\Laratchi\Validation\SecureValidator;
 
@@ -18,7 +18,7 @@ class LaratchiServiceProvider extends LaratchiLaratchiServiceProvider
         parent::register();
 
         // Set me json api resource used in Tomchochola\Laratchi\Auth\Http\Controllers\*::class
-        static::$meJsonApiResource = MeJsonApiResource::class;
+        static::$meJsonApiResource = MeResource::class;
 
         // Set extra json api computer readable validation messages
         SecureValidator::$customMsgs = [];
