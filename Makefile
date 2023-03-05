@@ -63,7 +63,7 @@ testing: composer clear migrate seed storage queue
 
 .PHONY: composer
 composer:
-	${MAKE_COMPOSER} install -a
+	${MAKE_COMPOSER} install -o
 
 .PHONY: composer-no-dev
 composer-no-dev:
@@ -121,7 +121,7 @@ serve: vendor
 
 .PHONY: update-composer
 update-composer: clean-composer
-	${MAKE_COMPOSER} update -a
+	${MAKE_COMPOSER} update -o
 
 .PHONY: clean-tools
 clean-tools:
@@ -154,16 +154,16 @@ tools/prettier/node_modules/.bin/prettier:
 	npm --prefix=tools/prettier update
 
 vendor:
-	${MAKE_COMPOSER} install -a
+	${MAKE_COMPOSER} install -o
 
 tools/phpstan/vendor/bin/phpstan:
-	${MAKE_COMPOSER} --working-dir=tools/phpstan update -a
+	${MAKE_COMPOSER} --working-dir=tools/phpstan update -o
 
 tools/php-cs-fixer/vendor/bin/php-cs-fixer:
-	${MAKE_COMPOSER} --working-dir=tools/php-cs-fixer update -a
+	${MAKE_COMPOSER} --working-dir=tools/php-cs-fixer update -o
 
 tools/local-php-security-checker/vendor/bin/local-php-security-checker:
-	${MAKE_COMPOSER} --working-dir=tools/local-php-security-checker update -a
+	${MAKE_COMPOSER} --working-dir=tools/local-php-security-checker update -o
 
 tools/spectral/node_modules/.bin/spectral:
 	npm --prefix=tools/spectral update
