@@ -28,13 +28,13 @@ abstract class TestCase extends LaratchiTestCase
     }
 
     /**
-     * Embed me.
+     * Structure Me.
      */
-    protected function embedMe(): JsonApiValidator
+    protected function structureMe(): JsonApiValidator
     {
         $authValidity = inject(AuthValidity::class);
 
-        return $this->jsonApiValidator('users', [
+        return $this->structure('users', [
             'email' => $authValidity->email('users')->required(),
             'name' => $authValidity->name('users')->required(),
             'locale' => $authValidity->locale('users')->required(),

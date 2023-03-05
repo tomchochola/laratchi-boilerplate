@@ -17,10 +17,10 @@ class LaratchiServiceProvider extends LaratchiLaratchiServiceProvider
     {
         parent::register();
 
-        // Set me json api resource used in Tomchochola\Laratchi\Auth\Http\Controllers\*::class
-        static::$meJsonApiResource = MeResource::class;
+        // Set me resource used in Tomchochola\Laratchi\Auth\Http\Controllers\*::class
+        static::$meResource = MeResource::class;
 
-        // Set extra json api computer readable validation messages
+        // Set extra validation messages
         SecureValidator::$customMsgs = [];
 
         // Tip to $this->app->bind() Tomchochola\Laratchi\Auth\Actions\CanLoginAction::class to global authorize authed users

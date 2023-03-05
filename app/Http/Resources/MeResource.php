@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace App\Http\Resources;
 
 use App\Models\User;
-use Tomchochola\Laratchi\Auth\Http\Resources\MeJsonApiResource as LaratchiMeJsonApiResource;
+use Tomchochola\Laratchi\Auth\Http\Resources\MeResource as LaratchiMeResource;
 
 /**
  * @property User $resource
  */
-class MeResource extends LaratchiMeJsonApiResource
+class MeResource extends LaratchiMeResource
 {
     /**
      * @inheritDoc

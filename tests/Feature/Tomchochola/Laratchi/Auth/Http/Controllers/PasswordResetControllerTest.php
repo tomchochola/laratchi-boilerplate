@@ -48,7 +48,7 @@ class PasswordResetControllerTest extends TestCase
 
         $response->assertOk();
 
-        $this->validateJsonApiResponse($response, $this->embedMe(), []);
+        $this->validateJsonApiResponse($response, $this->structureMe(), []);
 
         $this->assertAuthenticatedAs($me, 'users');
 
