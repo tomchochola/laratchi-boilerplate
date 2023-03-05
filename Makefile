@@ -47,27 +47,27 @@ cold: clean-tools clean-composer
 	git clean -xfd package-lock.json node_modules public bootstrap storage/framework .phpunit.result.cache
 
 .PHONY: production
-production: MAKE_COMPOSER_ARGUMENTS := --no-dev -a
-production: composer clear migrate seed optimize storage queue
+production: composer-no-dev clear migrate seed optimize storage queue
 
 .PHONY: staging
 staging: production
 
 .PHONY: development
-development: MAKE_COMPOSER_ARGUMENTS := -a
-development: composer clear migrate seed optimize storage queue
+development: composer clear migrate seed composer-no-dev optimize storage queue
 
 .PHONY: local
-local: MAKE_COMPOSER_ARGUMENTS := -o
 local: composer clear migrate seed storage queue
 
 .PHONY: testing
-testing: MAKE_COMPOSER_ARGUMENTS := -a
 testing: composer clear migrate seed storage queue
 
 .PHONY: composer
 composer:
-	${MAKE_COMPOSER} install ${MAKE_COMPOSER_ARGUMENTS}
+	${MAKE_COMPOSER} install -a
+
+.PHONY: composer-no-dev
+composer-no-dev:
+	${MAKE_COMPOSER} install --no-dev -a
 
 .PHONY: clear
 clear: vendor
@@ -121,7 +121,7 @@ serve: vendor
 
 .PHONY: update-composer
 update-composer: clean-composer
-	${MAKE_COMPOSER} update ${MAKE_COMPOSER_ARGUMENTS}
+	${MAKE_COMPOSER} update -a
 
 .PHONY: clean-tools
 clean-tools:
@@ -154,16 +154,16 @@ tools/prettier/node_modules/.bin/prettier:
 	npm --prefix=tools/prettier update
 
 vendor:
-	${MAKE_COMPOSER} install ${MAKE_COMPOSER_ARGUMENTS}
+	${MAKE_COMPOSER} install -a
 
 tools/phpstan/vendor/bin/phpstan:
-	${MAKE_COMPOSER} --working-dir=tools/phpstan update -o
+	${MAKE_COMPOSER} --working-dir=tools/phpstan update -a
 
 tools/php-cs-fixer/vendor/bin/php-cs-fixer:
-	${MAKE_COMPOSER} --working-dir=tools/php-cs-fixer update -o
+	${MAKE_COMPOSER} --working-dir=tools/php-cs-fixer update -a
 
 tools/local-php-security-checker/vendor/bin/local-php-security-checker:
-	${MAKE_COMPOSER} --working-dir=tools/local-php-security-checker update -o
+	${MAKE_COMPOSER} --working-dir=tools/local-php-security-checker update -a
 
 tools/spectral/node_modules/.bin/spectral:
 	npm --prefix=tools/spectral update
