@@ -10,7 +10,7 @@ MAKE_COMPOSER ?= ${MAKE_PHP} ${MAKE_COMPOSER_2_BIN}
 MAKE_ARTISAN ?= ${MAKE_PHP} artisan
 
 # Default goal
-.DEFAULT_GOAL := check
+.DEFAULT_GOAL := assert-never
 
 # Goals
 .PHONY: check
@@ -27,7 +27,7 @@ lint: vendor tools
 	${MAKE_COMPOSER} validate --strict
 	${MAKE_PHP} tools/phpstan/vendor/bin/phpstan analyse
 	${MAKE_PHP} tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --dry-run --diff
-	tools/spectral/node_modules/.bin/spectral lint --fail-severity=hint public/docs/*
+	tools/spectral/node_modules/.bin/spectral lint --fail-severity=hint public/docs/openapi*
 
 .PHONY: test
 test: vendor clear
@@ -38,13 +38,9 @@ test-large: vendor clear
 	${MAKE_ARTISAN} test --group large
 
 .PHONY: fix
-fix: tools
+fix: vendor tools
 	tools/prettier/node_modules/.bin/prettier --ignore-path .gitignore -w . '!**/*.svg'
 	${MAKE_PHP} tools/php-cs-fixer/vendor/bin/php-cs-fixer fix
-
-.PHONY: cold
-cold: clean-tools clean-composer
-	git clean -xfd package-lock.json node_modules public bootstrap storage/framework .phpunit.result.cache
 
 .PHONY: production
 production: composer-no-dev clear migrate seed optimize storage queue
@@ -119,6 +115,10 @@ tinker: vendor
 serve: vendor
 	${MAKE_ARTISAN} serve
 
+.PHONY: clean-composer
+clean-composer:
+	git clean -xfd vendor composer.lock
+
 .PHONY: update-composer
 update-composer: clean-composer
 	${MAKE_COMPOSER} update -o
@@ -127,25 +127,23 @@ update-composer: clean-composer
 clean-tools:
 	git clean -xfd tools
 
-.PHONY: clean-composer
-clean-composer:
-	git clean -xfd vendor composer.lock
-
 .PHONY: update-tools
 update-tools: clean-tools tools
+
+.PHONY: clean-npm
+clean-npm:
+	git clean -xfd package-lock.json node_modules
 
 .PHONY: update-full
 update-full: update-tools update-composer
 
-# Aliases
-.PHONY: ci
-ci: check
+.PHONY: clean
+clean: clean-tools clean-composer clean-npm
+	git clean -xfd public
 
+# Aliases
 .PHONY: start
 start: serve
-
-.PHONY: update
-update: update-composer
 
 # Dependencies
 tools: tools/prettier/node_modules/.bin/prettier tools/phpstan/vendor/bin/phpstan tools/php-cs-fixer/vendor/bin/php-cs-fixer tools/local-php-security-checker/vendor/bin/local-php-security-checker tools/spectral/node_modules/.bin/spectral
