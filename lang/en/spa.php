@@ -2,8 +2,11 @@
 
 declare(strict_types=1);
 
+$url = mustConfigString('spa.url.en');
+
 return [
-    'password_init_url' => mustConfigString('app.spa_url.en').'/password-init',
-    'password_reset_url' => mustConfigString('app.spa_url.en').'/password-reset',
-    'email_verification_verify_url' => mustConfigString('app.spa_url.en').'/email-verification',
+    'url' => $url,
+    'password_init_url' => "{$url}/password-init",
+    'password_reset_url' => "{$url}/password-reset",
+    'email_verification_verify_url' => "{$url}/email-verification",
 ];

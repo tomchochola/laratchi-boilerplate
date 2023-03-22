@@ -2,8 +2,11 @@
 
 declare(strict_types=1);
 
+$url = mustConfigString('spa.url.cs');
+
 return [
-    'password_init_url' => mustConfigString('app.spa_url.cs').'/nastaveni-hesla',
-    'password_reset_url' => mustConfigString('app.spa_url.cs').'/obnoveni-hesla',
-    'email_verification_verify_url' => mustConfigString('app.spa_url.cs').'/overeni-emailu',
+    'url' => $url,
+    'password_init_url' => "{$url}/nastaveni-hesla",
+    'password_reset_url' => "{$url}/obnoveni-hesla",
+    'email_verification_verify_url' => "{$url}/overeni-emailu",
 ];

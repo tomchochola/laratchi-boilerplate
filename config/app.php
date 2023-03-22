@@ -57,11 +57,6 @@ return [
 
     'asset_url' => null,
 
-    'spa_url' => [
-        'cs' => mustEnvString('SPA_URL_CS'),
-        'en' => mustEnvString('SPA_URL_EN'),
-    ],
-
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
