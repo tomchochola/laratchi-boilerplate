@@ -8,7 +8,6 @@ use App\Models\User;
 use Database\Factories\UserFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
-use Illuminate\Support\Str;
 use Tests\TestCase;
 use Tomchochola\Laratchi\Auth\Notifications\PasswordInitNotification;
 use Tomchochola\Laratchi\Auth\Notifications\ResetPasswordNotification;
@@ -35,7 +34,7 @@ class UserTest extends TestCase
 
         $me->setAttribute('password', null);
 
-        $me->sendPasswordResetNotification(Str::random());
+        $me->sendPasswordResetNotification('token');
 
         if ($fake) {
             Notification::assertSentToTimes($me, PasswordInitNotification::class);
@@ -57,7 +56,7 @@ class UserTest extends TestCase
 
         \assert($me instanceof User);
 
-        $me->sendPasswordResetNotification(Str::random());
+        $me->sendPasswordResetNotification('token');
 
         if ($fake) {
             Notification::assertSentToTimes($me, ResetPasswordNotification::class);
