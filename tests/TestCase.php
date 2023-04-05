@@ -28,6 +28,31 @@ abstract class TestCase extends LaratchiTestCase
     }
 
     /**
+     * @inheritDoc
+     */
+    public function localeBoolDataProvider(): array
+    {
+        return [
+            'cs|false' => [
+                'cs',
+                false,
+            ],
+            'cs|true' => [
+                'cs',
+                true,
+            ],
+            'en|false' => [
+                'en',
+                false,
+            ],
+            'en|true' => [
+                'en',
+                true,
+            ],
+        ];
+    }
+
+    /**
      * Structure Me.
      */
     protected function structureMe(): JsonApiValidator

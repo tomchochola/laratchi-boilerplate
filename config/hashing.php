@@ -20,21 +20,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Bcrypt Options
-    |--------------------------------------------------------------------------
-    |
-    | Here you may specify the configuration options that should be used when
-    | passwords are hashed using the Bcrypt algorithm. This will allow you
-    | to control the amount of time it takes to hash the given password.
-    |
-    */
-
-    'bcrypt' => [
-        'rounds' => isEnvEnv(['local', 'testing']) ? 4 : 10,
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
     | Argon Options
     |--------------------------------------------------------------------------
     |
@@ -47,6 +32,6 @@ return [
     'argon' => [
         'memory' => 65536,
         'threads' => 1,
-        'time' => isEnvEnv(['local', 'testing']) ? 1 : 4,
+        'time' => isEnv(['local', 'testing']) ? 1 : 4,
     ],
 ];

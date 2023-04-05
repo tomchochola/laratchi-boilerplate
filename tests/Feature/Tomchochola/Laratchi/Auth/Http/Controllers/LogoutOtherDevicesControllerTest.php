@@ -26,13 +26,13 @@ class LogoutOtherDevicesControllerTest extends TestCase
 
         Event::fake([OtherDeviceLogout::class, Validated::class]);
 
-        $me = UserFactory::new()->withValidPassword()->createOne();
+        $me = UserFactory::new()->password()->locale($locale)->createOne();
 
         \assert($me instanceof User);
 
         $query = [];
         $data = [
-            'password' => UserFactory::VALID_PASSWORD,
+            'password' => UserFactory::PASSWORD,
         ];
 
         $response = $this->be($me, 'users')->post(resolveUrlFactory()->action(LogoutOtherDevicesController::class, $query), $data);

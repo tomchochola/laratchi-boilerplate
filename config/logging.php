@@ -3,10 +3,8 @@
 declare(strict_types=1);
 
 use Monolog\Handler\NullHandler;
-use Monolog\Handler\StreamHandler;
-use Monolog\Handler\SyslogUdpHandler;
 
-$level = mapEnvEnv([
+$level = mapEnv([
     'local' => 'debug',
     'testing' => 'debug',
     'development' => 'debug',
@@ -26,7 +24,7 @@ return [
     |
     */
 
-    'default' => mapEnvEnv([
+    'default' => mapEnv([
         'local' => 'single',
         'testing' => 'null',
         'development' => 'single',
@@ -46,7 +44,7 @@ return [
     */
 
     'deprecations' => [
-        'channel' => mapEnvEnv([
+        'channel' => mapEnv([
             'local' => 'single',
             'testing' => 'null',
             'development' => 'single',
@@ -72,12 +70,6 @@ return [
     */
 
     'channels' => [
-        'stack' => [
-            'driver' => 'stack',
-            'channels' => ['single'],
-            'ignore_exceptions' => false,
-        ],
-
         'single' => [
             'driver' => 'single',
             'path' => resolveApp()->storagePath('logs/laravel.log'),
@@ -89,45 +81,6 @@ return [
             'path' => resolveApp()->storagePath('logs/laravel.log'),
             'level' => $level,
             'days' => 14,
-        ],
-
-        'slack' => [
-            'driver' => 'slack',
-            'url' => env('LOG_SLACK_WEBHOOK_URL'),
-            'username' => 'Laravel Log',
-            'emoji' => ':boom:',
-            'level' => $level,
-        ],
-
-        'papertrail' => [
-            'driver' => 'monolog',
-            'level' => $level,
-            'handler' => env('LOG_PAPERTRAIL_HANDLER', SyslogUdpHandler::class),
-            'handler_with' => [
-                'host' => env('PAPERTRAIL_URL'),
-                'port' => env('PAPERTRAIL_PORT'),
-                'connectionString' => 'tls://'.env('PAPERTRAIL_URL').':'.env('PAPERTRAIL_PORT'),
-            ],
-        ],
-
-        'stderr' => [
-            'driver' => 'monolog',
-            'level' => $level,
-            'handler' => StreamHandler::class,
-            'formatter' => env('LOG_STDERR_FORMATTER'),
-            'with' => [
-                'stream' => 'php://stderr',
-            ],
-        ],
-
-        'syslog' => [
-            'driver' => 'syslog',
-            'level' => $level,
-        ],
-
-        'errorlog' => [
-            'driver' => 'errorlog',
-            'level' => $level,
         ],
 
         'null' => [

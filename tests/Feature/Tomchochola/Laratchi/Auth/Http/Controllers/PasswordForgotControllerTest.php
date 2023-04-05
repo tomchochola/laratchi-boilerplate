@@ -25,7 +25,7 @@ class PasswordForgotControllerTest extends TestCase
 
         Notification::fake();
 
-        $me = UserFactory::new()->createOne();
+        $me = UserFactory::new()->locale($locale)->createOne();
 
         \assert($me instanceof User);
 

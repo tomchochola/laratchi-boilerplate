@@ -26,15 +26,15 @@ class PasswordUpdateControllerTest extends TestCase
 
         Event::fake([PasswordUpdateEvent::class, Validated::class]);
 
-        $me = UserFactory::new()->withValidPassword()->createOne();
+        $me = UserFactory::new()->password()->locale($locale)->createOne();
 
         \assert($me instanceof User);
 
         $query = [];
         $data = [
-            'password' => UserFactory::VALID_PASSWORD,
-            'new_password' => UserFactory::VALID_PASSWORD,
-            'new_password_confirmation' => UserFactory::VALID_PASSWORD,
+            'password' => UserFactory::PASSWORD,
+            'new_password' => UserFactory::PASSWORD,
+            'new_password_confirmation' => UserFactory::PASSWORD,
         ];
 
         $response = $this->be($me, 'users')->post(resolveUrlFactory()->action(PasswordUpdateController::class, $query), $data);

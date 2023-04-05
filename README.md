@@ -15,13 +15,7 @@ Available at [./docs/database_schema.md](./docs/database_schema.md).
 ## How to setup
 
 ```sh
-# clone code
-git clone
-
-# enter directory
-cd project
-
-# configure env
+# configure ENV via .env
 cp -n .env.example .env
 
 nano .env
@@ -33,22 +27,23 @@ make development
 make local
 make testing
 
-# start server or direct webserver to `public/index.php`
-make start
-make serve
+# direct webserver strictly to /public/index.php only
 ```
 
 ## Artisan
 
 ```sh
 # make validity class
-php artisan make:validity SharedValidity
+php8.1 artisan make:validity SharedValidity
 
 # test mail
-php artisan test:mail
+php8.1 artisan test:mail
+
+# scaffold
+php8.1 artisan make:tchi Model
 ```
 
-## CLI
+## Makefile
 
 ```sh
 # required env variables
@@ -70,31 +65,12 @@ make local
 # testing build
 make testing
 
-# remove re-creatable files
-make cold
-
 # check code
 make check
-make ci
-
-# audit packages
-make audit
-
-# lint code
-make lint
-
-# run unit tests without large group
-make test
-
-# run only large group unit tests
-make test-large
 
 # fix code
 make fix
 
-# update
-make update
-make update-tools
-make update-composer
+# local update
 make update-full
 ```

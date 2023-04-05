@@ -28,14 +28,14 @@ class LoginControllerTest extends TestCase
 
         Event::fake([Attempting::class, Validated::class, Login::class, Authenticated::class]);
 
-        $me = UserFactory::new()->withValidPassword()->createOne();
+        $me = UserFactory::new()->password()->locale($locale)->createOne();
 
         \assert($me instanceof User);
 
         $query = [];
         $data = [
             'email' => $me->getEmail(),
-            'password' => UserFactory::VALID_PASSWORD,
+            'password' => UserFactory::PASSWORD,
             'remember' => true,
         ];
 

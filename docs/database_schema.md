@@ -9,7 +9,7 @@ users {
   string email "unique"
   timestamp email_verified_at "nullable"
   string password "nullable"
-  char_60 remember_token "nullable"
+  string_100 remember_token "nullable"
   char_2 locale
   timestamp created_at
   timestamp updated_at

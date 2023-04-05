@@ -29,7 +29,7 @@ class RegisterControllerTest extends TestCase
 
         Event::fake([Registered::class, Login::class, Authenticated::class]);
 
-        $me = UserFactory::new()->makeOne();
+        $me = UserFactory::new()->locale($locale)->makeOne();
 
         \assert($me instanceof User);
 
@@ -38,8 +38,8 @@ class RegisterControllerTest extends TestCase
             'email' => $me->getEmail(),
             'name' => $me->getName(),
             'locale' => $me->getLocale(),
-            'password' => UserFactory::VALID_PASSWORD,
-            'password_confirmation' => UserFactory::VALID_PASSWORD,
+            'password' => UserFactory::PASSWORD,
+            'password_confirmation' => UserFactory::PASSWORD,
         ];
 
         $response = $this->post(resolveUrlFactory()->action(RegisterController::class, $query), $data);
@@ -68,7 +68,7 @@ class RegisterControllerTest extends TestCase
 
         Event::fake([Registered::class, Login::class, Authenticated::class]);
 
-        $me = UserFactory::new()->createOne();
+        $me = UserFactory::new()->locale($locale)->createOne();
 
         \assert($me instanceof User);
 
@@ -77,8 +77,8 @@ class RegisterControllerTest extends TestCase
             'email' => $me->getEmail(),
             'name' => $me->getName(),
             'locale' => $me->getLocale(),
-            'password' => UserFactory::VALID_PASSWORD,
-            'password_confirmation' => UserFactory::VALID_PASSWORD,
+            'password' => UserFactory::PASSWORD,
+            'password_confirmation' => UserFactory::PASSWORD,
         ];
 
         $response = $this->post(resolveUrlFactory()->action(RegisterController::class, $query), $data);
@@ -101,7 +101,7 @@ class RegisterControllerTest extends TestCase
 
         $this->locale($locale);
 
-        $me = UserFactory::new()->makeOne();
+        $me = UserFactory::new()->locale($locale)->makeOne();
 
         \assert($me instanceof User);
 
@@ -110,8 +110,8 @@ class RegisterControllerTest extends TestCase
             'email' => $me->getEmail(),
             'name' => $me->getName(),
             'locale' => $me->getLocale(),
-            'password' => UserFactory::VALID_PASSWORD,
-            'password_confirmation' => UserFactory::VALID_PASSWORD,
+            'password' => UserFactory::PASSWORD,
+            'password_confirmation' => UserFactory::PASSWORD,
         ];
 
         $response = $this->post(resolveUrlFactory()->action(RegisterController::class, $query), $data);

@@ -21,8 +21,8 @@ class MeUpdateControllerTest extends TestCase
     {
         $this->locale($locale);
 
-        $me = UserFactory::new()->createOne();
-        $newMe = UserFactory::new()->makeOne();
+        $me = UserFactory::new()->locale($locale)->createOne();
+        $newMe = UserFactory::new()->locale($locale)->makeOne();
 
         \assert($me instanceof User && $newMe instanceof User);
 
@@ -47,7 +47,7 @@ class MeUpdateControllerTest extends TestCase
     {
         $this->locale($locale);
 
-        $me = UserFactory::new()->createOne();
+        $me = UserFactory::new()->locale($locale)->createOne();
 
         \assert($me instanceof User);
 
@@ -72,8 +72,8 @@ class MeUpdateControllerTest extends TestCase
     {
         $this->locale($locale);
 
-        $me = UserFactory::new()->createOne();
-        $newUser = UserFactory::new()->createOne();
+        $me = UserFactory::new()->locale($locale)->createOne();
+        $newUser = UserFactory::new()->locale($locale)->createOne();
 
         \assert($me instanceof User && $newUser instanceof User);
 

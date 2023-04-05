@@ -21,7 +21,7 @@ class MeShowControllerTest extends TestCase
     {
         $this->locale($locale);
 
-        $me = UserFactory::new()->createOne();
+        $me = UserFactory::new()->locale($locale)->createOne();
 
         \assert($me instanceof User);
 

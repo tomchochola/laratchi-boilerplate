@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-$driver = mapEnvEnv([
+$driver = mapEnv([
     'local' => 'log',
     'testing' => 'array',
     'development' => 'smtp',
@@ -54,21 +54,8 @@ return [
             'local_domain' => envString('MAIL_EHLO_DOMAIN'),
         ],
 
-        'ses' => [
-            'transport' => 'ses',
-        ],
-
         'mailgun' => [
             'transport' => 'mailgun',
-        ],
-
-        'postmark' => [
-            'transport' => 'postmark',
-        ],
-
-        'sendmail' => [
-            'transport' => 'sendmail',
-            'path' => env('MAIL_SENDMAIL_PATH', '/usr/sbin/sendmail -bs -i'),
         ],
 
         'log' => [
@@ -78,14 +65,6 @@ return [
 
         'array' => [
             'transport' => 'array',
-        ],
-
-        'failover' => [
-            'transport' => 'failover',
-            'mailers' => [
-                'smtp',
-                'log',
-            ],
         ],
     ],
 

@@ -90,7 +90,7 @@ return [
     'mac_address' => ':Attribute není platnou MAC adresou.',
     'max' => [
         'array' => ':Attribute nemůže obsahovat více než :max prvků.',
-        'file' => 'Velikost souboru :attribute musí být menší než :value kB.',
+        'file' => 'Velikost souboru :attribute musí být menší než :max kB.',
         'numeric' => ':Attribute nemůže být větší než :max.',
         'string' => ':Attribute nemůže být delší než :max znaků.',
     ],

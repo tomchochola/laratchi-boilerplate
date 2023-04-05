@@ -26,7 +26,7 @@ class EmailVerificationVerifyControllerTest extends TestCase
 
         Event::fake(Verified::class);
 
-        $me = UserFactory::new()->unverified()->createOne();
+        $me = UserFactory::new()->unverified()->locale($locale)->createOne();
 
         \assert($me instanceof User);
 
@@ -50,7 +50,7 @@ class EmailVerificationVerifyControllerTest extends TestCase
 
         Event::fake(Verified::class);
 
-        $me = UserFactory::new()->unverified()->createOne();
+        $me = UserFactory::new()->unverified()->locale($locale)->createOne();
 
         \assert($me instanceof User);
 

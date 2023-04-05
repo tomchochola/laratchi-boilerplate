@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'default' => mapEnvEnv([
+    'default' => mapEnv([
         'local' => 'sync',
         'testing' => 'sync',
         'development' => 'redis',
@@ -40,34 +40,6 @@ return [
             'driver' => 'sync',
         ],
 
-        'database' => [
-            'driver' => 'database',
-            'table' => 'jobs',
-            'queue' => 'default',
-            'retry_after' => 90,
-            'after_commit' => true,
-        ],
-
-        'beanstalkd' => [
-            'driver' => 'beanstalkd',
-            'host' => 'localhost',
-            'queue' => 'default',
-            'retry_after' => 90,
-            'block_for' => 0,
-            'after_commit' => true,
-        ],
-
-        'sqs' => [
-            'driver' => 'sqs',
-            'key' => env('AWS_ACCESS_KEY_ID'),
-            'secret' => env('AWS_SECRET_ACCESS_KEY'),
-            'prefix' => env('SQS_PREFIX', 'https://sqs.us-east-1.amazonaws.com/your-account-id'),
-            'queue' => env('SQS_QUEUE', 'default'),
-            'suffix' => env('SQS_SUFFIX'),
-            'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
-            'after_commit' => true,
-        ],
-
         'redis' => [
             'driver' => 'redis',
             'connection' => 'default',
@@ -90,8 +62,6 @@ return [
     */
 
     'failed' => [
-        'driver' => 'database-uuids',
-        'database' => null,
-        'table' => 'failed_jobs',
+        'driver' => 'null',
     ],
 ];

@@ -25,7 +25,7 @@ class EmailVerificationResendControllerTest extends TestCase
 
         Notification::fake();
 
-        $me = UserFactory::new()->unverified()->createOne();
+        $me = UserFactory::new()->unverified()->locale($locale)->createOne();
 
         \assert($me instanceof User);
 
@@ -48,7 +48,7 @@ class EmailVerificationResendControllerTest extends TestCase
 
         Notification::fake();
 
-        $me = UserFactory::new()->unverified()->createOne();
+        $me = UserFactory::new()->unverified()->locale($locale)->createOne();
 
         \assert($me instanceof User);
 

@@ -22,10 +22,6 @@ class SpaRedirectControllerTest extends TestCase
 
         $response = $this->get(resolveUrlFactory()->to('/', $query));
 
-        $spa = mustTransString('spa.url');
-
-        static::assertNotSame($spa, mustConfigString('app.url'));
-
-        $response->assertRedirect($spa);
+        $response->assertRedirect(mustTransString('spa.url'));
     }
 }

@@ -25,7 +25,7 @@ class LogoutCurrentDeviceControllerTest extends TestCase
 
         Event::fake([CurrentDeviceLogout::class]);
 
-        $me = UserFactory::new()->createOne();
+        $me = UserFactory::new()->locale($locale)->createOne();
 
         \assert($me instanceof User);
 

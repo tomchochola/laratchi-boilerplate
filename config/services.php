@@ -2,10 +2,6 @@
 
 declare(strict_types=1);
 
-$config = envConfig();
-
-$mailer = $config->get('mail.default');
-
 return [
     /*
     |--------------------------------------------------------------------------
@@ -20,19 +16,9 @@ return [
     */
 
     'mailgun' => [
-        'domain' => $mailer === 'mailgun' ? mustEnvString('MAILGUN_DOMAIN') : env('MAILGUN_DOMAIN'),
-        'secret' => $mailer === 'mailgun' ? mustEnvString('MAILGUN_SECRET') : env('MAILGUN_SECRET'),
-        'endpoint' => $mailer === 'mailgun' ? mustEnvString('MAILGUN_ENDPOINT', 'api.eu.mailgun.net') : env('MAILGUN_ENDPOINT', 'api.eu.mailgun.net'),
+        'domain' => isEnv(['production']) ? mustEnvString('MAILGUN_DOMAIN') : envString('MAILGUN_DOMAIN'),
+        'secret' => isEnv(['production']) ? mustEnvString('MAILGUN_SECRET') : envString('MAILGUN_SECRET'),
+        'endpoint' => isEnv(['production']) ? mustEnvString('MAILGUN_ENDPOINT', 'api.eu.mailgun.net') : envString('MAILGUN_ENDPOINT', 'api.eu.mailgun.net'),
         'scheme' => 'https',
-    ],
-
-    'postmark' => [
-        'token' => env('POSTMARK_TOKEN'),
-    ],
-
-    'ses' => [
-        'key' => env('AWS_ACCESS_KEY_ID'),
-        'secret' => env('AWS_SECRET_ACCESS_KEY'),
-        'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 ];

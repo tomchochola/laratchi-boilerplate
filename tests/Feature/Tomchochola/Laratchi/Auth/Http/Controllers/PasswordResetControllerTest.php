@@ -28,7 +28,7 @@ class PasswordResetControllerTest extends TestCase
 
         Event::fake([PasswordReset::class, Login::class, Authenticated::class]);
 
-        $me = UserFactory::new()->createOne();
+        $me = UserFactory::new()->locale($locale)->createOne();
 
         \assert($me instanceof User);
 
@@ -40,8 +40,8 @@ class PasswordResetControllerTest extends TestCase
         $data = [
             'email' => $me->getEmailForPasswordReset(),
             'token' => $broker->createToken($me),
-            'password' => UserFactory::VALID_PASSWORD,
-            'password_confirmation' => UserFactory::VALID_PASSWORD,
+            'password' => UserFactory::PASSWORD,
+            'password_confirmation' => UserFactory::PASSWORD,
         ];
 
         $response = $this->post(resolveUrlFactory()->action(PasswordResetController::class, $query), $data);

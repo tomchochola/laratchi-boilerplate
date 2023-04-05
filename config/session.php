@@ -19,7 +19,7 @@ return [
     |
     */
 
-    'driver' => mapEnvEnv([
+    'driver' => mapEnv([
         'local' => 'file',
         'testing' => 'array',
         'development' => 'redis',
@@ -133,7 +133,7 @@ return [
     |
     */
 
-    'cookie' => (isEnvEnv(['local', 'testing']) ? '' : '__Host-').Str::slug(mustEnvString('APP_NAME'), '_').'_'.currentEnvEnv().'_session',
+    'cookie' => (isEnv(['local', 'testing']) ? '' : '__Host-').Str::slug(mustEnvString('APP_NAME'), '_').'_'.currentEnv().'_session',
 
     /*
     |--------------------------------------------------------------------------
