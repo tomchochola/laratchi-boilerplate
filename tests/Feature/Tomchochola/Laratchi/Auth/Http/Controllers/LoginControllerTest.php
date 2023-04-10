@@ -6,12 +6,7 @@ namespace Tests\Feature\Tomchochola\Laratchi\Auth\Http\Controllers;
 
 use App\Models\User;
 use Database\Factories\UserFactory;
-use Illuminate\Auth\Events\Attempting;
-use Illuminate\Auth\Events\Authenticated;
-use Illuminate\Auth\Events\Login;
-use Illuminate\Auth\Events\Validated;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
 use Tomchochola\Laratchi\Auth\Http\Controllers\LoginController;
 
@@ -26,9 +21,7 @@ class LoginControllerTest extends TestCase
     {
         $this->locale($locale);
 
-        Event::fake([Attempting::class, Validated::class, Login::class, Authenticated::class]);
-
-        $me = UserFactory::new()->password()->locale($locale)->createOne();
+        $me = UserFactory::new()->password()->createOne();
 
         \assert($me instanceof User);
 
@@ -36,20 +29,16 @@ class LoginControllerTest extends TestCase
         $data = [
             'email' => $me->getEmail(),
             'password' => UserFactory::PASSWORD,
-            'remember' => true,
         ];
 
         $response = $this->post(resolveUrlFactory()->action(LoginController::class, $query), $data);
 
         $response->assertOk();
 
+        $response->assertCookie(resolveGuard($me->getTable())->cookieName());
+
         $this->validateJsonApiResponse($response, $this->structureMe(), []);
 
-        $this->assertAuthenticatedAs($me, 'users');
-
-        Event::assertDispatchedTimes(Attempting::class);
-        Event::assertDispatchedTimes(Validated::class);
-        Event::assertDispatchedTimes(Login::class);
-        Event::assertDispatchedTimes(Authenticated::class);
+        $this->assertAuthenticatedAs($me);
     }
 }

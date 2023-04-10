@@ -6,12 +6,9 @@ namespace Tests\Feature\Tomchochola\Laratchi\Auth\Http\Controllers;
 
 use App\Models\User;
 use Database\Factories\UserFactory;
-use Illuminate\Auth\Events\Verified;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
 use Tomchochola\Laratchi\Auth\Http\Controllers\EmailVerificationVerifyController;
-use Tomchochola\Laratchi\Auth\Notifications\VerifyEmailNotification;
 
 class EmailVerificationVerifyControllerTest extends TestCase
 {
@@ -24,21 +21,18 @@ class EmailVerificationVerifyControllerTest extends TestCase
     {
         $this->locale($locale);
 
-        Event::fake(Verified::class);
-
-        $me = UserFactory::new()->unverified()->locale($locale)->createOne();
+        $me = UserFactory::new()->unverified()->createOne();
 
         \assert($me instanceof User);
 
-        $signedUrl = (new VerifyEmailNotification($me->getUserProviderName(), EmailVerificationVerifyController::class))->signedUrl($me);
+        $query = [];
+        $data = [
+            'token' => '111111',
+        ];
 
-        $data = [];
-
-        $response = $this->be($me, 'users')->post($signedUrl, $data);
+        $response = $this->be($me)->post(resolveUrlFactory()->action(EmailVerificationVerifyController::class, $query), $data);
 
         $response->assertNoContent();
-
-        Event::assertDispatchedTimes(Verified::class);
     }
 
     /**
@@ -48,20 +42,43 @@ class EmailVerificationVerifyControllerTest extends TestCase
     {
         $this->locale($locale);
 
-        Event::fake(Verified::class);
-
-        $me = UserFactory::new()->unverified()->locale($locale)->createOne();
+        $me = UserFactory::new()->unverified()->createOne();
 
         \assert($me instanceof User);
 
-        $signedUrl = (new VerifyEmailNotification($me->getUserProviderName(), EmailVerificationVerifyController::class))->signedUrl($me);
+        $this->assertDatabaseHas($me->getTable(), [
+            'email_verified_at' => null,
+        ]);
 
-        $data = [];
+        $query = [];
+        $data = [
+            'email' => $me->getEmailForVerification(),
+            'token' => '111111',
+        ];
 
-        $response = $this->post($signedUrl, $data);
+        $response = $this->post(resolveUrlFactory()->action(EmailVerificationVerifyController::class, $query), $data);
 
         $response->assertNoContent();
+    }
 
-        Event::assertDispatchedTimes(Verified::class);
+    /**
+     * @dataProvider localeDataProvider
+     */
+    public function test_user_can_not_verify_email_from_notification_if_already_verified(string $locale): void
+    {
+        $this->locale($locale);
+
+        $me = UserFactory::new()->createOne();
+
+        \assert($me instanceof User);
+
+        $query = [];
+        $data = [
+            'token' => '111111',
+        ];
+
+        $response = $this->be($me)->post(resolveUrlFactory()->action(EmailVerificationVerifyController::class, $query), $data);
+
+        $this->validateJsonApiError($response, 409);
     }
 }

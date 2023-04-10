@@ -28,44 +28,19 @@ abstract class TestCase extends LaratchiTestCase
     }
 
     /**
-     * @inheritDoc
-     */
-    public function localeBoolDataProvider(): array
-    {
-        return [
-            'cs|false' => [
-                'cs',
-                false,
-            ],
-            'cs|true' => [
-                'cs',
-                true,
-            ],
-            'en|false' => [
-                'en',
-                false,
-            ],
-            'en|true' => [
-                'en',
-                true,
-            ],
-        ];
-    }
-
-    /**
      * Structure Me.
      */
     protected function structureMe(): JsonApiValidator
     {
-        $authValidity = inject(AuthValidity::class);
+        $authValidity = AuthValidity::inject();
 
         return $this->structure('users', [
-            'email' => $authValidity->email('users')->required(),
-            'name' => $authValidity->name('users')->required(),
-            'locale' => $authValidity->locale('users')->required(),
-            'email_verified_at' => $authValidity->emailVerifiedAt('users')->nullable()->present(),
-            'created_at' => $authValidity->createdAt('users')->required(),
-            'updated_at' => $authValidity->updatedAt('users')->required(),
+            'email' => $authValidity->email()->required(),
+            'name' => $authValidity->name()->required(),
+            'locale' => $authValidity->locale()->required(),
+            'email_verified_at' => $authValidity->emailVerifiedAt()->nullable()->present(),
+            'created_at' => $authValidity->createdAt()->required(),
+            'updated_at' => $authValidity->updatedAt()->required(),
         ]);
     }
 }

@@ -8,29 +8,27 @@ use App\Models\User;
 use Database\Factories\UserFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
-use Tomchochola\Laratchi\Auth\Http\Controllers\MeDestroyController;
+use Tomchochola\Laratchi\Auth\Http\Controllers\LogoutController;
 
-class MeDestroyControllerTest extends TestCase
+class LogoutControllerTest extends TestCase
 {
     use RefreshDatabase;
 
     /**
      * @dataProvider localeDataProvider
      */
-    public function test_user_can_delete_his_account(string $locale): void
+    public function test_user_can_logout(string $locale): void
     {
         $this->locale($locale);
 
-        $me = UserFactory::new()->password()->createOne();
+        $me = UserFactory::new()->createOne();
 
         \assert($me instanceof User);
 
         $query = [];
-        $data = [
-            'password' => UserFactory::PASSWORD,
-        ];
+        $data = [];
 
-        $response = $this->be($me)->post(resolveUrlFactory()->action(MeDestroyController::class, $query), $data);
+        $response = $this->be($me)->post(resolveUrlFactory()->action(LogoutController::class, $query), $data);
 
         $response->assertNoContent();
 

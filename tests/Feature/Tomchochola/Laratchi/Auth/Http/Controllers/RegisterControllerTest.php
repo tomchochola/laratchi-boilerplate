@@ -6,15 +6,12 @@ namespace Tests\Feature\Tomchochola\Laratchi\Auth\Http\Controllers;
 
 use App\Models\User;
 use Database\Factories\UserFactory;
-use Illuminate\Auth\Events\Authenticated;
-use Illuminate\Auth\Events\Login;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Event;
+use Illuminate\Notifications\AnonymousNotifiable;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 use Tomchochola\Laratchi\Auth\Http\Controllers\RegisterController;
-use Tomchochola\Laratchi\Auth\Notifications\VerifyEmailNotification;
+use Tomchochola\Laratchi\Auth\Notifications\EmailConfirmationNotification;
 
 class RegisterControllerTest extends TestCase
 {
@@ -23,40 +20,66 @@ class RegisterControllerTest extends TestCase
     /**
      * @dataProvider localeDataProvider
      */
-    public function test_user_can_register(string $locale): void
+    public function test_send_email_confirmation(string $locale): void
     {
         $this->locale($locale);
 
-        Event::fake([Registered::class, Login::class, Authenticated::class]);
+        Notification::fake();
 
-        $me = UserFactory::new()->locale($locale)->makeOne();
+        $me = UserFactory::new()->makeOne();
 
         \assert($me instanceof User);
 
         $query = [];
         $data = [
             'email' => $me->getEmail(),
-            'name' => $me->getName(),
             'locale' => $me->getLocale(),
-            'password' => UserFactory::PASSWORD,
-            'password_confirmation' => UserFactory::PASSWORD,
         ];
 
         $response = $this->post(resolveUrlFactory()->action(RegisterController::class, $query), $data);
 
-        $response->assertCreated();
+        $response->assertNoContent(202);
 
-        $this->validateJsonApiResponse($response, $this->structureMe(), []);
+        $response->assertCookieMissing(resolveGuard($me->getTable())->cookieName());
 
-        $me = User::query()->sole();
+        $this->assertGuest();
+
+        Notification::assertSentToTimes((new AnonymousNotifiable())->route('mail', $me->getEmail()), EmailConfirmationNotification::class);
+    }
+
+    /**
+     * @dataProvider localeDataProvider
+     */
+    public function test_user_can_register(string $locale): void
+    {
+        $this->locale($locale);
+
+        Notification::fake();
+
+        $me = UserFactory::new()->makeOne();
 
         \assert($me instanceof User);
 
-        $this->assertAuthenticatedAs($me, 'users');
+        $query = [];
+        $data = [
+            'email' => $me->getEmail(),
+            'token' => '111111',
+            'name' => $me->getName(),
+            'locale' => $me->getLocale(),
+            'password' => UserFactory::PASSWORD,
+        ];
 
-        Event::assertDispatchedTimes(Registered::class);
-        Event::assertDispatchedTimes(Login::class);
-        Event::assertDispatchedTimes(Authenticated::class);
+        $response = $this->post(resolveUrlFactory()->action(RegisterController::class, $query), $data);
+
+        $response->assertOk();
+
+        $response->assertCookie(resolveGuard($me->getTable())->cookieName());
+
+        $this->validateJsonApiResponse($response, $this->structureMe(), []);
+
+        $this->assertAuthenticated();
+
+        Notification::assertNothingSent();
     }
 
     /**
@@ -66,9 +89,9 @@ class RegisterControllerTest extends TestCase
     {
         $this->locale($locale);
 
-        Event::fake([Registered::class, Login::class, Authenticated::class]);
+        Notification::fake();
 
-        $me = UserFactory::new()->locale($locale)->createOne();
+        $me = UserFactory::new()->createOne();
 
         \assert($me instanceof User);
 
@@ -78,54 +101,17 @@ class RegisterControllerTest extends TestCase
             'name' => $me->getName(),
             'locale' => $me->getLocale(),
             'password' => UserFactory::PASSWORD,
-            'password_confirmation' => UserFactory::PASSWORD,
+            'token' => '111111',
         ];
 
         $response = $this->post(resolveUrlFactory()->action(RegisterController::class, $query), $data);
+
+        $response->assertCookieMissing(resolveGuard($me->getTable())->cookieName());
 
         $this->validateJsonApiValidationError($response, ['email']);
 
-        $this->assertGuest('users');
+        $this->assertGuest();
 
-        Event::assertNotDispatched(Registered::class);
-        Event::assertNotDispatched(Login::class);
-        Event::assertNotDispatched(Authenticated::class);
-    }
-
-    /**
-     * @dataProvider localeDataProvider
-     */
-    public function test_user_gets_email_verification_notification(string $locale): void
-    {
-        Notification::fake();
-
-        $this->locale($locale);
-
-        $me = UserFactory::new()->locale($locale)->makeOne();
-
-        \assert($me instanceof User);
-
-        $query = [];
-        $data = [
-            'email' => $me->getEmail(),
-            'name' => $me->getName(),
-            'locale' => $me->getLocale(),
-            'password' => UserFactory::PASSWORD,
-            'password_confirmation' => UserFactory::PASSWORD,
-        ];
-
-        $response = $this->post(resolveUrlFactory()->action(RegisterController::class, $query), $data);
-
-        $response->assertCreated();
-
-        $this->validateJsonApiResponse($response, $this->structureMe(), []);
-
-        $me = User::query()->sole();
-
-        \assert($me instanceof User);
-
-        $this->assertAuthenticatedAs($me, 'users');
-
-        Notification::assertSentToTimes($me, VerifyEmailNotification::class);
+        Notification::assertNothingSent();
     }
 }

@@ -58,17 +58,16 @@
 
 | package                                 | description |
 | --------------------------------------- | ----------- |
-| https://github.com/tomchochola/laratchi | boilerplate |
+| https://github.com/tomchochola/laratchi | laratchi    |
 
 ## Tooling
 
-| tool                                                      | description     |
-| --------------------------------------------------------- | --------------- |
-| https://github.com/tomchochola/local-php-security-checker | composer audit  |
-| https://github.com/tomchochola/php-cs-fixer               | code style      |
-| https://github.com/tomchochola/phpstan-rules              | static analysis |
-| https://github.com/prettier/prettier                      | code style      |
-| https://github.com/stoplightio/spectral                   | openapi lint    |
+| tool                                         | description     |
+| -------------------------------------------- | --------------- |
+| https://github.com/tomchochola/php-cs-fixer  | code style      |
+| https://github.com/tomchochola/phpstan-rules | static analysis |
+| https://github.com/prettier/prettier         | code style      |
+| https://github.com/stoplightio/spectral      | static analysis |
 
 ## Locales
 
@@ -77,45 +76,28 @@
 
 ## Services
 
-- Mailer
+- Mailer - SMTP (development staging)
+- Mailer - Mailgun (production)
 
 ## ENV
 
 No special ENV needed.
 
-## Mails
-
-### Tomchochola\Laratchi\Auth\Notifications\ResetPasswordNotification
-
-Reset password notification.
-
-### Tomchochola\Laratchi\Auth\Notifications\PasswordInitNotification
-
-Init password notification.
-
-### Tomchochola\Laratchi\Auth\Notifications\VerifyEmailNotification
-
-Verify email notification.
-
-## Notifications
-
-No notifications are sent.
-
 ## Cookies
 
-| name                                             | description  |
-| ------------------------------------------------ | ------------ |
-| \_\_Host-{app_name}\_{env}\_database_token_users | bearer token |
-| \_\_Host-{app_name}\_{env}\_session              | session      |
+| name                                                | description  |
+| --------------------------------------------------- | ------------ |
+| \_\_Host-{app_name}\_{env}\_database_token\_{table} | bearer token |
+| \_\_Host-{app_name}\_{env}\_session                 | session      |
 
 ## Cron
 
-| command                  | cycle        |
-| ------------------------ | ------------ |
-| php artisan schedule:run | every minute |
+| command                     | cycle        |
+| --------------------------- | ------------ |
+| php8.1 artisan schedule:run | every minute |
 
 ## Queues
 
 | name    | cores | tries | sleep | memory | timeout | max time |
 | ------- | ----- | ----- | ----- | ------ | ------- | -------- |
-| default | max   | 1     | 3     | 65535  | 300     | 900      |
+| default | max   | 1     | 3     | 65535  | 3600    | 3600     |

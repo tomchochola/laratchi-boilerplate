@@ -21,13 +21,13 @@ class MeShowControllerTest extends TestCase
     {
         $this->locale($locale);
 
-        $me = UserFactory::new()->locale($locale)->createOne();
+        $me = UserFactory::new()->createOne();
 
         \assert($me instanceof User);
 
         $query = [];
 
-        $response = $this->be($me, 'users')->get(resolveUrlFactory()->action(MeShowController::class, $query));
+        $response = $this->be($me)->get(resolveUrlFactory()->action(MeShowController::class, $query));
 
         $response->assertOk();
 

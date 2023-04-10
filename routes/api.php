@@ -2,22 +2,10 @@
 
 declare(strict_types=1);
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
-
 resolveRouteRegistrar()->prefix('v1/auth')->group(static function (): void {
     resolveRouter()->post('login', Tomchochola\Laratchi\Auth\Http\Controllers\LoginController::class);
     resolveRouter()->post('register', Tomchochola\Laratchi\Auth\Http\Controllers\RegisterController::class);
-    resolveRouter()->post('logout_current', Tomchochola\Laratchi\Auth\Http\Controllers\LogoutCurrentDeviceController::class);
-    resolveRouter()->post('logout_other', Tomchochola\Laratchi\Auth\Http\Controllers\LogoutOtherDevicesController::class);
+    resolveRouter()->post('logout', Tomchochola\Laratchi\Auth\Http\Controllers\LogoutController::class);
 });
 
 resolveRouteRegistrar()->prefix('v1/password')->group(static function (): void {
@@ -37,4 +25,4 @@ resolveRouteRegistrar()->prefix('v1/me')->group(static function (): void {
     resolveRouter()->post('update', Tomchochola\Laratchi\Auth\Http\Controllers\MeUpdateController::class);
 });
 
-resolveRouter()->any('{any?}', Tomchochola\Laratchi\Http\Controllers\NotFoundController::class)->where('any', '.*')->fallback();
+resolveRouter()->any('{any?}', Tomchochola\Laratchi\Http\Controllers\NotFoundController::class)->where('any', '.*');

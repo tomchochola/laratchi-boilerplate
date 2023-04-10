@@ -23,6 +23,7 @@ return [
     'alpha_dash' => ':Attribute může obsahovat pouze písmena, číslice, pomlčky a podtržítka. České znaky (á, é, í, ó, ú, ů, ž, š, č, ř, ď, ť, ň) nejsou podporovány.',
     'alpha_num' => ':Attribute může obsahovat pouze písmena a číslice.',
     'array' => ':Attribute musí být pole.',
+    'collection' => ':Attribute musí být pole.',
     'ascii' => ':Attribute může obsahovat pouze písmena a číslice.',
     'before' => ':Attribute musí být datum před :date.',
     'before_or_equal' => 'Datum :attribute musí být před nebo rovno :date.',

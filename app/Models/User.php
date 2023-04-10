@@ -7,6 +7,8 @@ namespace App\Models;
 use Illuminate\Contracts\Auth\MustVerifyEmail as MustVerifyEmailContract;
 use Illuminate\Support\Carbon;
 use Tomchochola\Laratchi\Auth\User as LaratchiUser;
+use Tomchochola\Laratchi\Http\JsonApi\JsonApiResource;
+use Tomchochola\Laratchi\Http\JsonApi\ModelResource;
 
 class User extends LaratchiUser implements MustVerifyEmailContract
 {
@@ -49,5 +51,22 @@ class User extends LaratchiUser implements MustVerifyEmailContract
     public function getEmailVerifiedAt(): ?Carbon
     {
         return $this->carbon('email_verified_at');
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function meResource(): JsonApiResource
+    {
+        return new ModelResource($this, static function (self $me): array {
+            return [
+                'email' => $me->getEmail(),
+                'name' => $me->getName(),
+                'locale' => $me->getLocale(),
+                'email_verified_at' => $me->getEmailVerifiedAt(),
+                'created_at' => $me->getCreatedAt(),
+                'updated_at' => $me->getUpdatedAt(),
+            ];
+        });
     }
 }

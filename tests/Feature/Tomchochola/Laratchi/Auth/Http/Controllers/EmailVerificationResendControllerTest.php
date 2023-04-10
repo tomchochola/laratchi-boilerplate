@@ -10,7 +10,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 use Tomchochola\Laratchi\Auth\Http\Controllers\EmailVerificationResendController;
-use Tomchochola\Laratchi\Auth\Notifications\VerifyEmailNotification;
+use Tomchochola\Laratchi\Auth\Notifications\EmailVerificationNotification;
 
 class EmailVerificationResendControllerTest extends TestCase
 {
@@ -25,18 +25,18 @@ class EmailVerificationResendControllerTest extends TestCase
 
         Notification::fake();
 
-        $me = UserFactory::new()->unverified()->locale($locale)->createOne();
+        $me = UserFactory::new()->unverified()->createOne();
 
         \assert($me instanceof User);
 
         $query = [];
         $data = [];
 
-        $response = $this->be($me, 'users')->post(resolveUrlFactory()->action(EmailVerificationResendController::class, $query), $data);
+        $response = $this->be($me)->post(resolveUrlFactory()->action(EmailVerificationResendController::class, $query), $data);
 
-        $response->assertNoContent();
+        $response->assertNoContent(202);
 
-        Notification::assertSentToTimes($me, VerifyEmailNotification::class);
+        Notification::assertSentToTimes($me, EmailVerificationNotification::class);
     }
 
     /**
@@ -48,7 +48,7 @@ class EmailVerificationResendControllerTest extends TestCase
 
         Notification::fake();
 
-        $me = UserFactory::new()->unverified()->locale($locale)->createOne();
+        $me = UserFactory::new()->unverified()->createOne();
 
         \assert($me instanceof User);
 
@@ -59,8 +59,31 @@ class EmailVerificationResendControllerTest extends TestCase
 
         $response = $this->post(resolveUrlFactory()->action(EmailVerificationResendController::class, $query), $data);
 
-        $response->assertNoContent();
+        $response->assertNoContent(202);
 
-        Notification::assertSentToTimes($me, VerifyEmailNotification::class);
+        Notification::assertSentToTimes($me, EmailVerificationNotification::class);
+    }
+
+    /**
+     * @dataProvider localeDataProvider
+     */
+    public function test_user_can_not_request_another_email_verification_if_verified(string $locale): void
+    {
+        $this->locale($locale);
+
+        Notification::fake();
+
+        $me = UserFactory::new()->createOne();
+
+        \assert($me instanceof User);
+
+        $query = [];
+        $data = [];
+
+        $response = $this->be($me)->post(resolveUrlFactory()->action(EmailVerificationResendController::class, $query), $data);
+
+        $this->validateJsonApiError($response, 409);
+
+        Notification::assertNothingSent();
     }
 }

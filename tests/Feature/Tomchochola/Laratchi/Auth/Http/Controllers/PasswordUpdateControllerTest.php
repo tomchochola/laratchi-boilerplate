@@ -6,11 +6,8 @@ namespace Tests\Feature\Tomchochola\Laratchi\Auth\Http\Controllers;
 
 use App\Models\User;
 use Database\Factories\UserFactory;
-use Illuminate\Auth\Events\Validated;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
-use Tomchochola\Laratchi\Auth\Events\PasswordUpdateEvent;
 use Tomchochola\Laratchi\Auth\Http\Controllers\PasswordUpdateController;
 
 class PasswordUpdateControllerTest extends TestCase
@@ -24,9 +21,7 @@ class PasswordUpdateControllerTest extends TestCase
     {
         $this->locale($locale);
 
-        Event::fake([PasswordUpdateEvent::class, Validated::class]);
-
-        $me = UserFactory::new()->password()->locale($locale)->createOne();
+        $me = UserFactory::new()->password()->createOne();
 
         \assert($me instanceof User);
 
@@ -34,16 +29,16 @@ class PasswordUpdateControllerTest extends TestCase
         $data = [
             'password' => UserFactory::PASSWORD,
             'new_password' => UserFactory::PASSWORD,
-            'new_password_confirmation' => UserFactory::PASSWORD,
         ];
 
-        $response = $this->be($me, 'users')->post(resolveUrlFactory()->action(PasswordUpdateController::class, $query), $data);
+        $response = $this->be($me)->post(resolveUrlFactory()->action(PasswordUpdateController::class, $query), $data);
 
         $response->assertOk();
 
+        $response->assertCookie(resolveGuard($me->getTable())->cookieName());
+
         $this->validateJsonApiResponse($response, $this->structureMe(), []);
 
-        Event::assertDispatchedTimes(Validated::class);
-        Event::assertDispatchedTimes(PasswordUpdateEvent::class);
+        $this->assertAuthenticatedAs($me);
     }
 }

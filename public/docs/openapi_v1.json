@@ -50,39 +50,65 @@
           "content": {
             "multipart/form-data": {
               "schema": {
-                "description": "request data",
-                "type": "object",
-                "required": ["name", "email", "password", "password_confirmation", "locale"],
-                "properties": {
-                  "name": {
-                    "$ref": "#/components/schemas/varchar"
+                "oneOf": [
+                  {
+                    "description": "send e-mail confirmation",
+                    "type": "object",
+                    "required": ["email", "locale"],
+                    "properties": {
+                      "email": {
+                        "$ref": "#/components/schemas/email"
+                      },
+                      "locale": {
+                        "$ref": "#/components/schemas/locale"
+                      }
+                    }
                   },
-                  "email": {
-                    "$ref": "#/components/schemas/email"
-                  },
-                  "password": {
-                    "$ref": "#/components/schemas/password"
-                  },
-                  "password_confirmation": {
-                    "$ref": "#/components/schemas/password"
-                  },
-                  "locale": {
-                    "$ref": "#/components/schemas/locale"
+                  {
+                    "description": "register",
+                    "type": "object",
+                    "required": ["name", "email", "password", "locale", "token"],
+                    "properties": {
+                      "name": {
+                        "$ref": "#/components/schemas/varchar"
+                      },
+                      "email": {
+                        "$ref": "#/components/schemas/email"
+                      },
+                      "password": {
+                        "$ref": "#/components/schemas/password"
+                      },
+                      "locale": {
+                        "$ref": "#/components/schemas/locale"
+                      },
+                      "token": {
+                        "$ref": "#/components/schemas/varchar"
+                      }
+                    }
                   }
-                }
+                ]
               }
             }
           }
         },
         "responses": {
-          "201": {
+          "200": {
             "$ref": "#/components/responses/Me"
+          },
+          "202": {
+            "description": "E-mail confirmation sent"
+          },
+          "204": {
+            "description": "User has been registered but can not login"
           },
           "422": {
             "$ref": "#/components/responses/422"
           },
           "427": {
             "$ref": "#/components/responses/427"
+          },
+          "429": {
+            "$ref": "#/components/responses/429"
           }
         }
       }
@@ -100,16 +126,13 @@
               "schema": {
                 "description": "request data",
                 "type": "object",
-                "required": ["email", "password", "remember"],
+                "required": ["email", "password"],
                 "properties": {
                   "email": {
                     "$ref": "#/components/schemas/email"
                   },
                   "password": {
                     "$ref": "#/components/schemas/password"
-                  },
-                  "remember": {
-                    "$ref": "#/components/schemas/boolean"
                   }
                 }
               }
@@ -119,60 +142,41 @@
         "responses": {
           "200": {
             "$ref": "#/components/responses/Me"
+          },
+          "403": {
+            "description": "User can not login",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "422": {
             "$ref": "#/components/responses/422"
           },
           "427": {
             "$ref": "#/components/responses/427"
+          },
+          "429": {
+            "$ref": "#/components/responses/429"
           }
         }
       }
     },
-    "/auth/logout_current": {
+    "/auth/logout": {
       "post": {
         "tags": ["auth"],
-        "summary": "Logout current device",
-        "description": "Logout current device\n\nUser must be authenticated",
+        "summary": "Logout",
+        "description": "Logout\n\nUser must be authenticated",
         "operationId": "post_auth_logout_current",
         "responses": {
           "204": {
             "$ref": "#/components/responses/204"
           },
           "401": {
-            "$ref": "#/components/responses/4xx"
-          }
-        }
-      }
-    },
-    "/auth/logout_other": {
-      "post": {
-        "tags": ["auth"],
-        "summary": "Logout other devices",
-        "description": "Logout other devices\n\nUser must be authenticated\n\nThrottled",
-        "operationId": "post_auth_logout_other",
-        "requestBody": {
-          "required": false,
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "description": "request data",
-                "type": "object",
-                "properties": {
-                  "password": {
-                    "$ref": "#/components/schemas/password"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/Me"
-          },
-          "401": {
-            "$ref": "#/components/responses/4xx"
+            "$ref": "#/components/responses/401"
           },
           "422": {
             "$ref": "#/components/responses/422"
@@ -203,20 +207,30 @@
           }
         },
         "responses": {
-          "204": {
+          "202": {
             "$ref": "#/components/responses/204"
           },
           "401": {
-            "$ref": "#/components/responses/4xx"
+            "$ref": "#/components/responses/401"
           },
           "403": {
-            "$ref": "#/components/responses/4xx"
+            "$ref": "#/components/responses/403"
+          },
+          "409": {
+            "description": "E-mail already verified",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "422": {
             "$ref": "#/components/responses/422"
           },
           "429": {
-            "$ref": "#/components/responses/4xx"
+            "$ref": "#/components/responses/429"
           }
         }
       }
@@ -225,43 +239,53 @@
       "post": {
         "tags": ["email_verification"],
         "summary": "Verify e-mail",
-        "description": "Verify e-mail via link from e-mail\n\nThrottled",
+        "description": "Verify e-mail\n\nUser must be authenticated or email field must be provided\n\nThrottled",
         "operationId": "post_email_verification_verify",
-        "parameters": [
-          {
-            "description": "user id",
-            "name": "id",
-            "in": "query",
-            "schema": {
-              "$ref": "#/components/schemas/id"
-            },
-            "required": true
-          },
-          {
-            "description": "verification email",
-            "name": "email",
-            "in": "query",
-            "schema": {
-              "$ref": "#/components/schemas/email"
-            },
-            "required": true
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "description": "request data",
+                "type": "object",
+                "required": ["token"],
+                "properties": {
+                  "token": {
+                    "$ref": "#/components/schemas/varchar"
+                  },
+                  "email": {
+                    "$ref": "#/components/schemas/email"
+                  }
+                }
+              }
+            }
           }
-        ],
+        },
         "responses": {
           "204": {
             "$ref": "#/components/responses/204"
           },
           "401": {
-            "$ref": "#/components/responses/4xx"
+            "$ref": "#/components/responses/401"
           },
           "403": {
-            "$ref": "#/components/responses/4xx"
+            "$ref": "#/components/responses/403"
+          },
+          "409": {
+            "description": "E-mail already verified",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "422": {
             "$ref": "#/components/responses/422"
           },
           "429": {
-            "$ref": "#/components/responses/4xx"
+            "$ref": "#/components/responses/429"
           }
         }
       }
@@ -270,7 +294,7 @@
       "post": {
         "tags": ["password"],
         "summary": "Send password forgot e-mail",
-        "description": "Send password forgot e-mail\n\nUser must not be authenticated\n\nThrottled\n\nPassword not set\n\n(cs) `{$SPA}/nastaveni-hesla?token=String&email=String&guard=String`\n\n(en) `{$SPA}/password-init?token=String&email=String&guard=String`\n\nPassword set\n\n(cs) `{$SPA}/obnoveni-hesla?token=String&email=String&guard=String`\n\n(en) `{$SPA}/password-reset?token=String&email=String&guard=String`",
+        "description": "Send password forgot e-mail\n\nUser must not be authenticated\n\nThrottled\n\n(cs) `{$SPA}/obnoveni-hesla?token=String&email=String&guard=String`\n\n(en) `{$SPA}/password-reset?token=String&email=String&guard=String`",
         "operationId": "post_password_forgot",
         "requestBody": {
           "required": true,
@@ -290,14 +314,20 @@
           }
         },
         "responses": {
-          "204": {
+          "202": {
             "$ref": "#/components/responses/204"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
           },
           "422": {
             "$ref": "#/components/responses/422"
           },
           "427": {
             "$ref": "#/components/responses/427"
+          },
+          "429": {
+            "$ref": "#/components/responses/429"
           }
         }
       }
@@ -315,7 +345,7 @@
               "schema": {
                 "description": "request data",
                 "type": "object",
-                "required": ["email", "token", "password", "password_confirmation"],
+                "required": ["email", "token", "password"],
                 "properties": {
                   "email": {
                     "$ref": "#/components/schemas/email"
@@ -324,9 +354,6 @@
                     "$ref": "#/components/schemas/varchar"
                   },
                   "password": {
-                    "$ref": "#/components/schemas/password"
-                  },
-                  "password_confirmation": {
                     "$ref": "#/components/schemas/password"
                   }
                 }
@@ -338,11 +365,24 @@
           "200": {
             "$ref": "#/components/responses/Me"
           },
+          "403": {
+            "description": "User can not login",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
           "422": {
             "$ref": "#/components/responses/422"
           },
           "427": {
             "$ref": "#/components/responses/427"
+          },
+          "429": {
+            "$ref": "#/components/responses/429"
           }
         }
       }
@@ -360,15 +400,12 @@
               "schema": {
                 "description": "request data",
                 "type": "object",
-                "required": ["password", "new_password", "new_password_confirmation"],
+                "required": ["password", "new_password"],
                 "properties": {
                   "password": {
                     "$ref": "#/components/schemas/password"
                   },
                   "new_password": {
-                    "$ref": "#/components/schemas/password"
-                  },
-                  "new_password_confirmation": {
                     "$ref": "#/components/schemas/password"
                   }
                 }
@@ -381,10 +418,13 @@
             "$ref": "#/components/responses/Me"
           },
           "401": {
-            "$ref": "#/components/responses/4xx"
+            "$ref": "#/components/responses/401"
           },
           "422": {
-            "$ref": "#/components/responses/4xx"
+            "$ref": "#/components/responses/422"
+          },
+          "429": {
+            "$ref": "#/components/responses/429"
           }
         }
       }
@@ -393,14 +433,17 @@
       "get": {
         "tags": ["me"],
         "summary": "Get currently authenticated user",
-        "description": "Get currently authenticated user\n\n`200` -> Authenticated\n\n`204` -> Unauthenticated",
+        "description": "Get currently authenticated user",
         "operationId": "get_me_show",
         "responses": {
           "200": {
             "$ref": "#/components/responses/Me"
           },
           "204": {
-            "$ref": "#/components/responses/204"
+            "description": "User not authenticated"
+          },
+          "422": {
+            "$ref": "#/components/responses/422"
           }
         }
       }
@@ -416,19 +459,43 @@
           "content": {
             "multipart/form-data": {
               "schema": {
-                "description": "request data",
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "$ref": "#/components/schemas/varchar"
+                "oneOf": [
+                  {
+                    "description": "send e-mail confirmation",
+                    "type": "object",
+                    "required": ["email"],
+                    "properties": {
+                      "email": {
+                        "$ref": "#/components/schemas/email"
+                      }
+                    }
                   },
-                  "email": {
-                    "$ref": "#/components/schemas/email"
+                  {
+                    "description": "update credentials",
+                    "type": "object",
+                    "required": ["email", "token"],
+                    "properties": {
+                      "email": {
+                        "$ref": "#/components/schemas/email"
+                      },
+                      "token": {
+                        "$ref": "#/components/schemas/varchar"
+                      }
+                    }
                   },
-                  "locale": {
-                    "$ref": "#/components/schemas/locale"
+                  {
+                    "description": "update profile",
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "$ref": "#/components/schemas/varchar"
+                      },
+                      "locale": {
+                        "$ref": "#/components/schemas/locale"
+                      }
+                    }
                   }
-                }
+                ]
               }
             }
           }
@@ -437,11 +504,17 @@
           "200": {
             "$ref": "#/components/responses/Me"
           },
+          "202": {
+            "description": "E-mail confirmation sent"
+          },
           "401": {
-            "$ref": "#/components/responses/4xx"
+            "$ref": "#/components/responses/401"
           },
           "422": {
             "$ref": "#/components/responses/422"
+          },
+          "429": {
+            "$ref": "#/components/responses/429"
           }
         }
       }
@@ -450,14 +523,37 @@
       "post": {
         "tags": ["me"],
         "summary": "Destroy currently authenticated user",
-        "description": "Destroy currently authenticated user\n\nUser must be authenticated",
+        "description": "Destroy currently authenticated user\n\nUser must be authenticated\n\nThrottled",
         "operationId": "post_me_destroy",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "description": "request data",
+                "type": "object",
+                "required": ["password"],
+                "properties": {
+                  "password": {
+                    "$ref": "#/components/schemas/password"
+                  }
+                }
+              }
+            }
+          }
+        },
         "responses": {
           "204": {
             "$ref": "#/components/responses/204"
           },
           "401": {
-            "$ref": "#/components/responses/4xx"
+            "$ref": "#/components/responses/401"
+          },
+          "422": {
+            "$ref": "#/components/responses/422"
+          },
+          "429": {
+            "$ref": "#/components/responses/429"
           }
         }
       }
@@ -506,6 +602,15 @@
         "name": "select",
         "schema": {
           "description": "enable select mode",
+          "type": "boolean"
+        }
+      },
+      "count": {
+        "description": "enable count mode",
+        "in": "query",
+        "name": "count",
+        "schema": {
+          "description": "enable count mode",
           "type": "boolean"
         }
       },
@@ -904,16 +1009,6 @@
         },
         "nullable": true
       },
-      "Relationship": {
-        "description": "json:api relationship",
-        "type": "object",
-        "required": ["data"],
-        "properties": {
-          "data": {
-            "$ref": "#/components/schemas/Resource"
-          }
-        }
-      },
       "NullableRelationship": {
         "description": "json:api nullable relationship",
         "type": "object",
@@ -980,55 +1075,13 @@
           }
         ]
       },
-      "DatabaseToken": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/Resource"
-          },
-          {
-            "description": "database token schema",
-            "type": "object",
-            "required": ["attributes"],
-            "properties": {
-              "type": {
-                "enum": ["database_tokens"]
-              },
-              "attributes": {
-                "description": "attributes",
-                "type": "object",
-                "required": ["provider", "auth_id", "bearer"],
-                "properties": {
-                  "provider": {
-                    "$ref": "#/components/schemas/string"
-                  },
-                  "auth_id": {
-                    "$ref": "#/components/schemas/string"
-                  },
-                  "bearer": {
-                    "$ref": "#/components/schemas/nullableString"
-                  }
-                }
-              }
-            }
-          }
-        ]
-      },
       "Error": {
         "description": "generic error",
         "type": "object",
-        "required": ["status", "code"],
+        "required": ["code"],
         "properties": {
-          "status": {
-            "description": "HTTP status code",
-            "type": "integer",
-            "minimum": 400,
-            "maximum": 599
-          },
           "code": {
-            "description": "error code",
-            "type": "integer",
-            "minimum": 0,
-            "maximum": 9223372036854775807
+            "$ref": "#/components/schemas/integer"
           }
         }
       }
@@ -1042,21 +1095,27 @@
         "content": {
           "application/json": {
             "schema": {
-              "allOf": [
-                {
-                  "$ref": "#/components/schemas/Error"
-                },
-                {
-                  "description": "Client error",
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "minimum": 400,
-                      "maximum": 499
-                    }
-                  }
-                }
-              ]
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "401": {
+        "description": "Unauthenticated",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "403": {
+        "description": "Unauthorized",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
             }
           }
         }
@@ -1074,9 +1133,6 @@
                   "description": "Validation error\n\n## Validation error format\n\nError arguments are encoded using `csv` format, strings are wrapped inside `\"`, if `\"` occurs inside string it is doubled `'string \" string'` -> `'string \"\" string'`, fields are separated using `,`\n\n### JSON to csv conversion\n\n#### Boolean\n\n`true` -> `1`\n\n`false` -> `0`\n\n#### String\n\n`String` -> `\"String\"`\n\n#### Number\n\n`Number` -> `no change`\n\n#### Null\n\n`null` -> `_` (empty string)\n\n### Sample conversion\n\n`[true, false, null, 1.0, 1, 'string \" string']` -> `1,0,,1.0,1,\"string \"\" string\"`\n\n### Sample responses\n\n`{errors: {title: ['required_unless:\"type\",0,1']}}`\n\n`{errors: {date: ['before:\"2023-01-01\"']}}`\n\n`{errors: {event_date: ['before:\"registration_date\"']}}`",
                   "type": "object",
                   "properties": {
-                    "status": {
-                      "enum": [422]
-                    },
                     "errors": {
                       "description": "validation errors",
                       "type": "object",
@@ -1095,6 +1151,7 @@
                             "alpha_dash",
                             "alpha_num",
                             "array",
+                            "collection",
                             "ascii",
                             "before:date",
                             "before_or_equal:date",
@@ -1240,20 +1297,17 @@
         "content": {
           "application/json": {
             "schema": {
-              "allOf": [
-                {
-                  "$ref": "#/components/schemas/Error"
-                },
-                {
-                  "description": "Guest error",
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "enum": [427]
-                    }
-                  }
-                }
-              ]
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "429": {
+        "description": "Throttled",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
             }
           }
         }

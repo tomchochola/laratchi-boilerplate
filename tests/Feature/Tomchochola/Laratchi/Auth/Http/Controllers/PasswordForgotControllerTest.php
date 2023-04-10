@@ -10,7 +10,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 use Tomchochola\Laratchi\Auth\Http\Controllers\PasswordForgotController;
-use Tomchochola\Laratchi\Auth\Notifications\ResetPasswordNotification;
+use Tomchochola\Laratchi\Auth\Notifications\PasswordResetNotification;
 
 class PasswordForgotControllerTest extends TestCase
 {
@@ -25,7 +25,7 @@ class PasswordForgotControllerTest extends TestCase
 
         Notification::fake();
 
-        $me = UserFactory::new()->locale($locale)->createOne();
+        $me = UserFactory::new()->createOne();
 
         \assert($me instanceof User);
 
@@ -36,8 +36,8 @@ class PasswordForgotControllerTest extends TestCase
 
         $response = $this->post(resolveUrlFactory()->action(PasswordForgotController::class, $query), $data);
 
-        $response->assertNoContent();
+        $response->assertNoContent(202);
 
-        Notification::assertSentToTimes($me, ResetPasswordNotification::class);
+        Notification::assertSentToTimes($me, PasswordResetNotification::class);
     }
 }

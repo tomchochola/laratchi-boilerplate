@@ -8,5 +8,5 @@ return [
     'url' => $url,
     'password_init_url' => "{$url}/password-init",
     'password_reset_url' => "{$url}/password-reset",
-    'email_verification_verify_url' => "{$url}/email-verification",
+    'email_verification_url' => "{$url}/email-verification",
 ];

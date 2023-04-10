@@ -24,31 +24,9 @@ user_password_resets {
 
 database_tokens {
   id id PK
-  string provider
-  string auth_id
+  id user_id FK "cascadeOnUpdate cascadeOnDelete"
   char_64 hash
   timestamp created_at
   timestamp updated_at
-}
-
-notifications {
-  uuid id PK
-  string type
-  string notifiable_type
-  id notifiable_id
-  text data
-  timestamp read_at "nullable"
-  timestamp created_at
-  timestamp updated_at
-}
-
-failed_jobs {
-  id id PK
-  string uuid "unique"
-  text connection
-  text queue
-  longText payload
-  longText exception
-  timestamp failed_at "default:current"
 }
 ```

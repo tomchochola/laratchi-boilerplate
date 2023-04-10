@@ -6,12 +6,7 @@ namespace Tests\Feature\Tomchochola\Laratchi\Auth\Http\Controllers;
 
 use App\Models\User;
 use Database\Factories\UserFactory;
-use Illuminate\Auth\Events\Authenticated;
-use Illuminate\Auth\Events\Login;
-use Illuminate\Auth\Events\PasswordReset;
-use Illuminate\Auth\Passwords\PasswordBroker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
 use Tomchochola\Laratchi\Auth\Http\Controllers\PasswordResetController;
 
@@ -26,34 +21,27 @@ class PasswordResetControllerTest extends TestCase
     {
         $this->locale($locale);
 
-        Event::fake([PasswordReset::class, Login::class, Authenticated::class]);
-
-        $me = UserFactory::new()->locale($locale)->createOne();
+        $me = UserFactory::new()->createOne();
 
         \assert($me instanceof User);
 
-        $broker = resolvePasswordBrokerManager()->broker($me->getPasswordBrokerName());
-
-        \assert($broker instanceof PasswordBroker);
+        $token = resolvePasswordBroker($me->getTable())->createToken($me);
 
         $query = [];
         $data = [
             'email' => $me->getEmailForPasswordReset(),
-            'token' => $broker->createToken($me),
+            'token' => $token,
             'password' => UserFactory::PASSWORD,
-            'password_confirmation' => UserFactory::PASSWORD,
         ];
 
         $response = $this->post(resolveUrlFactory()->action(PasswordResetController::class, $query), $data);
 
         $response->assertOk();
 
+        $response->assertCookie(resolveGuard($me->getTable())->cookieName());
+
         $this->validateJsonApiResponse($response, $this->structureMe(), []);
 
-        $this->assertAuthenticatedAs($me, 'users');
-
-        Event::assertDispatchedTimes(PasswordReset::class);
-        Event::assertDispatchedTimes(Login::class);
-        Event::assertDispatchedTimes(Authenticated::class);
+        $this->assertAuthenticatedAs($me);
     }
 }

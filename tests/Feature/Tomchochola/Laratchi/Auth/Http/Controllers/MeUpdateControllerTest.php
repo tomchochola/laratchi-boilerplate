@@ -7,8 +7,11 @@ namespace Tests\Feature\Tomchochola\Laratchi\Auth\Http\Controllers;
 use App\Models\User;
 use Database\Factories\UserFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Notifications\AnonymousNotifiable;
+use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 use Tomchochola\Laratchi\Auth\Http\Controllers\MeUpdateController;
+use Tomchochola\Laratchi\Auth\Notifications\EmailConfirmationNotification;
 
 class MeUpdateControllerTest extends TestCase
 {
@@ -17,12 +20,40 @@ class MeUpdateControllerTest extends TestCase
     /**
      * @dataProvider localeDataProvider
      */
+    public function test_send_email_confirmation(string $locale): void
+    {
+        $this->locale($locale);
+
+        Notification::fake();
+
+        $me = UserFactory::new()->createOne();
+        $newMe = UserFactory::new()->makeOne();
+
+        \assert($me instanceof User && $newMe instanceof User);
+
+        $query = [];
+        $data = [
+            'email' => $newMe->getEmail(),
+        ];
+
+        $response = $this->be($me)->post(resolveUrlFactory()->action(MeUpdateController::class, $query), $data);
+
+        $response->assertNoContent(202);
+
+        Notification::assertSentToTimes((new AnonymousNotifiable())->route('mail', $newMe->getEmail()), EmailConfirmationNotification::class);
+    }
+
+    /**
+     * @dataProvider localeDataProvider
+     */
     public function test_user_can_update_his_profile(string $locale): void
     {
         $this->locale($locale);
 
-        $me = UserFactory::new()->locale($locale)->createOne();
-        $newMe = UserFactory::new()->locale($locale)->makeOne();
+        Notification::fake();
+
+        $me = UserFactory::new()->createOne();
+        $newMe = UserFactory::new()->makeOne();
 
         \assert($me instanceof User && $newMe instanceof User);
 
@@ -31,13 +62,14 @@ class MeUpdateControllerTest extends TestCase
             'email' => $newMe->getEmail(),
             'name' => $newMe->getName(),
             'locale' => $newMe->getLocale(),
+            'token' => '111111',
         ];
 
-        $response = $this->be($me, 'users')->post(resolveUrlFactory()->action(MeUpdateController::class, $query), $data);
+        $response = $this->be($me)->post(resolveUrlFactory()->action(MeUpdateController::class, $query), $data);
 
-        $response->assertOk();
+        $response->assertNoContent();
 
-        $this->validateJsonApiResponse($response, $this->structureMe(), []);
+        Notification::assertNothingSent();
     }
 
     /**
@@ -47,7 +79,9 @@ class MeUpdateControllerTest extends TestCase
     {
         $this->locale($locale);
 
-        $me = UserFactory::new()->locale($locale)->createOne();
+        Notification::fake();
+
+        $me = UserFactory::new()->createOne();
 
         \assert($me instanceof User);
 
@@ -56,13 +90,14 @@ class MeUpdateControllerTest extends TestCase
             'email' => $me->getEmail(),
             'name' => $me->getName(),
             'locale' => $me->getLocale(),
+            'token' => '111111',
         ];
 
-        $response = $this->be($me, 'users')->post(resolveUrlFactory()->action(MeUpdateController::class, $query), $data);
+        $response = $this->be($me)->post(resolveUrlFactory()->action(MeUpdateController::class, $query), $data);
 
-        $response->assertOk();
+        $response->assertNoContent();
 
-        $this->validateJsonApiResponse($response, $this->structureMe(), []);
+        Notification::assertNothingSent();
     }
 
     /**
@@ -72,20 +107,25 @@ class MeUpdateControllerTest extends TestCase
     {
         $this->locale($locale);
 
-        $me = UserFactory::new()->locale($locale)->createOne();
-        $newUser = UserFactory::new()->locale($locale)->createOne();
+        Notification::fake();
 
-        \assert($me instanceof User && $newUser instanceof User);
+        $me = UserFactory::new()->createOne();
+        $newMe = UserFactory::new()->createOne();
+
+        \assert($me instanceof User && $newMe instanceof User);
 
         $query = [];
         $data = [
-            'email' => $newUser->getEmail(),
-            'name' => $newUser->getName(),
-            'locale' => $newUser->getLocale(),
+            'email' => $newMe->getEmail(),
+            'name' => $newMe->getName(),
+            'locale' => $newMe->getLocale(),
+            'token' => '111111',
         ];
 
-        $response = $this->be($me, 'users')->post(resolveUrlFactory()->action(MeUpdateController::class, $query), $data);
+        $response = $this->be($me)->post(resolveUrlFactory()->action(MeUpdateController::class, $query), $data);
 
         $this->validateJsonApiValidationError($response, ['email']);
+
+        Notification::assertNothingSent();
     }
 }
