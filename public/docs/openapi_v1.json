@@ -626,6 +626,19 @@
             "$ref": "#/components/schemas/id"
           }
         }
+      },
+      "filterSlug": {
+        "description": "slug filter",
+        "in": "query",
+        "name": "filter[slug]",
+        "explode": false,
+        "schema": {
+          "description": "slug",
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/slug"
+          }
+        }
       }
     },
     "schemas": {
