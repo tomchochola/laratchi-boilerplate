@@ -30,7 +30,7 @@
   </coverage>
   <groups>
     <exclude>
-      <group>large</group>
+      <group>integration</group>
     </exclude>
   </groups>
   <php>
