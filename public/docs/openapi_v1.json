@@ -617,8 +617,7 @@
       "filterId": {
         "description": "id filter",
         "in": "query",
-        "name": "filter[id]",
-        "explode": false,
+        "name": "filter[id][]",
         "schema": {
           "description": "id",
           "type": "array",
@@ -630,8 +629,7 @@
       "filterSlug": {
         "description": "slug filter",
         "in": "query",
-        "name": "filter[slug]",
-        "explode": false,
+        "name": "filter[slug][]",
         "schema": {
           "description": "slug",
           "type": "array",
