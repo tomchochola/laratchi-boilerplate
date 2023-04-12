@@ -22,8 +22,10 @@ class PasswordResetNotificationTest extends TestCase
 
         $email = fake()->safeEmail();
 
-        $notification = new PasswordResetNotification(resolveAuthManager()->getDefaultDriver(), 'token', $email);
+        foreach (\array_keys(mustConfigArray('auth.guards')) as $guard) {
+            $notification = PasswordResetNotification::inject((string) $guard, 'token', $email);
 
-        (new AnonymousNotifiable())->route('mail', $email)->notify($notification->locale($locale));
+            (new AnonymousNotifiable())->route('mail', $email)->notify($notification->locale($locale));
+        }
     }
 }

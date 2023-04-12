@@ -22,8 +22,10 @@ class EmailConfirmationNotificationTest extends TestCase
 
         $email = fake()->safeEmail();
 
-        $notification = new EmailConfirmationNotification(resolveAuthManager()->getDefaultDriver(), 'token', $email);
+        foreach (\array_keys(mustConfigArray('auth.guards')) as $guard) {
+            $notification = EmailConfirmationNotification::inject((string) $guard, 'token', $email);
 
-        (new AnonymousNotifiable())->route('mail', $email)->notify($notification->locale($locale));
+            (new AnonymousNotifiable())->route('mail', $email)->notify($notification->locale($locale));
+        }
     }
 }

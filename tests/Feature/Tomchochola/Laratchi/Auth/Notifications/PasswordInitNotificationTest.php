@@ -22,8 +22,10 @@ class PasswordInitNotificationTest extends TestCase
 
         $email = fake()->safeEmail();
 
-        $notification = new PasswordInitNotification(resolveAuthManager()->getDefaultDriver(), 'token', $email);
+        foreach (\array_keys(mustConfigArray('auth.guards')) as $guard) {
+            $notification = PasswordInitNotification::inject((string) $guard, 'token', $email);
 
-        (new AnonymousNotifiable())->route('mail', $email)->notify($notification->locale($locale));
+            (new AnonymousNotifiable())->route('mail', $email)->notify($notification->locale($locale));
+        }
     }
 }
