@@ -24,7 +24,7 @@ user_password_resets {
 
 database_tokens {
   id id PK
-  id user_id FK "users.id cascadeOnUpdate cascadeOnDelete"
+  id user_id FK "users.id nullable cascadeOnUpdate cascadeOnDelete"
   char_64 hash
   timestamp created_at
   timestamp updated_at
