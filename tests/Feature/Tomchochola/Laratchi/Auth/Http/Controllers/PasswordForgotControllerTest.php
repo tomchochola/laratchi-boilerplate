@@ -29,12 +29,11 @@ class PasswordForgotControllerTest extends TestCase
 
         \assert($me instanceof User);
 
-        $query = [];
         $data = [
             'email' => $me->getEmail(),
         ];
 
-        $response = $this->post(resolveUrlFactory()->action(PasswordForgotController::class, $query), $data);
+        $response = $this->post(resolveUrlFactory()->action(PasswordForgotController::class), $data);
 
         $response->assertNoContent(202);
 

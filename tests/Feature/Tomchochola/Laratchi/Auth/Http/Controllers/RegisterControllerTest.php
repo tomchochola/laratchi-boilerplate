@@ -30,13 +30,12 @@ class RegisterControllerTest extends TestCase
 
         \assert($me instanceof User);
 
-        $query = [];
         $data = [
             'email' => $me->getEmail(),
             'locale' => $me->getLocale(),
         ];
 
-        $response = $this->post(resolveUrlFactory()->action(RegisterController::class, $query), $data);
+        $response = $this->post(resolveUrlFactory()->action(RegisterController::class), $data);
 
         $response->assertNoContent(202);
 
@@ -60,7 +59,6 @@ class RegisterControllerTest extends TestCase
 
         \assert($me instanceof User);
 
-        $query = [];
         $data = [
             'email' => $me->getEmail(),
             'token' => '111111',
@@ -69,7 +67,7 @@ class RegisterControllerTest extends TestCase
             'password' => UserFactory::PASSWORD,
         ];
 
-        $response = $this->post(resolveUrlFactory()->action(RegisterController::class, $query), $data);
+        $response = $this->post(resolveUrlFactory()->action(RegisterController::class), $data);
 
         $response->assertOk();
 
@@ -95,7 +93,6 @@ class RegisterControllerTest extends TestCase
 
         \assert($me instanceof User);
 
-        $query = [];
         $data = [
             'email' => $me->getEmail(),
             'name' => $me->getName(),
@@ -104,7 +101,7 @@ class RegisterControllerTest extends TestCase
             'token' => '111111',
         ];
 
-        $response = $this->post(resolveUrlFactory()->action(RegisterController::class, $query), $data);
+        $response = $this->post(resolveUrlFactory()->action(RegisterController::class), $data);
 
         $response->assertCookieMissing(resolveGuard($me->getTable())->cookieName());
 

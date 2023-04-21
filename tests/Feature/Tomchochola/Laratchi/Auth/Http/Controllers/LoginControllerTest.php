@@ -25,13 +25,12 @@ class LoginControllerTest extends TestCase
 
         \assert($me instanceof User);
 
-        $query = [];
         $data = [
             'email' => $me->getEmail(),
             'password' => UserFactory::PASSWORD,
         ];
 
-        $response = $this->post(resolveUrlFactory()->action(LoginController::class, $query), $data);
+        $response = $this->post(resolveUrlFactory()->action(LoginController::class), $data);
 
         $response->assertOk();
 

@@ -11,6 +11,13 @@ class Kernel extends LaratchiKernel
 {
     /**
      * @inheritDoc
+     *
+     * @var array<mixed>
+     */
+    protected $commands = [];
+
+    /**
+     * @inheritDoc
      */
     protected function schedule(Schedule $schedule): void
     {

@@ -42,7 +42,7 @@ fix: vendor tools
 	${MAKE_PHP} tools/php-cs-fixer/vendor/bin/php-cs-fixer fix
 
 .PHONY: production
-production: composer-no-dev clear migrate seed optimize storage queue
+production: composer clear migrate seed composer-no-dev optimize storage queue
 
 .PHONY: staging
 staging: production

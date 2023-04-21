@@ -637,6 +637,18 @@
             "$ref": "#/components/schemas/slug"
           }
         }
+      },
+      "filterNotId": {
+        "description": "not id filter",
+        "in": "query",
+        "name": "filter[not_id][]",
+        "schema": {
+          "description": "id",
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/id"
+          }
+        }
       }
     },
     "schemas": {

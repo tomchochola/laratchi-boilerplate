@@ -25,12 +25,11 @@ class EmailVerificationVerifyControllerTest extends TestCase
 
         \assert($me instanceof User);
 
-        $query = [];
         $data = [
             'token' => '111111',
         ];
 
-        $response = $this->be($me)->post(resolveUrlFactory()->action(EmailVerificationVerifyController::class, $query), $data);
+        $response = $this->be($me)->post(resolveUrlFactory()->action(EmailVerificationVerifyController::class), $data);
 
         $response->assertNoContent();
     }
@@ -50,13 +49,12 @@ class EmailVerificationVerifyControllerTest extends TestCase
             'email_verified_at' => null,
         ]);
 
-        $query = [];
         $data = [
             'email' => $me->getEmailForVerification(),
             'token' => '111111',
         ];
 
-        $response = $this->post(resolveUrlFactory()->action(EmailVerificationVerifyController::class, $query), $data);
+        $response = $this->post(resolveUrlFactory()->action(EmailVerificationVerifyController::class), $data);
 
         $response->assertNoContent();
     }
@@ -72,12 +70,11 @@ class EmailVerificationVerifyControllerTest extends TestCase
 
         \assert($me instanceof User);
 
-        $query = [];
         $data = [
             'token' => '111111',
         ];
 
-        $response = $this->be($me)->post(resolveUrlFactory()->action(EmailVerificationVerifyController::class, $query), $data);
+        $response = $this->be($me)->post(resolveUrlFactory()->action(EmailVerificationVerifyController::class), $data);
 
         $this->validateJsonApiError($response, 409);
     }

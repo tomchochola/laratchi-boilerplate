@@ -25,10 +25,9 @@ class LogoutControllerTest extends TestCase
 
         \assert($me instanceof User);
 
-        $query = [];
         $data = [];
 
-        $response = $this->be($me)->post(resolveUrlFactory()->action(LogoutController::class, $query), $data);
+        $response = $this->be($me)->post(resolveUrlFactory()->action(LogoutController::class), $data);
 
         $response->assertNoContent();
 

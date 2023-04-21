@@ -27,14 +27,13 @@ class PasswordResetControllerTest extends TestCase
 
         $token = resolvePasswordBroker($me->getTable())->createToken($me);
 
-        $query = [];
         $data = [
             'email' => $me->getEmailForPasswordReset(),
             'token' => $token,
             'password' => UserFactory::PASSWORD,
         ];
 
-        $response = $this->post(resolveUrlFactory()->action(PasswordResetController::class, $query), $data);
+        $response = $this->post(resolveUrlFactory()->action(PasswordResetController::class), $data);
 
         $response->assertOk();
 

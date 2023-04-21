@@ -25,13 +25,12 @@ class PasswordUpdateControllerTest extends TestCase
 
         \assert($me instanceof User);
 
-        $query = [];
         $data = [
             'password' => UserFactory::PASSWORD,
             'new_password' => UserFactory::PASSWORD,
         ];
 
-        $response = $this->be($me)->post(resolveUrlFactory()->action(PasswordUpdateController::class, $query), $data);
+        $response = $this->be($me)->post(resolveUrlFactory()->action(PasswordUpdateController::class), $data);
 
         $response->assertOk();
 

@@ -100,4 +100,4 @@ No special ENV needed.
 
 | name    | cores | tries | sleep | memory | timeout | max time |
 | ------- | ----- | ----- | ----- | ------ | ------- | -------- |
-| default | max   | 1     | 3     | 65535  | 3600    | 3600     |
+| default | max   | 1     | 3     | 65535  | 3600    | 86400    |

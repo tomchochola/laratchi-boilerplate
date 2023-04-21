@@ -25,12 +25,11 @@ class MeDestroyControllerTest extends TestCase
 
         \assert($me instanceof User);
 
-        $query = [];
         $data = [
             'password' => UserFactory::PASSWORD,
         ];
 
-        $response = $this->be($me)->post(resolveUrlFactory()->action(MeDestroyController::class, $query), $data);
+        $response = $this->be($me)->post(resolveUrlFactory()->action(MeDestroyController::class), $data);
 
         $response->assertNoContent();
 

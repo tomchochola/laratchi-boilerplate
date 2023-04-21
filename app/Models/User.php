@@ -58,14 +58,14 @@ class User extends LaratchiUser implements MustVerifyEmailContract
      */
     public function meResource(): JsonApiResource
     {
-        return new ModelResource($this, static function (self $me): array {
+        return new ModelResource($this, static function (self $resource): array {
             return [
-                'email' => $me->getEmail(),
-                'name' => $me->getName(),
-                'locale' => $me->getLocale(),
-                'email_verified_at' => $me->getEmailVerifiedAt(),
-                'created_at' => $me->getCreatedAt(),
-                'updated_at' => $me->getUpdatedAt(),
+                'email' => $resource->getEmail(),
+                'name' => $resource->getName(),
+                'locale' => $resource->getLocale(),
+                'email_verified_at' => $resource->getEmailVerifiedAt(),
+                'created_at' => $resource->getCreatedAt(),
+                'updated_at' => $resource->getUpdatedAt(),
             ];
         });
     }

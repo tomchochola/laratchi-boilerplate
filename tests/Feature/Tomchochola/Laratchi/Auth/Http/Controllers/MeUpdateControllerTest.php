@@ -31,12 +31,11 @@ class MeUpdateControllerTest extends TestCase
 
         \assert($me instanceof User && $newMe instanceof User);
 
-        $query = [];
         $data = [
             'email' => $newMe->getEmail(),
         ];
 
-        $response = $this->be($me)->post(resolveUrlFactory()->action(MeUpdateController::class, $query), $data);
+        $response = $this->be($me)->post(resolveUrlFactory()->action(MeUpdateController::class), $data);
 
         $response->assertNoContent(202);
 
@@ -57,7 +56,6 @@ class MeUpdateControllerTest extends TestCase
 
         \assert($me instanceof User && $newMe instanceof User);
 
-        $query = [];
         $data = [
             'email' => $newMe->getEmail(),
             'name' => $newMe->getName(),
@@ -65,7 +63,7 @@ class MeUpdateControllerTest extends TestCase
             'token' => '111111',
         ];
 
-        $response = $this->be($me)->post(resolveUrlFactory()->action(MeUpdateController::class, $query), $data);
+        $response = $this->be($me)->post(resolveUrlFactory()->action(MeUpdateController::class), $data);
 
         $response->assertNoContent();
 
@@ -85,7 +83,6 @@ class MeUpdateControllerTest extends TestCase
 
         \assert($me instanceof User);
 
-        $query = [];
         $data = [
             'email' => $me->getEmail(),
             'name' => $me->getName(),
@@ -93,7 +90,7 @@ class MeUpdateControllerTest extends TestCase
             'token' => '111111',
         ];
 
-        $response = $this->be($me)->post(resolveUrlFactory()->action(MeUpdateController::class, $query), $data);
+        $response = $this->be($me)->post(resolveUrlFactory()->action(MeUpdateController::class), $data);
 
         $response->assertNoContent();
 
@@ -114,7 +111,6 @@ class MeUpdateControllerTest extends TestCase
 
         \assert($me instanceof User && $newMe instanceof User);
 
-        $query = [];
         $data = [
             'email' => $newMe->getEmail(),
             'name' => $newMe->getName(),
@@ -122,7 +118,7 @@ class MeUpdateControllerTest extends TestCase
             'token' => '111111',
         ];
 
-        $response = $this->be($me)->post(resolveUrlFactory()->action(MeUpdateController::class, $query), $data);
+        $response = $this->be($me)->post(resolveUrlFactory()->action(MeUpdateController::class), $data);
 
         $this->validateJsonApiValidationError($response, ['email']);
 

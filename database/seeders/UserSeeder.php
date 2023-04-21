@@ -23,6 +23,6 @@ class UserSeeder extends Seeder
             return;
         }
 
-        UserFactory::new()->locale('cs')->password()->blankRememberToken()->unverified()->createOne(['email' => 'testovaci@uzivatel.cz', 'name' => 'Testovací Uživatel']);
+        UserFactory::new()->locale(resolveApp()->getLocale())->password()->blankRememberToken()->unverified()->createOne(['email' => 'testovaci@uzivatel.cz', 'name' => 'Testovací Uživatel']);
     }
 }
