@@ -50,43 +50,23 @@
           "content": {
             "multipart/form-data": {
               "schema": {
-                "oneOf": [
-                  {
-                    "description": "send e-mail confirmation",
-                    "type": "object",
-                    "required": ["email", "locale"],
-                    "properties": {
-                      "email": {
-                        "$ref": "#/components/schemas/email"
-                      },
-                      "locale": {
-                        "$ref": "#/components/schemas/locale"
-                      }
-                    }
+                "description": "request data",
+                "type": "object",
+                "required": ["name", "email", "password", "locale"],
+                "properties": {
+                  "name": {
+                    "$ref": "#/components/schemas/varchar"
                   },
-                  {
-                    "description": "register",
-                    "type": "object",
-                    "required": ["name", "email", "password", "locale", "token"],
-                    "properties": {
-                      "name": {
-                        "$ref": "#/components/schemas/varchar"
-                      },
-                      "email": {
-                        "$ref": "#/components/schemas/email"
-                      },
-                      "password": {
-                        "$ref": "#/components/schemas/password"
-                      },
-                      "locale": {
-                        "$ref": "#/components/schemas/locale"
-                      },
-                      "token": {
-                        "$ref": "#/components/schemas/varchar"
-                      }
-                    }
+                  "email": {
+                    "$ref": "#/components/schemas/email"
+                  },
+                  "password": {
+                    "$ref": "#/components/schemas/password"
+                  },
+                  "locale": {
+                    "$ref": "#/components/schemas/locale"
                   }
-                ]
+                }
               }
             }
           }
@@ -184,63 +164,12 @@
         }
       }
     },
-    "/email_verification/resend": {
+    "/email_verification/confirm": {
       "post": {
         "tags": ["email_verification"],
-        "summary": "Resend e-mail verification",
-        "description": "Resend e-mail verification notification\n\nUser must be authenticated or email field must be provided\n\nThrottled\n\n(cs) `{$SPA}/overeni-emailu?url=String&guard=String `\n\n(en) `{$SPA}/email-verification?url=String&guard=String `",
-        "operationId": "post_email_verification_resend",
-        "requestBody": {
-          "required": false,
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "description": "request data",
-                "type": "object",
-                "properties": {
-                  "email": {
-                    "$ref": "#/components/schemas/email"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "202": {
-            "$ref": "#/components/responses/204"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          },
-          "403": {
-            "$ref": "#/components/responses/403"
-          },
-          "409": {
-            "description": "E-mail already verified",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "422": {
-            "$ref": "#/components/responses/422"
-          },
-          "429": {
-            "$ref": "#/components/responses/429"
-          }
-        }
-      }
-    },
-    "/email_verification/verify": {
-      "post": {
-        "tags": ["email_verification"],
-        "summary": "Verify e-mail",
-        "description": "Verify e-mail\n\nUser must be authenticated or email field must be provided\n\nThrottled",
-        "operationId": "post_email_verification_verify",
+        "summary": "Confirm e-mail",
+        "description": "Confirm e-mail\n\nThrottled",
+        "operationId": "post_email_verification_confirm",
         "requestBody": {
           "required": true,
           "content": {
@@ -248,7 +177,7 @@
               "schema": {
                 "description": "request data",
                 "type": "object",
-                "required": ["token"],
+                "required": ["token", "email"],
                 "properties": {
                   "token": {
                     "$ref": "#/components/schemas/varchar"
@@ -264,12 +193,6 @@
         "responses": {
           "204": {
             "$ref": "#/components/responses/204"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          },
-          "403": {
-            "$ref": "#/components/responses/403"
           },
           "409": {
             "description": "E-mail already verified",
@@ -459,43 +382,19 @@
           "content": {
             "multipart/form-data": {
               "schema": {
-                "oneOf": [
-                  {
-                    "description": "send e-mail confirmation",
-                    "type": "object",
-                    "required": ["email"],
-                    "properties": {
-                      "email": {
-                        "$ref": "#/components/schemas/email"
-                      }
-                    }
+                "description": "request data",
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "$ref": "#/components/schemas/email"
                   },
-                  {
-                    "description": "update credentials",
-                    "type": "object",
-                    "required": ["email", "token"],
-                    "properties": {
-                      "email": {
-                        "$ref": "#/components/schemas/email"
-                      },
-                      "token": {
-                        "$ref": "#/components/schemas/varchar"
-                      }
-                    }
+                  "name": {
+                    "$ref": "#/components/schemas/varchar"
                   },
-                  {
-                    "description": "update profile",
-                    "type": "object",
-                    "properties": {
-                      "name": {
-                        "$ref": "#/components/schemas/varchar"
-                      },
-                      "locale": {
-                        "$ref": "#/components/schemas/locale"
-                      }
-                    }
+                  "locale": {
+                    "$ref": "#/components/schemas/locale"
                   }
-                ]
+                }
               }
             }
           }

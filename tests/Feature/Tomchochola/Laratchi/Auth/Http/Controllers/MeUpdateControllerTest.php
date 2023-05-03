@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 use Tomchochola\Laratchi\Auth\Http\Controllers\MeUpdateController;
 use Tomchochola\Laratchi\Auth\Notifications\EmailConfirmationNotification;
+use Tomchochola\Laratchi\Auth\Services\EmailBrokerService;
 
 class MeUpdateControllerTest extends TestCase
 {
@@ -33,6 +34,8 @@ class MeUpdateControllerTest extends TestCase
 
         $data = [
             'email' => $newMe->getEmail(),
+            'name' => $newMe->getName(),
+            'locale' => $newMe->getLocale(),
         ];
 
         $response = $this->be($me)->post(resolveUrlFactory()->action(MeUpdateController::class), $data);
@@ -60,8 +63,9 @@ class MeUpdateControllerTest extends TestCase
             'email' => $newMe->getEmail(),
             'name' => $newMe->getName(),
             'locale' => $newMe->getLocale(),
-            'token' => '111111',
         ];
+
+        EmailBrokerService::inject()->confirm($me->getTable(), $newMe->getEmail());
 
         $response = $this->be($me)->post(resolveUrlFactory()->action(MeUpdateController::class), $data);
 
@@ -87,8 +91,9 @@ class MeUpdateControllerTest extends TestCase
             'email' => $me->getEmail(),
             'name' => $me->getName(),
             'locale' => $me->getLocale(),
-            'token' => '111111',
         ];
+
+        EmailBrokerService::inject()->confirm($me->getTable(), $me->getEmail());
 
         $response = $this->be($me)->post(resolveUrlFactory()->action(MeUpdateController::class), $data);
 
@@ -115,7 +120,6 @@ class MeUpdateControllerTest extends TestCase
             'email' => $newMe->getEmail(),
             'name' => $newMe->getName(),
             'locale' => $newMe->getLocale(),
-            'token' => '111111',
         ];
 
         $response = $this->be($me)->post(resolveUrlFactory()->action(MeUpdateController::class), $data);

@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 use Tomchochola\Laratchi\Auth\Http\Controllers\RegisterController;
 use Tomchochola\Laratchi\Auth\Notifications\EmailConfirmationNotification;
+use Tomchochola\Laratchi\Auth\Services\EmailBrokerService;
 
 class RegisterControllerTest extends TestCase
 {
@@ -32,7 +33,9 @@ class RegisterControllerTest extends TestCase
 
         $data = [
             'email' => $me->getEmail(),
+            'name' => $me->getName(),
             'locale' => $me->getLocale(),
+            'password' => UserFactory::PASSWORD,
         ];
 
         $response = $this->post(resolveUrlFactory()->action(RegisterController::class), $data);
@@ -61,11 +64,12 @@ class RegisterControllerTest extends TestCase
 
         $data = [
             'email' => $me->getEmail(),
-            'token' => '111111',
             'name' => $me->getName(),
             'locale' => $me->getLocale(),
             'password' => UserFactory::PASSWORD,
         ];
+
+        EmailBrokerService::inject()->confirm($me->getTable(), $me->getEmail());
 
         $response = $this->post(resolveUrlFactory()->action(RegisterController::class), $data);
 
@@ -98,7 +102,6 @@ class RegisterControllerTest extends TestCase
             'name' => $me->getName(),
             'locale' => $me->getLocale(),
             'password' => UserFactory::PASSWORD,
-            'token' => '111111',
         ];
 
         $response = $this->post(resolveUrlFactory()->action(RegisterController::class), $data);

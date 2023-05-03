@@ -15,8 +15,7 @@ resolveRouteRegistrar()->prefix('v1/password')->group(static function (): void {
 });
 
 resolveRouteRegistrar()->prefix('v1/email_verification')->group(static function (): void {
-    resolveRouter()->post('resend', Tomchochola\Laratchi\Auth\Http\Controllers\EmailVerificationResendController::class);
-    resolveRouter()->post('verify', Tomchochola\Laratchi\Auth\Http\Controllers\EmailVerificationVerifyController::class);
+    resolveRouter()->post('confirm', Tomchochola\Laratchi\Auth\Http\Controllers\EmailConfirmationController::class);
 });
 
 resolveRouteRegistrar()->prefix('v1/me')->group(static function (): void {
