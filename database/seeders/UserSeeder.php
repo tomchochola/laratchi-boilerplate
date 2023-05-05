@@ -24,5 +24,7 @@ class UserSeeder extends Seeder
         }
 
         UserFactory::new()->locale(resolveApp()->getLocale())->password()->blankRememberToken()->unverified()->createOne(['email' => 'testovaci@uzivatel.cz', 'name' => 'Testovací Uživatel']);
+
+        UserFactory::new()->randomLocale()->password()->blankRememberToken()->unverified()->count(100)->create();
     }
 }
