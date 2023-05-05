@@ -9,7 +9,7 @@ http --session=session -f POST $SERVER/api/v1/auth/login email=testovaci@uzivate
 http --session=session -f POST $SERVER/api/v1/auth/register name=name email=testovaci@uzivatel.cz password=password locale=cs
 
 # E-mail confirmation
-http --session=session -f POST $SERVER/api/v1/email_verification/confirm email=testovaci@uzivatel.cz token=
+http --session=session -f POST $SERVER/api/v1/email_verification/confirm email=testovaci@uzivatel.cz token=111111
 
 # Logout
 http --session=session -f POST $SERVER/api/v1/auth/logout
@@ -18,7 +18,7 @@ http --session=session -f POST $SERVER/api/v1/auth/logout
 http --session=session -f POST $SERVER/api/v1/password/forgot email=testovaci@uzivatel.cz
 
 # Password reset
-http --session=session -f POST $SERVER/api/v1/password/reset email=testovaci@uzivatel.cz password=password token=
+http --session=session -f POST $SERVER/api/v1/password/reset email=testovaci@uzivatel.cz password=password token=111111
 
 # Password update
 http --session=session -f POST $SERVER/api/v1/password/update password=password new_password=password
