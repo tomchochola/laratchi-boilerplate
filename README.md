@@ -8,6 +8,12 @@ Available at URL `/api/v1/spec`.
 
 Source files are located in [./public/docs/openapi_v1.json](./public/docs/openapi_v1.json).
 
+## HTTPie samples
+
+Available at URL `/docs/httpie.sh`.
+
+Source files are located in [./public/docs/httpie.sh](./public/docs/httpie.sh).
+
 ## Database schema
 
 Available at [./docs/database_schema.md](./docs/database_schema.md).
