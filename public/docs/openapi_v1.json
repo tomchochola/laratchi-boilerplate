@@ -2,7 +2,7 @@
   "openapi": "3.0.3",
   "info": {
     "title": "Laratchi",
-    "description": "API V1 specification\n\n## Request data format\n\nAPI expects `multipart/form-data` or `application/x-www-form-urlencoded` on every input and produces `application/json` on most outputs\n\n### JSON to form conversions\n\n#### Boolean\n\n`true` -> `1`\n\n`false` -> `0`\n\n#### String\n\n`String` -> `no change`\n\n#### Number\n\n`Number` -> `String`\n\n#### Null\n\n`null` -> `_` (empty string)\n\n#### Object and Array\n\nEncode using exploded and deep object format\n\n\n`{data: [{title: 'a'},{title: null}], collection: [], object: {}}` -> `?data[0][title]=a&data[1][title]=&collection=&object=`\n\nEmpty arrays encode as null\n\n`[]` -> `_` (empty string)\n\nEmpty objects encode as null\n\n`{}` -> `_` (empty string)",
+    "description": "API V1 specification\n\n## HTTPie\n\n[/docs/httpie.sh](/docs/httpie.sh)\n\n## Request data format\n\nAPI expects `multipart/form-data` or `application/x-www-form-urlencoded` on every input and produces `application/json` on most outputs\n\n### JSON to form conversions\n\n#### Boolean\n\n`true` -> `1`\n\n`false` -> `0`\n\n#### String\n\n`String` -> `no change`\n\n#### Number\n\n`Number` -> `String`\n\n#### Null\n\n`null` -> `_` (empty string)\n\n#### Object and Array\n\nEncode using exploded and deep object format\n\n\n`{data: [{title: 'a'},{title: null}], collection: [], object: {}}` -> `?data[0][title]=a&data[1][title]=&collection=&object=`\n\nEmpty arrays encode as null\n\n`[]` -> `_` (empty string)\n\nEmpty objects encode as null\n\n`{}` -> `_` (empty string)",
     "version": "0.1.0",
     "contact": {
       "name": "Tomáš Chochola",
@@ -217,7 +217,7 @@
       "post": {
         "tags": ["password"],
         "summary": "Send password forgot e-mail",
-        "description": "Send password forgot e-mail\n\nUser must not be authenticated\n\nThrottled\n\n(cs) `{$SPA}/obnoveni-hesla?token=String&email=String&guard=String`\n\n(en) `{$SPA}/password-reset?token=String&email=String&guard=String`",
+        "description": "Send password forgot e-mail\n\nUser must not be authenticated\n\nThrottled",
         "operationId": "post_password_forgot",
         "requestBody": {
           "required": true,
