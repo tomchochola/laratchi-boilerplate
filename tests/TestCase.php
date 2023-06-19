@@ -43,4 +43,17 @@ abstract class TestCase extends LaratchiTestCase
             'updated_at' => $authValidity->updatedAt()->required(),
         ]);
     }
+
+    /**
+     * User embed structure.
+     */
+    protected function structureUserEmbed(): JsonApiValidator
+    {
+        $authValidity = AuthValidity::inject();
+
+        return $this->structure('users', [
+            'email' => $authValidity->email()->required(),
+            'name' => $authValidity->name()->required(),
+        ]);
+    }
 }

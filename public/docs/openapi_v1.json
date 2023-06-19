@@ -997,6 +997,36 @@
           }
         ]
       },
+      "UserEmbed": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Resource"
+          },
+          {
+            "description": "User embed schema",
+            "type": "object",
+            "required": ["attributes"],
+            "properties": {
+              "type": {
+                "enum": ["users"]
+              },
+              "attributes": {
+                "description": "attributes",
+                "type": "object",
+                "required": ["name", "email"],
+                "properties": {
+                  "name": {
+                    "$ref": "#/components/schemas/string"
+                  },
+                  "email": {
+                    "$ref": "#/components/schemas/string"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
       "Error": {
         "description": "generic error",
         "type": "object",

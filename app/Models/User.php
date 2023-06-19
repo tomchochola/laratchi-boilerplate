@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail as MustVerifyEmailContract;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Carbon;
 use Tomchochola\Laratchi\Auth\User as LaratchiUser;
 use Tomchochola\Laratchi\Http\JsonApi\JsonApiResource;
@@ -20,6 +21,14 @@ class User extends LaratchiUser implements MustVerifyEmailContract
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Modify embed query.
+     */
+    public static function queryEmbed(Builder $builder): void
+    {
+        $builder->getQuery()->select($builder->qualifyColumns(['*']));
+    }
 
     /**
      * E-mail getter.
@@ -65,6 +74,17 @@ class User extends LaratchiUser implements MustVerifyEmailContract
             'email_verified_at' => $resource->getEmailVerifiedAt(),
             'created_at' => $resource->getCreatedAt(),
             'updated_at' => $resource->getUpdatedAt(),
+        ]);
+    }
+
+    /**
+     * Embed resource.
+     */
+    public function embedResource(): JsonApiResource
+    {
+        return new ModelResource($this, static fn (self $resource): array => [
+            'email' => $resource->getEmail(),
+            'name' => $resource->getName(),
         ]);
     }
 }
