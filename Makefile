@@ -18,28 +18,28 @@ check: audit lint test
 
 .PHONY: audit
 audit: vendor tools
-	${MAKE_COMPOSER} audit
+	${MAKE_COMPOSER} audit --no-interaction
 
 .PHONY: lint
 lint: vendor tools
 	tools/prettier/node_modules/.bin/prettier --ignore-path .gitignore -c . '!**/*.svg'
-	${MAKE_COMPOSER} validate --strict
-	${MAKE_PHP} tools/phpstan/vendor/bin/phpstan analyse
-	${MAKE_PHP} tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --dry-run --diff
+	${MAKE_COMPOSER} validate --strict --no-interaction
+	${MAKE_PHP} tools/phpstan/vendor/bin/phpstan analyse --no-progress --no-interaction
+	${MAKE_PHP} tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --dry-run --diff --no-interaction
 	tools/spectral/node_modules/.bin/spectral lint --fail-severity=hint public/docs/openapi*
 
 .PHONY: test
 test: vendor clear
-	${MAKE_ARTISAN} test --exclude-group integration
+	${MAKE_ARTISAN} test --exclude-group integration --no-interaction
 
 .PHONY: test-integration
 test-integration: vendor clear
-	${MAKE_ARTISAN} test --group integration
+	${MAKE_ARTISAN} test --group integration --no-interaction
 
 .PHONY: fix
 fix: vendor tools
 	tools/prettier/node_modules/.bin/prettier --ignore-path .gitignore -w . '!**/*.svg'
-	${MAKE_PHP} tools/php-cs-fixer/vendor/bin/php-cs-fixer fix
+	${MAKE_PHP} tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --no-interaction
 
 .PHONY: production
 production: composer clear migrate seed composer-no-dev optimize storage queue
@@ -58,61 +58,61 @@ testing: composer clear migrate seed storage queue
 
 .PHONY: composer
 composer:
-	${MAKE_COMPOSER} install -o
+	${MAKE_COMPOSER} install -o --no-progress --no-interaction
 
 .PHONY: composer-no-dev
 composer-no-dev:
-	${MAKE_COMPOSER} install --no-dev -a
+	${MAKE_COMPOSER} install --no-dev -a --no-progress --no-interaction
 
 .PHONY: clear
 clear: vendor
-	${MAKE_ARTISAN} optimize:clear
-	${MAKE_ARTISAN} cache:clear
-	${MAKE_ARTISAN} config:clear
-	${MAKE_ARTISAN} event:clear
-	${MAKE_ARTISAN} route:clear
-	${MAKE_ARTISAN} view:clear
-	${MAKE_ARTISAN} clear-compiled
+	${MAKE_ARTISAN} optimize:clear --no-interaction
+	${MAKE_ARTISAN} cache:clear --no-interaction
+	${MAKE_ARTISAN} config:clear --no-interaction
+	${MAKE_ARTISAN} event:clear --no-interaction
+	${MAKE_ARTISAN} route:clear --no-interaction
+	${MAKE_ARTISAN} view:clear --no-interaction
+	${MAKE_ARTISAN} clear-compiled --no-interaction
 
 .PHONY: migrate
 migrate: vendor
-	${MAKE_ARTISAN} migrate --force
+	${MAKE_ARTISAN} migrate --force --no-interaction
 
 .PHONY: seed
 seed: vendor
-	${MAKE_ARTISAN} db:seed --force
+	${MAKE_ARTISAN} db:seed --force --no-interaction
 
 .PHONY: optimize
 optimize: vendor
-	${MAKE_ARTISAN} optimize
-	${MAKE_ARTISAN} config:cache
-	${MAKE_ARTISAN} event:cache
-	${MAKE_ARTISAN} route:cache
-	${MAKE_ARTISAN} view:cache
+	${MAKE_ARTISAN} optimize --no-interaction
+	${MAKE_ARTISAN} config:cache --no-interaction
+	${MAKE_ARTISAN} event:cache --no-interaction
+	${MAKE_ARTISAN} route:cache --no-interaction
+	${MAKE_ARTISAN} view:cache --no-interaction
 
 .PHONY: storage
 storage: vendor
-	${MAKE_ARTISAN} storage:link --force
+	${MAKE_ARTISAN} storage:link --force --no-interaction
 
 .PHONY: queue
 queue: vendor
-	${MAKE_ARTISAN} queue:restart
+	${MAKE_ARTISAN} queue:restart --no-interaction
 
 .PHONY: down
 down: vendor
-	${MAKE_ARTISAN} down
+	${MAKE_ARTISAN} down --no-interaction
 
 .PHONY: up
 up: vendor
-	${MAKE_ARTISAN} up
+	${MAKE_ARTISAN} up --no-interaction
 
 .PHONY: tinker
 tinker: vendor
-	${MAKE_ARTISAN} tinker
+	${MAKE_ARTISAN} tinker --no-interaction
 
 .PHONY: serve
 serve: vendor
-	${MAKE_ARTISAN} serve
+	${MAKE_ARTISAN} serve --no-interaction
 
 .PHONY: clean-composer
 clean-composer:
@@ -120,7 +120,7 @@ clean-composer:
 
 .PHONY: update-composer
 update-composer: clean-composer
-	${MAKE_COMPOSER} update -o
+	${MAKE_COMPOSER} update -o --no-progress
 
 .PHONY: clean-tools
 clean-tools:
@@ -148,16 +148,16 @@ start: serve
 tools: tools/prettier/node_modules/.bin/prettier tools/phpstan/vendor/bin/phpstan tools/php-cs-fixer/vendor/bin/php-cs-fixer tools/spectral/node_modules/.bin/spectral
 
 tools/prettier/node_modules/.bin/prettier:
-	npm --prefix=tools/prettier update
+	npm --prefix=tools/prettier update --no-progress
 
 vendor:
-	${MAKE_COMPOSER} install -o
+	${MAKE_COMPOSER} install -o --no-progress --no-interaction
 
 tools/phpstan/vendor/bin/phpstan:
-	${MAKE_COMPOSER} --working-dir=tools/phpstan update -o
+	${MAKE_COMPOSER} --working-dir=tools/phpstan update -o --no-progress --no-interaction
 
 tools/php-cs-fixer/vendor/bin/php-cs-fixer:
-	${MAKE_COMPOSER} --working-dir=tools/php-cs-fixer update -o
+	${MAKE_COMPOSER} --working-dir=tools/php-cs-fixer update -o --no-progress --no-interaction
 
 tools/spectral/node_modules/.bin/spectral:
-	npm --prefix=tools/spectral update
+	npm --prefix=tools/spectral update --no-progress

@@ -63,22 +63,22 @@
   },
   "scripts": {
     "post-install-cmd": [
-      "@php artisan vendor:publish --tag=laravel-assets --ansi --force",
+      "@php artisan vendor:publish --tag=laravel-assets --force",
       "@php -r \"file_exists('stubs') || (PHP_OS_FAMILY === 'Windows' ? exec('mklink /J '.escapeshellarg('stubs').' '.escapeshellarg('vendor/tomchochola/laratchi/stubs')) : symlink('vendor/tomchochola/laratchi/stubs', 'stubs'));\""
     ],
     "post-update-cmd": [
-      "@php artisan vendor:publish --tag=laravel-assets --ansi --force",
+      "@php artisan vendor:publish --tag=laravel-assets --force",
       "@php -r \"file_exists('stubs') || (PHP_OS_FAMILY === 'Windows' ? exec('mklink /J '.escapeshellarg('stubs').' '.escapeshellarg('vendor/tomchochola/laratchi/stubs')) : symlink('vendor/tomchochola/laratchi/stubs', 'stubs'));\""
     ],
     "post-autoload-dump": [
       "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-      "@php artisan package:discover --ansi"
+      "@php artisan package:discover"
     ],
     "post-root-package-install": [
       "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
     ],
     "post-create-project-cmd": [
-      "@php artisan key:generate --ansi"
+      "@php artisan key:generate"
     ]
   }
 }
