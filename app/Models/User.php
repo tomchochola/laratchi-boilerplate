@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail as MustVerifyEmailContract;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Carbon;
 use Tomchochola\Laratchi\Auth\User as LaratchiUser;
 use Tomchochola\Laratchi\Http\JsonApi\JsonApiResource;
 use Tomchochola\Laratchi\Http\JsonApi\ModelResource;
 
-class User extends LaratchiUser implements MustVerifyEmailContract
+class User extends LaratchiUser
 {
     /**
      * @inheritDoc

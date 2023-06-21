@@ -85,19 +85,19 @@ No special ENV needed.
 
 ## Cookies
 
-| name                                                | description  |
-| --------------------------------------------------- | ------------ |
-| \_\_Host-{app_name}\_{env}\_database_token\_{table} | bearer token |
-| \_\_Host-{app_name}\_{env}\_session                 | session      |
+| name                                                | description     |
+| --------------------------------------------------- | --------------- |
+| \_\_Host-{app_name}\_{env}\_database_token\_{table} | bearer token    |
+| \_\_Host-{app_name}\_{env}\_session                 | session (admin) |
 
 ## Cron
 
-| command                     | cycle        |
-| --------------------------- | ------------ |
-| php8.1 artisan schedule:run | every minute |
+| command                     | schedule       |
+| --------------------------- | -------------- |
+| php8.1 artisan schedule:run | \* \* \* \* \* |
 
 ## Queues
 
-| name    | cores | tries | sleep | memory | timeout | max time |
-| ------- | ----- | ----- | ----- | ------ | ------- | -------- |
-| default | max   | 1     | 3     | 65535  | 3600    | 86400    |
+| connection | name    | queue   | cores | tries | sleep | memory | timeout | max time | backoff | max jobs |
+| ---------- | ------- | ------- | ----- | ----- | ----- | ------ | ------- | -------- | ------- | -------- |
+| redis      | default | default | all   | 3     | 3     | 65535  | 86400   | 86400    | 3600    | 1000     |
