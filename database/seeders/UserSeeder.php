@@ -19,12 +19,27 @@ class UserSeeder extends Seeder
             return;
         }
 
-        if (User::query()->getQuery()->exists()) {
+        if (
+            User::query()
+                ->getQuery()
+                ->exists()
+        ) {
             return;
         }
 
-        UserFactory::new()->locale(resolveApp()->getLocale())->password()->blankRememberToken()->unverified()->createOne(['email' => 'testovaci@uzivatel.cz', 'name' => 'Testovací Uživatel']);
+        UserFactory::new()
+            ->locale(resolveApp()->getLocale())
+            ->password()
+            ->blankRememberToken()
+            ->unverified()
+            ->createOne(['email' => 'testovaci@uzivatel.cz', 'name' => 'Testovací Uživatel']);
 
-        UserFactory::new()->randomLocale()->password()->blankRememberToken()->unverified()->count(100)->create();
+        UserFactory::new()
+            ->randomLocale()
+            ->password()
+            ->blankRememberToken()
+            ->unverified()
+            ->count(100)
+            ->create();
     }
 }

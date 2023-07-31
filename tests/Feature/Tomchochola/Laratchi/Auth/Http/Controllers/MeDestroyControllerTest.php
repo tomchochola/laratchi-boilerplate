@@ -21,7 +21,9 @@ class MeDestroyControllerTest extends TestCase
     {
         $this->locale($locale);
 
-        $me = UserFactory::new()->password()->createOne();
+        $me = UserFactory::new()
+            ->password()
+            ->createOne();
 
         \assert($me instanceof User);
 

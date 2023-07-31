@@ -98,8 +98,6 @@ return [
     'markdown' => [
         'theme' => 'default',
 
-        'paths' => [
-            resolveApp()->resourcePath('views/vendor/mail'),
-        ],
+        'paths' => [resolveApp()->resourcePath('views/vendor/mail')],
     ],
 ];

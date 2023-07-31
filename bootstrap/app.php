@@ -13,9 +13,7 @@ declare(strict_types=1);
 |
 */
 
-$app = new Illuminate\Foundation\Application(
-    $_ENV['APP_BASE_PATH'] ?? \dirname(__DIR__),
-);
+$app = new Illuminate\Foundation\Application($_ENV['APP_BASE_PATH'] ?? \dirname(__DIR__));
 
 /*
 |--------------------------------------------------------------------------
@@ -28,20 +26,11 @@ $app = new Illuminate\Foundation\Application(
 |
 */
 
-$app->singleton(
-    Illuminate\Contracts\Http\Kernel::class,
-    Tomchochola\Laratchi\Http\Kernel::class,
-);
+$app->singleton(Illuminate\Contracts\Http\Kernel::class, Tomchochola\Laratchi\Http\Kernel::class);
 
-$app->singleton(
-    Illuminate\Contracts\Console\Kernel::class,
-    App\Console\Kernel::class,
-);
+$app->singleton(Illuminate\Contracts\Console\Kernel::class, App\Console\Kernel::class);
 
-$app->singleton(
-    Illuminate\Contracts\Debug\ExceptionHandler::class,
-    Tomchochola\Laratchi\Exceptions\Handler::class,
-);
+$app->singleton(Illuminate\Contracts\Debug\ExceptionHandler::class, Tomchochola\Laratchi\Exceptions\Handler::class);
 
 /*
 |--------------------------------------------------------------------------

@@ -14,9 +14,7 @@ return [
     |
     */
 
-    'paths' => [
-        resolveApp()->resourcePath('views'),
-    ],
+    'paths' => [resolveApp()->resourcePath('views')],
 
     /*
     |--------------------------------------------------------------------------

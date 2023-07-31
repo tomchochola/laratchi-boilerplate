@@ -66,14 +66,17 @@ class User extends LaratchiUser
      */
     public function meResource(): JsonApiResource
     {
-        return new ModelResource($this, static fn (self $resource): array => [
-            'email' => $resource->getEmail(),
-            'name' => $resource->getName(),
-            'locale' => $resource->getLocale(),
-            'email_verified_at' => $resource->getEmailVerifiedAt(),
-            'created_at' => $resource->getCreatedAt(),
-            'updated_at' => $resource->getUpdatedAt(),
-        ]);
+        return new ModelResource(
+            $this,
+            static fn (self $resource): array => [
+                'email' => $resource->getEmail(),
+                'name' => $resource->getName(),
+                'locale' => $resource->getLocale(),
+                'email_verified_at' => $resource->getEmailVerifiedAt(),
+                'created_at' => $resource->getCreatedAt(),
+                'updated_at' => $resource->getUpdatedAt(),
+            ],
+        );
     }
 
     /**
@@ -81,9 +84,12 @@ class User extends LaratchiUser
      */
     public function embedResource(): JsonApiResource
     {
-        return new ModelResource($this, static fn (self $resource): array => [
-            'email' => $resource->getEmail(),
-            'name' => $resource->getName(),
-        ]);
+        return new ModelResource(
+            $this,
+            static fn (self $resource): array => [
+                'email' => $resource->getEmail(),
+                'name' => $resource->getName(),
+            ],
+        );
     }
 }

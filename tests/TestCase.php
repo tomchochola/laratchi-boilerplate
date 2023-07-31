@@ -18,12 +18,8 @@ abstract class TestCase extends LaratchiTestCase
     public function localeDataProvider(): array
     {
         return [
-            'cs' => [
-                'cs',
-            ],
-            'en' => [
-                'en',
-            ],
+            'cs' => ['cs'],
+            'en' => ['en'],
         ];
     }
 
@@ -38,7 +34,10 @@ abstract class TestCase extends LaratchiTestCase
             'email' => $authValidity->email()->required(),
             'name' => $authValidity->name()->required(),
             'locale' => $authValidity->locale()->required(),
-            'email_verified_at' => $authValidity->emailVerifiedAt()->nullable()->present(),
+            'email_verified_at' => $authValidity
+                ->emailVerifiedAt()
+                ->nullable()
+                ->present(),
             'created_at' => $authValidity->createdAt()->required(),
             'updated_at' => $authValidity->updatedAt()->required(),
         ]);
