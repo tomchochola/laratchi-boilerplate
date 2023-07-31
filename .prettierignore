@@ -1,0 +1,64 @@
+# stock
+/node_modules
+/public/build
+/public/hot
+/public/storage
+/storage/*.key
+/vendor
+.env
+.env.backup
+.env.production
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+auth.json
+npm-debug.log
+yarn-error.log
+/.fleet
+/.idea
+/.vscode
+
+# generic
+.DS_Store
+.idea
+.vscode
+.fleet
+
+# node
+/node_modules
+/package-lock.json
+
+# composer
+/vendor
+/composer.lock
+
+# phpunit
+phpunit.xml
+.phpunit.result.cache
+
+# phpstan
+phpstan.neon
+
+# php-cs-fixer
+.php-cs-fixer.cache
+
+# tools
+/tools/*/vendor
+/tools/*/node_modules
+/tools/*/package-lock.json
+/tools/*/composer.lock
+
+# public
+/public/vendor
+
+# stubs
+/stubs
+
+# svg
+*.svg
+
+# blade
+*.blade.php
+
+# storage
+/storage

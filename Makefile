@@ -22,7 +22,7 @@ audit: vendor tools
 
 .PHONY: lint
 lint: vendor tools
-	tools/prettier/node_modules/.bin/prettier --ignore-path .gitignore -c . '!**/*.svg'
+	tools/prettier-lint/node_modules/.bin/prettier -c .
 	${MAKE_COMPOSER} validate --strict --no-interaction
 	${MAKE_PHP} tools/phpstan/vendor/bin/phpstan analyse --no-progress --no-interaction
 	${MAKE_PHP} tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --dry-run --diff --no-interaction
@@ -38,7 +38,7 @@ test-integration: vendor clear
 
 .PHONY: fix
 fix: vendor tools
-	tools/prettier/node_modules/.bin/prettier --ignore-path .gitignore -w . '!**/*.svg'
+	tools/prettier-fix/node_modules/.bin/prettier -w .
 	${MAKE_PHP} tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --no-interaction
 
 .PHONY: production
@@ -145,10 +145,13 @@ clean: clean-tools clean-composer clean-npm
 start: serve
 
 # Dependencies
-tools: tools/prettier/node_modules/.bin/prettier tools/phpstan/vendor/bin/phpstan tools/php-cs-fixer/vendor/bin/php-cs-fixer tools/spectral/node_modules/.bin/spectral
+tools: tools/prettier-lint/node_modules/.bin/prettier tools/prettier-fix/node_modules/.bin/prettier tools/phpstan/vendor/bin/phpstan tools/php-cs-fixer/vendor/bin/php-cs-fixer tools/spectral/node_modules/.bin/spectral
 
-tools/prettier/node_modules/.bin/prettier:
-	npm --prefix=tools/prettier update --no-progress
+tools/prettier-lint/node_modules/.bin/prettier:
+	npm --prefix=tools/prettier-lint update --no-progress
+
+tools/prettier-fix/node_modules/.bin/prettier:
+	npm --prefix=tools/prettier-fix update --no-progress
 
 vendor:
 	${MAKE_COMPOSER} install -o --no-progress --no-interaction
