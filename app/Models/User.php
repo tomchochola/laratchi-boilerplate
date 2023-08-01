@@ -26,7 +26,7 @@ class User extends LaratchiUser
      */
     public static function queryEmbed(Builder $builder): void
     {
-        $builder->getQuery()->select($builder->qualifyColumns(['*']));
+        $builder->getQuery()->select($builder->qualifyColumn('*'));
     }
 
     /**
