@@ -2,7 +2,7 @@
 
 ## Tech stack
 
-- PHP 8.1
+- PHP 8.2
 - Laravel 9
 - Composer 2
 
@@ -76,28 +76,24 @@
 
 ## Services
 
-- Mailer - SMTP (development staging)
+- Mailer - SMTP (development|staging)
 - Mailer - Mailgun (production)
-
-## ENV
-
-No special ENV needed.
 
 ## Cookies
 
-| name                                                | description     |
-| --------------------------------------------------- | --------------- |
-| \_\_Host-{app_name}\_{env}\_database_token\_{table} | bearer token    |
-| \_\_Host-{app_name}\_{env}\_session                 | session (admin) |
+| name                                                | description  |
+| --------------------------------------------------- | ------------ |
+| \_\_Host-{app_name}\_{env}\_database_token\_{table} | bearer token |
+| \_\_Host-{app_name}\_{env}\_session                 | session      |
 
 ## Cron
 
-| command                     | schedule       |
-| --------------------------- | -------------- |
-| php8.1 artisan schedule:run | \* \* \* \* \* |
+```
+* * * * * ${PHP} ${ROOT}/artisan schedule:run | rotatelogs -n 1 ${ROOT}/storage/logs/cron.log 50M
+```
 
-## Queues
+## Supervisor
 
-| connection | name    | queue   | cores | tries | sleep | memory | timeout | max time | backoff | max jobs |
-| ---------- | ------- | ------- | ----- | ----- | ----- | ------ | ------- | -------- | ------- | -------- |
-| redis      | default | default | all   | 3     | 3     | 65535  | 86400   | 86400    | 3600    | 1000     |
+```
+${PHP} ${ROOT}/artisan queue:work redis --tries=3 --sleep=3 --memory=65535 --timeout=86400 --queue=default --max-time=86400 --max-jobs=1000 --backoff=3600
+```

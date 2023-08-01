@@ -2,10 +2,10 @@
 SHELL := /bin/bash
 
 # Variables
-MAKE_PHP_8_1_BIN ?= php8.1
+MAKE_PHP_8_2_BIN ?= php8.2
 MAKE_COMPOSER_2_BIN ?= /usr/local/bin/composer2
 
-MAKE_PHP ?= ${MAKE_PHP_8_1_BIN}
+MAKE_PHP ?= ${MAKE_PHP_8_2_BIN}
 MAKE_COMPOSER ?= ${MAKE_PHP} ${MAKE_COMPOSER_2_BIN}
 MAKE_ARTISAN ?= ${MAKE_PHP} artisan
 

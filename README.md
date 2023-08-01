@@ -1,6 +1,6 @@
 ## Application documentation
 
-Available at [./docs/application_documentation.md](./docs/application_documentation.md).
+Source files are located in [./docs/application_documentation.md](./docs/application_documentation.md).
 
 ## API specification
 
@@ -16,15 +16,13 @@ Source files are located in [./public/docs/httpie.sh](./public/docs/httpie.sh).
 
 ## Database schema
 
-Available at [./docs/database_schema.md](./docs/database_schema.md).
+Source files are located in [./docs/database_schema.md](./docs/database_schema.md).
 
-## How to setup
+## How to provision
 
 ```sh
 # configure ENV via .env
 cp -n .env.example .env
-
-nano .env
 
 # build app for selected environment
 make production
@@ -32,51 +30,49 @@ make staging
 make development
 make local
 make testing
-
-# direct webserver strictly to /public/index.php only
 ```
 
 ## Artisan
 
 ```sh
-# make validity class
-php8.1 artisan make:validity SharedValidity
+# scaffold validity
+php8.2 artisan make:validity SharedValidity
 
-# test mail
-php8.1 artisan test:mail
+# test mailer integration
+php8.2 artisan test:mail
 
-# scaffold
-php8.1 artisan make:tchi Model
+# scaffold crud
+php8.2 artisan make:tchi Model
 ```
 
 ## Makefile
 
 ```sh
 # required env variables
-MAKE_PHP_8_1_BIN="php8.1"
+MAKE_PHP_8_2_BIN="php8.2"
 MAKE_COMPOSER_2_BIN="/usr/local/bin/composer2"
 
-# production build
+# production provision
 make production
 
-# staging build
+# staging provision
 make staging
 
-# development build
+# development provision
 make development
 
-# local build
+# local provision
 make local
 
-# testing build
+# testing provision
 make testing
 
-# check code
+# lint code style, unit tests, static analysis
 make check
 
-# fix code
+# fix code style
 make fix
 
-# local update
+# update everything
 make update-full
 ```
