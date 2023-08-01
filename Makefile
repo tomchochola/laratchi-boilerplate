@@ -14,19 +14,22 @@ MAKE_ARTISAN ?= ${MAKE_PHP} artisan
 
 # Goals
 .PHONY: check
-check: audit lint test
+check: stan test lint audit
 
 .PHONY: audit
 audit: vendor tools
 	${MAKE_COMPOSER} audit --no-interaction
 
+.PHONY: stan
+stan: vendor tools
+	${MAKE_PHP} tools/phpstan/vendor/bin/phpstan analyse --no-progress --no-interaction
+	tools/spectral/node_modules/.bin/spectral lint --fail-severity=hint public/docs/openapi*
+
 .PHONY: lint
 lint: vendor tools
-	tools/prettier-lint/node_modules/.bin/prettier -c .
 	${MAKE_COMPOSER} validate --strict --no-interaction
-	${MAKE_PHP} tools/phpstan/vendor/bin/phpstan analyse --no-progress --no-interaction
+	tools/prettier-lint/node_modules/.bin/prettier -c .
 	${MAKE_PHP} tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --dry-run --diff --no-interaction
-	tools/spectral/node_modules/.bin/spectral lint --fail-severity=hint public/docs/openapi*
 
 .PHONY: test
 test: vendor clear
