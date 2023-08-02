@@ -123,7 +123,7 @@ clean-composer:
 
 .PHONY: update-composer
 update-composer: clean-composer
-	${MAKE_COMPOSER} update -o --no-progress
+	${MAKE_COMPOSER} update -o --no-progress --no-interaction
 
 .PHONY: clean-tools
 clean-tools:
