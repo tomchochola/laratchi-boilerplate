@@ -5,7 +5,7 @@ SHELL := /bin/bash
 MAKE_PHP_8_2_BIN ?= php8.2
 MAKE_COMPOSER_2_BIN ?= /usr/local/bin/composer2
 
-MAKE_PHP ?= ${MAKE_PHP_8_2_BIN}
+MAKE_PHP ?= ${MAKE_PHP_8_2_BIN} -d zend.assertions=1
 MAKE_COMPOSER ?= ${MAKE_PHP} ${MAKE_COMPOSER_2_BIN}
 MAKE_ARTISAN ?= ${MAKE_PHP} artisan
 
@@ -23,12 +23,12 @@ audit: vendor tools
 .PHONY: stan
 stan: vendor tools
 	${MAKE_PHP} tools/phpstan/vendor/bin/phpstan analyse --no-progress --no-interaction
-	tools/spectral/node_modules/.bin/spectral lint --fail-severity=hint public/docs/openapi*
+	"tools/spectral/node_modules/.bin/spectral" lint --fail-severity=hint public/docs/openapi*
 
 .PHONY: lint
 lint: vendor tools
 	${MAKE_COMPOSER} validate --strict --no-interaction
-	tools/prettier-lint/node_modules/.bin/prettier -c .
+	"tools/prettier-lint/node_modules/.bin/prettier" -c .
 	${MAKE_PHP} tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --dry-run --diff --no-interaction
 
 .PHONY: test
@@ -41,7 +41,7 @@ test-integration: vendor clear
 
 .PHONY: fix
 fix: vendor tools
-	tools/prettier-fix/node_modules/.bin/prettier -w .
+	"tools/prettier-fix/node_modules/.bin/prettier" -w .
 	${MAKE_PHP} tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --no-interaction
 
 .PHONY: production
@@ -132,20 +132,22 @@ clean-tools:
 .PHONY: update-tools
 update-tools: clean-tools tools
 
-.PHONY: clean-npm
-clean-npm:
-	git clean -xfd package-lock.json node_modules
-
-.PHONY: update-full
+.PHONY: update
 update-full: update-tools update-composer
 
 .PHONY: clean
-clean: clean-tools clean-composer clean-npm
+clean: clean-tools clean-composer
 	git clean -xfd public
 
 # Aliases
 .PHONY: start
 start: serve
+
+.PHONY: ci
+ci: check
+
+.PHONY: update-full
+update-full: update
 
 # Dependencies
 tools: tools/prettier-lint/node_modules/.bin/prettier tools/prettier-fix/node_modules/.bin/prettier tools/phpstan/vendor/bin/phpstan tools/php-cs-fixer/vendor/bin/php-cs-fixer tools/spectral/node_modules/.bin/spectral
