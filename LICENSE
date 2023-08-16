@@ -1,26 +1,62 @@
-All Rights Reserved License
----------------------------
+# All Rights Reserved License
 
-Copyright (c) 2022+ Tomáš Chochola <chocholatom1997@gmail.com>
+Copyright © 2022+ Tomáš Chochola <chocholatom1997@gmail.com>
 
-This PHP library (the "Software") and the corresponding source code, documentation and related material hosted on GitHub are proprietary to Tomáš Chochola (the "Owner").
+## Terms of Service
 
-Without purchasing a license key in form of a GitHub access token from the Owner, no person or entity is authorized to use, copy, modify, distribute, publish, transmit, or in any way exploit any part of the Software.
+This license is a legal agreement between you and Tomáš Chochola for the use of the Work (the “Software”). By accessing, downloading, or using any files, add-ons, or resources related to the Software, you agree to be bound by the terms and conditions of this license. Tomáš Chochola reserves the right to alter this agreement at any time, for any reason, without notice.
 
-This includes but is not limited to the following activities:
+### Revocation of Rights
 
-1. Cloning, forking, or any other forms of replication of the Software;
-2. Inspecting, reading, studying or otherwise examining the Software's source code;
-3. Taking inspiration from, imitating, or creating derivative works of the Software;
-4. Overriding or modifying any classes, methods, or functions within the Software.
+Tomáš Chochola reserves the right to revoke any and all rights granted to you under this license at any time, for any reason, without notice. Upon revocation, you must immediately cease all use of the Software, delete all copies, and destroy all related materials. Failure to comply with the revocation may result in legal action.
 
-Once a license key has been purchased, the holder of that key (the "Licensee") is granted the non-exclusive, non-transferable right to install this library using composer and use its classes, methods, and functions in their projects, in accordance with the following restrictions:
+### Permitted Use
 
-1. The Licensee is only allowed to extend the given code or use it;
-2. The Licensee is not allowed to override any of the Software's functions;
-3. The Licensee must not make the Software available to others, either through sharing, distributing, or by any other means.
-4. The Licensee must not remove the name of the author, Tomáš Chochola, from the source code or any extended projects. The author's name must always be included and acknowledged in any derivative work.
+A license grants the right to use the Software in accordance with the specific rights and restrictions provided to you by Tomáš Chochola. Unauthorized use, copying, modification, distribution, publication, transmission, exploitation, or any other activities related to the Software are strictly prohibited. The Owner reserves the right to alter or revoke the terms of this license at any time, for any reason, without notice.
 
-The Owner reserves the right to revoke this license at any time, for any reason.
+### License Keys
 
-This Software is provided by the Owner "as is" and any express or implied warranties, including, but not limited to, the implied warranties of merchantability and fitness for a particular purpose are disclaimed. In no event shall the Owner be liable for any direct, indirect, incidental, special, exemplary, or consequential damages (including, but not limited to, procurement of substitute goods or services; loss of use, data, or profits; or business interruption) however caused and on any theory of liability, whether in contract, strict liability, or tort (including negligence or otherwise) arising in any way out of the use of this Software, even if advised of the possibility of such damage.
+License Keys may be required to access or install the Software. You agree not to use unauthorized license keys or otherwise circumvent the license key mechanism. You are responsible for the use of any License Key(s) assigned to you and must not share the License Key(s) with any third party. If your License Key is stolen or if you suspect any improper or illegal usage, you should promptly notify the Owner of such occurrence.
+
+### Restrictions
+
+Unless you have been granted prior, written consent from Tomáš Chochola, you may not:
+
+- Reproduce, distribute, or transfer the Software, or portions thereof, to any third party.
+- Sell, rent, lease, assign, or sublet the Software or portions thereof.
+- Grant rights to any other person.
+- Use the Software in violation of any law or regulation.
+
+All copyright and proprietary notices in the Software files must remain intact.
+
+### Dependency Restrictions
+
+Without purchasing a license key from Tomáš Chochola, no person or entity is authorized to include, reference, or link the Software as a dependency in any project, whether public or private, free or commercial. This includes but is not limited to listing the Software in any dependency management files, such as "composer.json", or otherwise facilitating or encouraging the unauthorized installation or use of the Software.
+
+### Making Copies
+
+You may make copies of the Software for back-up purposes, provided that you reproduce the Software in its original form and with all proprietary notices on the back-up copy.
+
+### Software Modification
+
+You may not alter, modify, extend, or create derivative works of the Software. Components from the Software may not be extracted and used in other programs without prior written consent from Tomáš Chochola.
+
+### Technical Support
+
+No technical support is provided, including but not limited to diagnosis or advice on application-level code issues.
+
+### Refunds
+
+No refunds are offered for any reason.
+
+### Indemnity
+
+You agree to indemnify and hold harmless Tomáš Chochola for any third-party claims, actions, or suits, as well as any related expenses, liabilities, damages, settlements, or fees arising from your use or misuse of the Software, or a violation of any terms of this license.
+
+### Disclaimer Of Warranty
+
+THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, WARRANTIES OF QUALITY, PERFORMANCE, NON-INFRINGEMENT, MERCHANTABILITY, OR FITNESS FOR A PARTICULAR PURPOSE. FURTHER, TOMÁŠ CHOCHOLA DOES NOT WARRANT THAT THE SOFTWARE OR ANY RELATED SERVICE WILL ALWAYS BE AVAILABLE.
+
+### Limitations Of Liability
+
+YOU ASSUME ALL RISK ASSOCIATED WITH THE INSTALLATION AND USE OF THE SOFTWARE. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS OF THE SOFTWARE BE LIABLE FOR CLAIMS, DAMAGES OR OTHER LIABILITY ARISING FROM, OUT OF, OR IN CONNECTION WITH THE SOFTWARE. YOU ARE SOLELY RESPONSIBLE FOR DETERMINING THE APPROPRIATENESS OF USE AND ASSUME ALL RISKS ASSOCIATED WITH ITS USE, INCLUDING BUT NOT LIMITED TO THE RISKS OF PROGRAM ERRORS, DAMAGE TO EQUIPMENT, LOSS OF DATA OR SOFTWARE PROGRAMS, OR UNAVAILABILITY OR INTERRUPTION OF OPERATIONS.
