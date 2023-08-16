@@ -7,6 +7,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Seeder;
+use Tomchochola\Laratchi\Config\Config;
 
 class UserSeeder extends Seeder
 {
@@ -28,7 +29,7 @@ class UserSeeder extends Seeder
         }
 
         UserFactory::new()
-            ->locale(resolveApp()->getLocale())
+            ->locale((new Config())->appLocale())
             ->password()
             ->blankRememberToken()
             ->unverified()
