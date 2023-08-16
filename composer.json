@@ -56,11 +56,6 @@
     "preferred-install": "dist",
     "sort-packages": true
   },
-  "extra": {
-    "laravel": {
-      "dont-discover": []
-    }
-  },
   "scripts": {
     "post-install-cmd": [
       "@php artisan vendor:publish --tag=laravel-assets --force",
