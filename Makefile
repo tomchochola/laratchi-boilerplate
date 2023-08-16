@@ -133,7 +133,7 @@ clean-tools:
 update-tools: clean-tools tools
 
 .PHONY: update
-update-full: update-tools update-composer
+update: update-tools update-composer
 
 .PHONY: clean
 clean: clean-tools clean-composer
