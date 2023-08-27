@@ -10,9 +10,10 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Notifications\AnonymousNotifiable;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
-use Tomchochola\Laratchi\Auth\Http\Controllers\MeUpdateController;
 use Tomchochola\Laratchi\Auth\Notifications\EmailConfirmationNotification;
 use Tomchochola\Laratchi\Auth\Services\EmailBrokerService;
+use Tomchochola\Laratchi\Support\Resolver;
+use Tomchochola\Laratchi\Support\Typer;
 
 class MeUpdateControllerTest extends TestCase
 {
@@ -27,10 +28,8 @@ class MeUpdateControllerTest extends TestCase
 
         Notification::fake();
 
-        $me = UserFactory::new()->createOne();
-        $newMe = UserFactory::new()->makeOne();
-
-        \assert($me instanceof User && $newMe instanceof User);
+        $me = Typer::assertInstance(UserFactory::new()->createOne(), User::class);
+        $newMe = Typer::assertInstance(UserFactory::new()->makeOne(), User::class);
 
         $data = [
             'email' => $newMe->getEmail(),
@@ -38,7 +37,7 @@ class MeUpdateControllerTest extends TestCase
             'locale' => $newMe->getLocale(),
         ];
 
-        $response = $this->be($me)->post(resolveUrlFactory()->action(MeUpdateController::class), $data);
+        $response = $this->be($me)->post(Resolver::resolveUrlGenerator()->to('/api/v1/me/update'), $data);
 
         $response->assertNoContent(202);
 
@@ -54,10 +53,8 @@ class MeUpdateControllerTest extends TestCase
 
         Notification::fake();
 
-        $me = UserFactory::new()->createOne();
-        $newMe = UserFactory::new()->makeOne();
-
-        \assert($me instanceof User && $newMe instanceof User);
+        $me = Typer::assertInstance(UserFactory::new()->createOne(), User::class);
+        $newMe = Typer::assertInstance(UserFactory::new()->makeOne(), User::class);
 
         $data = [
             'email' => $newMe->getEmail(),
@@ -67,7 +64,7 @@ class MeUpdateControllerTest extends TestCase
 
         EmailBrokerService::inject()->confirm($me->getTable(), $newMe->getEmail());
 
-        $response = $this->be($me)->post(resolveUrlFactory()->action(MeUpdateController::class), $data);
+        $response = $this->be($me)->post(Resolver::resolveUrlGenerator()->to('/api/v1/me/update'), $data);
 
         $response->assertNoContent();
 
@@ -83,9 +80,7 @@ class MeUpdateControllerTest extends TestCase
 
         Notification::fake();
 
-        $me = UserFactory::new()->createOne();
-
-        \assert($me instanceof User);
+        $me = Typer::assertInstance(UserFactory::new()->createOne(), User::class);
 
         $data = [
             'email' => $me->getEmail(),
@@ -95,7 +90,7 @@ class MeUpdateControllerTest extends TestCase
 
         EmailBrokerService::inject()->confirm($me->getTable(), $me->getEmail());
 
-        $response = $this->be($me)->post(resolveUrlFactory()->action(MeUpdateController::class), $data);
+        $response = $this->be($me)->post(Resolver::resolveUrlGenerator()->to('/api/v1/me/update'), $data);
 
         $response->assertNoContent();
 
@@ -111,10 +106,8 @@ class MeUpdateControllerTest extends TestCase
 
         Notification::fake();
 
-        $me = UserFactory::new()->createOne();
-        $newMe = UserFactory::new()->createOne();
-
-        \assert($me instanceof User && $newMe instanceof User);
+        $me = Typer::assertInstance(UserFactory::new()->createOne(), User::class);
+        $newMe = Typer::assertInstance(UserFactory::new()->createOne(), User::class);
 
         $data = [
             'email' => $newMe->getEmail(),
@@ -122,7 +115,7 @@ class MeUpdateControllerTest extends TestCase
             'locale' => $newMe->getLocale(),
         ];
 
-        $response = $this->be($me)->post(resolveUrlFactory()->action(MeUpdateController::class), $data);
+        $response = $this->be($me)->post(Resolver::resolveUrlGenerator()->to('/api/v1/me/update'), $data);
 
         $this->validateJsonApiValidationError($response, ['email']);
 

@@ -2,6 +2,12 @@
 
 declare(strict_types=1);
 
+use Tomchochola\Laratchi\Config\Env;
+use Tomchochola\Laratchi\Support\Resolver;
+
+$env = Env::inject();
+$app = Resolver::resolveApp();
+
 return [
     /*
     |--------------------------------------------------------------------------
@@ -32,14 +38,14 @@ return [
     'disks' => [
         'local' => [
             'driver' => 'local',
-            'root' => resolveApp()->storagePath('app'),
+            'root' => $app->storagePath('app'),
             'throw' => false,
         ],
 
         'public' => [
             'driver' => 'local',
-            'root' => resolveApp()->storagePath('app/public'),
-            'url' => mustEnvString('APP_URL').'/storage',
+            'root' => $app->storagePath('app/public'),
+            'url' => $env->mustParseString('APP_URL').'/storage',
             'visibility' => 'public',
             'throw' => false,
         ],
@@ -57,6 +63,6 @@ return [
     */
 
     'links' => [
-        resolveApp()->publicPath().'/storage' => resolveApp()->storagePath('app/public'),
+        $app->publicPath().'/storage' => $app->storagePath('app/public'),
     ],
 ];

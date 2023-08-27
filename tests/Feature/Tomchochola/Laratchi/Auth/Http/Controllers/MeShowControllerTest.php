@@ -8,7 +8,8 @@ use App\Models\User;
 use Database\Factories\UserFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
-use Tomchochola\Laratchi\Auth\Http\Controllers\MeShowController;
+use Tomchochola\Laratchi\Support\Resolver;
+use Tomchochola\Laratchi\Support\Typer;
 
 class MeShowControllerTest extends TestCase
 {
@@ -21,13 +22,11 @@ class MeShowControllerTest extends TestCase
     {
         $this->locale($locale);
 
-        $me = UserFactory::new()->createOne();
-
-        \assert($me instanceof User);
+        $me = Typer::assertInstance(UserFactory::new()->createOne(), User::class);
 
         $query = [];
 
-        $response = $this->be($me)->get(resolveUrlFactory()->action(MeShowController::class, $query));
+        $response = $this->be($me)->get(Resolver::resolveUrlGenerator()->to('/api/v1/me/show', $query));
 
         $response->assertOk();
 
@@ -43,7 +42,7 @@ class MeShowControllerTest extends TestCase
 
         $query = [];
 
-        $response = $this->get(resolveUrlFactory()->action(MeShowController::class, $query));
+        $response = $this->get(Resolver::resolveUrlGenerator()->to('/api/v1/me/show', $query));
 
         $response->assertNoContent();
     }

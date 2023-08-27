@@ -6,6 +6,7 @@ namespace Tests\Feature\Tomchochola\Laratchi\Swagger\Http\Controllers;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use Tomchochola\Laratchi\Support\Resolver;
 
 class SwaggerControllerTest extends TestCase
 {
@@ -20,7 +21,7 @@ class SwaggerControllerTest extends TestCase
 
         $query = [];
 
-        $response = $this->get(resolveUrlFactory()->to('api/v1/spec', $query));
+        $response = $this->get(Resolver::resolveUrlGenerator()->to('/api/v1/spec', $query));
 
         $response->assertOk();
 

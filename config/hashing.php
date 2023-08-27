@@ -2,6 +2,10 @@
 
 declare(strict_types=1);
 
+use Tomchochola\Laratchi\Config\Env;
+
+$env = Env::inject();
+
 return [
     /*
     |--------------------------------------------------------------------------
@@ -32,6 +36,6 @@ return [
     'argon' => [
         'memory' => 65536,
         'threads' => 1,
-        'time' => isEnv(['local', 'testing']) ? 1 : 4,
+        'time' => $env->appEnvIs(['local', 'testing']) ? 1 : 4,
     ],
 ];

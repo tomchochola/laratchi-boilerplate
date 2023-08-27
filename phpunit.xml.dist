@@ -38,7 +38,7 @@
     <env name="SPA_URL_EN" value="'http://localhost:8080'" />
     <env name="APP_KEY" value="'base64:k7XaOGDe52ZOY2P77nbS6P1p7b/mMHL+aN0jzV+Usdw='" />
 
-    <env name="DB_DATABASE" value="'laratchi_boilerplate_testing'" />
+    <env name="DB_DATABASE" value="'testing'" />
 
     <env name="MAIL_FROM_ADDRESS" value="'hello@localhost:8000'" />
     <env name="MAIL_FROM_NAME" value="'Feature test'" />

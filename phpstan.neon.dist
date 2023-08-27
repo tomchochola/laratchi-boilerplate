@@ -5,7 +5,7 @@ includes:
     - tools/phpstan/vendor/spaze/phpstan-disallowed-calls/disallowed-execution-calls.neon
     - tools/phpstan/vendor/spaze/phpstan-disallowed-calls/disallowed-insecure-calls.neon
     - tools/phpstan/vendor/spaze/phpstan-disallowed-calls/disallowed-loose-calls.neon
-    - vendor/tomchochola/laratchi/shared/phpstan/hard.neon
+    - vendor/tomchochola/laratchi/shared/phpstan/hardcore.neon
 
 parameters:
   paths:

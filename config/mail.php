@@ -2,7 +2,13 @@
 
 declare(strict_types=1);
 
-$driver = mapEnv([
+use Tomchochola\Laratchi\Config\Env;
+use Tomchochola\Laratchi\Support\Resolver;
+
+$env = Env::inject();
+$app = Resolver::resolveApp();
+
+$driver = $env->appEnvMap([
     'local' => 'log',
     'testing' => 'array',
     'development' => 'smtp',
@@ -45,13 +51,13 @@ return [
     'mailers' => [
         'smtp' => [
             'transport' => 'smtp',
-            'host' => $driver === 'smtp' ? mustEnvString('MAIL_HOST') : envString('MAIL_HOST'),
-            'port' => $driver === 'smtp' ? mustEnvInt('MAIL_PORT') : envInt('MAIL_PORT'),
+            'host' => $driver === 'smtp' ? $env->mustParseString('MAIL_HOST') : $env->mustParseNullableString('MAIL_HOST'),
+            'port' => $driver === 'smtp' ? $env->mustParseInt('MAIL_PORT') : $env->mustParseNullableInt('MAIL_PORT'),
             'encryption' => 'tls',
-            'username' => $driver === 'smtp' ? mustEnvString('MAIL_USERNAME') : envString('MAIL_USERNAME'),
-            'password' => $driver === 'smtp' ? mustEnvString('MAIL_PASSWORD') : envString('MAIL_PASSWORD'),
+            'username' => $driver === 'smtp' ? $env->mustParseString('MAIL_USERNAME') : $env->mustParseNullableString('MAIL_USERNAME'),
+            'password' => $driver === 'smtp' ? $env->mustParseString('MAIL_PASSWORD') : $env->mustParseNullableString('MAIL_PASSWORD'),
             'timeout' => null,
-            'local_domain' => envString('MAIL_EHLO_DOMAIN'),
+            'local_domain' => $env->mustParseNullableString('MAIL_EHLO_DOMAIN'),
         ],
 
         'mailgun' => [
@@ -80,8 +86,8 @@ return [
     */
 
     'from' => [
-        'address' => mustEnvString('MAIL_FROM_ADDRESS'),
-        'name' => mustEnvString('MAIL_FROM_NAME'),
+        'address' => $env->mustParseString('MAIL_FROM_ADDRESS'),
+        'name' => $env->mustParseString('MAIL_FROM_NAME'),
     ],
 
     /*
@@ -98,6 +104,6 @@ return [
     'markdown' => [
         'theme' => 'default',
 
-        'paths' => [resolveApp()->resourcePath('views/vendor/mail')],
+        'paths' => [$app->resourcePath('views/vendor/mail')],
     ],
 ];

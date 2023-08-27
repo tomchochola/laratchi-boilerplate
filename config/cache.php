@@ -3,6 +3,11 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Str;
+use Tomchochola\Laratchi\Config\Env;
+use Tomchochola\Laratchi\Support\Resolver;
+
+$env = Env::inject();
+$app = Resolver::resolveApp();
 
 return [
     /*
@@ -16,7 +21,7 @@ return [
     |
     */
 
-    'default' => mapEnv([
+    'default' => $env->appEnvMap([
         'local' => 'file',
         'testing' => 'array',
         'development' => 'redis',
@@ -46,7 +51,7 @@ return [
 
         'file' => [
             'driver' => 'file',
-            'path' => resolveApp()->storagePath('framework/cache/data'),
+            'path' => $app->storagePath('framework/cache/data'),
         ],
 
         'redis' => [
@@ -67,5 +72,5 @@ return [
     |
     */
 
-    'prefix' => Str::slug(mustEnvString('APP_NAME'), '_').'_'.currentEnv().'_cache_',
+    'prefix' => Str::slug($env->mustParseString('APP_NAME'), '_').'_'.$env->appEnv().'_cache_',
 ];

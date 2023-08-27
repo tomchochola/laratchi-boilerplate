@@ -6,6 +6,8 @@ namespace Tests\Feature\Tomchochola\Laratchi\Http\Controllers;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use Tomchochola\Laratchi\Support\Resolver;
+use Tomchochola\Laratchi\Translation\Trans;
 
 class SpaRedirectControllerTest extends TestCase
 {
@@ -20,8 +22,8 @@ class SpaRedirectControllerTest extends TestCase
 
         $query = [];
 
-        $response = $this->get(resolveUrlFactory()->to('/', $query));
+        $response = $this->get(Resolver::resolveUrlGenerator()->to('/', $query));
 
-        $response->assertRedirect(mustTransString('spa.url'));
+        $response->assertRedirect(Trans::inject()->assertString('spa.url'));
     }
 }

@@ -2,6 +2,11 @@
 
 declare(strict_types=1);
 
+use Tomchochola\Laratchi\Config\Env;
+use Tomchochola\Laratchi\Support\Typer;
+
+$env = Env::inject();
+
 return [
     /*
     |--------------------------------------------------------------------------
@@ -14,7 +19,7 @@ return [
     |
     */
 
-    'name' => mustEnvString('APP_NAME'),
+    'name' => $env->mustParseString('APP_NAME'),
 
     /*
     |--------------------------------------------------------------------------
@@ -27,7 +32,7 @@ return [
     |
     */
 
-    'env' => mustEnvString('APP_ENV', in: ['testing', 'local', 'development', 'staging', 'production']),
+    'env' => Typer::assertIn($env->appEnv(), ['testing', 'local', 'development', 'staging', 'production']),
 
     /*
     |--------------------------------------------------------------------------
@@ -40,7 +45,7 @@ return [
     |
     */
 
-    'debug' => isEnv(['local', 'testing']),
+    'debug' => $env->appEnvIs(['local', 'testing']),
 
     /*
     |--------------------------------------------------------------------------
@@ -53,7 +58,7 @@ return [
     |
     */
 
-    'url' => mustEnvString('APP_URL'),
+    'url' => $env->mustParseString('APP_URL'),
 
     'asset_url' => null,
 
@@ -122,7 +127,7 @@ return [
     |
     */
 
-    'key' => mustEnvString('APP_KEY'),
+    'key' => $env->mustParseString('APP_KEY'),
 
     'cipher' => 'AES-256-CBC',
 

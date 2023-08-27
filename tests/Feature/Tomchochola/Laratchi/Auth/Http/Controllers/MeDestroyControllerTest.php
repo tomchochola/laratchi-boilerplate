@@ -8,7 +8,8 @@ use App\Models\User;
 use Database\Factories\UserFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
-use Tomchochola\Laratchi\Auth\Http\Controllers\MeDestroyController;
+use Tomchochola\Laratchi\Support\Resolver;
+use Tomchochola\Laratchi\Support\Typer;
 
 class MeDestroyControllerTest extends TestCase
 {
@@ -21,21 +22,22 @@ class MeDestroyControllerTest extends TestCase
     {
         $this->locale($locale);
 
-        $me = UserFactory::new()
-            ->password()
-            ->createOne();
-
-        \assert($me instanceof User);
+        $me = Typer::assertInstance(
+            UserFactory::new()
+                ->password()
+                ->createOne(),
+            User::class,
+        );
 
         $data = [
             'password' => UserFactory::PASSWORD,
         ];
 
-        $response = $this->be($me)->post(resolveUrlFactory()->action(MeDestroyController::class), $data);
+        $response = $this->be($me)->post(Resolver::resolveUrlGenerator()->to('/api/v1/me/destroy'), $data);
 
         $response->assertNoContent();
 
-        $response->assertCookieExpired(resolveGuard($me->getTable())->cookieName());
+        $response->assertCookieExpired(Resolver::resolveDatabaseTokenGuard($me->getTable())->cookieName());
 
         $this->assertGuest();
     }

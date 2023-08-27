@@ -34,7 +34,7 @@ class User extends LaratchiUser
      */
     public function getEmail(): string
     {
-        return $this->mustString('email');
+        return $this->assertString('email');
     }
 
     /**
@@ -42,7 +42,7 @@ class User extends LaratchiUser
      */
     public function getName(): string
     {
-        return $this->mustString('name');
+        return $this->assertString('name');
     }
 
     /**
@@ -50,7 +50,7 @@ class User extends LaratchiUser
      */
     public function getLocale(): string
     {
-        return $this->mustString('locale');
+        return $this->assertString('locale');
     }
 
     /**
@@ -58,7 +58,7 @@ class User extends LaratchiUser
      */
     public function getEmailVerifiedAt(): ?Carbon
     {
-        return $this->carbon('email_verified_at');
+        return $this->assertNullableCarbon('email_verified_at');
     }
 
     /**

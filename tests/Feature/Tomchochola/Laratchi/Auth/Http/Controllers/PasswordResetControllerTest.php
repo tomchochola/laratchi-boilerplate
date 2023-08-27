@@ -8,7 +8,8 @@ use App\Models\User;
 use Database\Factories\UserFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
-use Tomchochola\Laratchi\Auth\Http\Controllers\PasswordResetController;
+use Tomchochola\Laratchi\Support\Resolver;
+use Tomchochola\Laratchi\Support\Typer;
 
 class PasswordResetControllerTest extends TestCase
 {
@@ -21,11 +22,9 @@ class PasswordResetControllerTest extends TestCase
     {
         $this->locale($locale);
 
-        $me = UserFactory::new()->createOne();
+        $me = Typer::assertInstance(UserFactory::new()->createOne(), User::class);
 
-        \assert($me instanceof User);
-
-        $token = resolvePasswordBroker($me->getTable())->createToken($me);
+        $token = Resolver::resolvePasswordBroker($me->getTable())->createToken($me);
 
         $data = [
             'email' => $me->getEmailForPasswordReset(),
@@ -33,11 +32,11 @@ class PasswordResetControllerTest extends TestCase
             'password' => UserFactory::PASSWORD,
         ];
 
-        $response = $this->post(resolveUrlFactory()->action(PasswordResetController::class), $data);
+        $response = $this->post(Resolver::resolveUrlGenerator()->to('/api/v1/password/reset'), $data);
 
         $response->assertOk();
 
-        $response->assertCookie(resolveGuard($me->getTable())->cookieName());
+        $response->assertCookie(Resolver::resolveDatabaseTokenGuard($me->getTable())->cookieName());
 
         $this->validateJsonApiResponse($response, $this->structureMe(), []);
 

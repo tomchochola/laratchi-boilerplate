@@ -2,9 +2,13 @@
 
 declare(strict_types=1);
 
+use Tomchochola\Laratchi\Config\Env;
+
+$env = Env::inject();
+
 return [
     'url' => [
-        'cs' => mustEnvString('SPA_URL_CS'),
-        'en' => mustEnvString('SPA_URL_EN'),
+        'cs' => $env->mustParseString('SPA_URL_CS'),
+        'en' => $env->mustParseString('SPA_URL_EN'),
     ],
 ];

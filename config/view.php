@@ -2,6 +2,10 @@
 
 declare(strict_types=1);
 
+use Tomchochola\Laratchi\Support\Resolver;
+
+$app = Resolver::resolveApp();
+
 return [
     /*
     |--------------------------------------------------------------------------
@@ -14,7 +18,7 @@ return [
     |
     */
 
-    'paths' => [resolveApp()->resourcePath('views')],
+    'paths' => [$app->resourcePath('views')],
 
     /*
     |--------------------------------------------------------------------------
@@ -27,5 +31,5 @@ return [
     |
     */
 
-    'compiled' => \realpath(resolveApp()->storagePath('framework/views')),
+    'compiled' => \realpath($app->storagePath('framework/views')),
 ];

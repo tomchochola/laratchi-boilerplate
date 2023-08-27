@@ -2,15 +2,17 @@
 
 declare(strict_types=1);
 
-resolveRouter()
-    ->get('api/v1/spec', Tomchochola\Laratchi\Swagger\Http\Controllers\SwaggerController::class)
-    ->defaults('url', resolveUrlFactory()->asset('docs/openapi_v1.json'));
+use Tomchochola\Laratchi\Support\Resolver;
 
-resolveRouteRegistrar()
+Resolver::resolveRouter()
+    ->get('api/v1/spec', Tomchochola\Laratchi\Swagger\Http\Controllers\SwaggerController::class)
+    ->defaults('url', Resolver::resolveUrlGenerator()->asset('docs/openapi_v1.json'));
+
+Resolver::resolveRouteRegistrar()
     ->middleware('api')
     ->prefix('api')
     ->group(__DIR__.'/api.php');
 
-resolveRouteRegistrar()
+Resolver::resolveRouteRegistrar()
     ->middleware('session')
     ->group(__DIR__.'/session.php');

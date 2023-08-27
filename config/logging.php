@@ -3,8 +3,13 @@
 declare(strict_types=1);
 
 use Monolog\Handler\NullHandler;
+use Tomchochola\Laratchi\Config\Env;
+use Tomchochola\Laratchi\Support\Resolver;
 
-$level = mapEnv([
+$env = Env::inject();
+$app = Resolver::resolveApp();
+
+$level = $env->appEnvMap([
     'local' => 'debug',
     'testing' => 'debug',
     'development' => 'debug',
@@ -24,7 +29,7 @@ return [
     |
     */
 
-    'default' => mapEnv([
+    'default' => $env->appEnvMap([
         'local' => 'single',
         'testing' => 'null',
         'development' => 'single',
@@ -44,7 +49,7 @@ return [
     */
 
     'deprecations' => [
-        'channel' => mapEnv([
+        'channel' => $env->appEnvMap([
             'local' => 'single',
             'testing' => 'null',
             'development' => 'single',
@@ -72,13 +77,13 @@ return [
     'channels' => [
         'single' => [
             'driver' => 'single',
-            'path' => resolveApp()->storagePath('logs/laravel.log'),
+            'path' => $app->storagePath('logs/laravel.log'),
             'level' => $level,
         ],
 
         'daily' => [
             'driver' => 'daily',
-            'path' => resolveApp()->storagePath('logs/laravel.log'),
+            'path' => $app->storagePath('logs/laravel.log'),
             'level' => $level,
             'days' => 14,
         ],
@@ -89,7 +94,7 @@ return [
         ],
 
         'emergency' => [
-            'path' => resolveApp()->storagePath('logs/laravel.log'),
+            'path' => $app->storagePath('logs/laravel.log'),
         ],
     ],
 ];

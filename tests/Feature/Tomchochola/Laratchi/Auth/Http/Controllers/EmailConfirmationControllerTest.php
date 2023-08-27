@@ -8,8 +8,9 @@ use App\Models\User;
 use Database\Factories\UserFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
-use Tomchochola\Laratchi\Auth\Http\Controllers\EmailConfirmationController;
 use Tomchochola\Laratchi\Auth\Services\EmailBrokerService;
+use Tomchochola\Laratchi\Support\Resolver;
+use Tomchochola\Laratchi\Support\Typer;
 
 class EmailConfirmationControllerTest extends TestCase
 {
@@ -22,16 +23,14 @@ class EmailConfirmationControllerTest extends TestCase
     {
         $this->locale($locale);
 
-        $me = UserFactory::new()->makeOne();
-
-        \assert($me instanceof User);
+        $me = Typer::assertInstance(UserFactory::new()->makeOne(), User::class);
 
         $data = [
             'email' => $me->getEmailForVerification(),
             'token' => EmailBrokerService::inject()->store($me->getTable(), $me->getEmailForVerification()),
         ];
 
-        $response = $this->post(resolveUrlFactory()->action(EmailConfirmationController::class), $data);
+        $response = $this->post(Resolver::resolveUrlGenerator()->to('/api/v1/email_verification/confirm'), $data);
 
         $response->assertNoContent();
     }
@@ -43,9 +42,7 @@ class EmailConfirmationControllerTest extends TestCase
     {
         $this->locale($locale);
 
-        $me = UserFactory::new()->makeOne();
-
-        \assert($me instanceof User);
+        $me = Typer::assertInstance(UserFactory::new()->makeOne(), User::class);
 
         $data = [
             'email' => $me->getEmailForVerification(),
@@ -54,7 +51,7 @@ class EmailConfirmationControllerTest extends TestCase
 
         EmailBrokerService::inject()->confirm($me->getTable(), $me->getEmailForVerification());
 
-        $response = $this->be($me)->post(resolveUrlFactory()->action(EmailConfirmationController::class), $data);
+        $response = $this->be($me)->post(Resolver::resolveUrlGenerator()->to('/api/v1/email_verification/confirm'), $data);
 
         $this->validateJsonApiError($response, 409);
     }

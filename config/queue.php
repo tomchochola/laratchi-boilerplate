@@ -2,6 +2,10 @@
 
 declare(strict_types=1);
 
+use Tomchochola\Laratchi\Config\Env;
+
+$env = Env::inject();
+
 return [
     /*
     |--------------------------------------------------------------------------
@@ -14,7 +18,7 @@ return [
     |
     */
 
-    'default' => mapEnv([
+    'default' => $env->appEnvMap([
         'local' => 'sync',
         'testing' => 'sync',
         'development' => 'redis',

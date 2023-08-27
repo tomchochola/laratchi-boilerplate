@@ -16,7 +16,7 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        if (isEnv(['staging', 'production'])) {
+        if (Config::inject()->appEnvIs(['staging', 'production'])) {
             return;
         }
 
@@ -29,7 +29,6 @@ class UserSeeder extends Seeder
         }
 
         UserFactory::new()
-            ->locale((new Config())->appLocale())
             ->password()
             ->blankRememberToken()
             ->unverified()

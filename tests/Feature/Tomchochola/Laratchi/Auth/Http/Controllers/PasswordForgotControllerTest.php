@@ -9,8 +9,9 @@ use Database\Factories\UserFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
-use Tomchochola\Laratchi\Auth\Http\Controllers\PasswordForgotController;
 use Tomchochola\Laratchi\Auth\Notifications\PasswordResetNotification;
+use Tomchochola\Laratchi\Support\Resolver;
+use Tomchochola\Laratchi\Support\Typer;
 
 class PasswordForgotControllerTest extends TestCase
 {
@@ -25,15 +26,13 @@ class PasswordForgotControllerTest extends TestCase
 
         Notification::fake();
 
-        $me = UserFactory::new()->createOne();
-
-        \assert($me instanceof User);
+        $me = Typer::assertInstance(UserFactory::new()->createOne(), User::class);
 
         $data = [
             'email' => $me->getEmail(),
         ];
 
-        $response = $this->post(resolveUrlFactory()->action(PasswordForgotController::class), $data);
+        $response = $this->post(Resolver::resolveUrlGenerator()->to('/api/v1/password/forgot'), $data);
 
         $response->assertNoContent(202);
 

@@ -8,6 +8,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Notifications\AnonymousNotifiable;
 use Tests\TestCase;
 use Tomchochola\Laratchi\Auth\Notifications\EmailConfirmationNotification;
+use Tomchochola\Laratchi\Config\Config;
 
 class EmailConfirmationNotificationTest extends TestCase
 {
@@ -22,8 +23,8 @@ class EmailConfirmationNotificationTest extends TestCase
 
         $email = fake()->email();
 
-        foreach (\array_keys(mustConfigArray('auth.guards')) as $guard) {
-            $notification = EmailConfirmationNotification::inject((string) $guard, 'token', $email);
+        foreach (Config::inject()->authGuards() as $guard) {
+            $notification = EmailConfirmationNotification::inject($guard, 'token', $email);
 
             (new AnonymousNotifiable())->route('mail', $email)->notify($notification->locale($locale));
         }

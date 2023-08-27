@@ -2,6 +2,10 @@
 
 declare(strict_types=1);
 
+use Tomchochola\Laratchi\Config\Env;
+
+$env = Env::inject();
+
 return [
     /*
     |--------------------------------------------------------------------------
@@ -16,9 +20,9 @@ return [
     */
 
     'mailgun' => [
-        'domain' => isEnv(['production']) ? mustEnvString('MAILGUN_DOMAIN') : envString('MAILGUN_DOMAIN'),
-        'secret' => isEnv(['production']) ? mustEnvString('MAILGUN_SECRET') : envString('MAILGUN_SECRET'),
-        'endpoint' => isEnv(['production']) ? mustEnvString('MAILGUN_ENDPOINT', 'api.eu.mailgun.net') : envString('MAILGUN_ENDPOINT', 'api.eu.mailgun.net'),
+        'domain' => $env->appEnvIs(['production']) ? $env->mustParseString('MAILGUN_DOMAIN') : $env->mustParseNullableString('MAILGUN_DOMAIN'),
+        'secret' => $env->appEnvIs(['production']) ? $env->mustParseString('MAILGUN_SECRET') : $env->mustParseNullableString('MAILGUN_SECRET'),
+        'endpoint' => $env->mustParseNullableString('MAILGUN_ENDPOINT') ?? 'api.eu.mailgun.net',
         'scheme' => 'https',
     ],
 ];

@@ -3,6 +3,9 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Str;
+use Tomchochola\Laratchi\Config\Env;
+
+$env = Env::inject();
 
 return [
     /*
@@ -38,12 +41,14 @@ return [
         'mysql' => [
             'driver' => 'mysql',
             'url' => null,
-            'host' => mustEnvString('DB_HOST', '127.0.0.1'),
-            'port' => mustEnvInt('DB_PORT', 3306),
-            'database' => mustEnvString('DB_DATABASE'),
-            'username' => mustEnvString('DB_USERNAME'),
-            'password' => envString('DB_PASSWORD'),
-            'unix_socket' => isEnv(['development', 'staging', 'production']) ? mustEnvString('DB_SOCKET', '/var/run/mysqld/mysqld.sock') : envString('DB_SOCKET'),
+            'host' => $env->mustParseNullableString('DB_HOST') ?? '127.0.0.1',
+            'port' => $env->mustParseNullableInt('DB_PORT') ?? 3306,
+            'database' => $env->mustParseString('DB_DATABASE'),
+            'username' => $env->mustParseString('DB_USERNAME'),
+            'password' => $env->mustParseNullableString('DB_PASSWORD'),
+            'unix_socket' => $env->appEnvIs(['development', 'staging', 'production'])
+                ? $env->mustParseNullableString('DB_SOCKET') ?? '/var/run/mysqld/mysqld.sock'
+                : $env->mustParseNullableString('DB_SOCKET'),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_0900_ai_ci',
             'prefix' => '',
@@ -83,24 +88,24 @@ return [
 
         'options' => [
             'cluster' => 'redis',
-            'prefix' => Str::slug(mustEnvString('APP_NAME'), '_').'_'.currentEnv().'_database_',
+            'prefix' => Str::slug($env->mustParseString('APP_NAME'), '_').'_'.$env->appEnv().'_database_',
         ],
 
         'default' => [
             'url' => null,
-            'host' => mustEnvString('REDIS_HOST', '127.0.0.1'),
-            'username' => envString('REDIS_USERNAME'),
-            'password' => envString('REDIS_PASSWORD'),
-            'port' => mustEnvInt('REDIS_PORT', 6379),
+            'host' => $env->mustParseNullableString('REDIS_HOST') ?? '127.0.0.1',
+            'username' => $env->mustParseNullableString('REDIS_USERNAME'),
+            'password' => $env->mustParseNullableString('REDIS_PASSWORD'),
+            'port' => $env->mustParseNullableInt('REDIS_PORT') ?? 6379,
             'database' => '0',
         ],
 
         'cache' => [
             'url' => null,
-            'host' => mustEnvString('REDIS_HOST', '127.0.0.1'),
-            'username' => envString('REDIS_USERNAME'),
-            'password' => envString('REDIS_PASSWORD'),
-            'port' => mustEnvInt('REDIS_PORT', 6379),
+            'host' => $env->mustParseNullableString('REDIS_HOST') ?? '127.0.0.1',
+            'username' => $env->mustParseNullableString('REDIS_USERNAME'),
+            'password' => $env->mustParseNullableString('REDIS_PASSWORD'),
+            'port' => $env->mustParseNullableInt('REDIS_PORT') ?? 6379,
             'database' => '1',
         ],
     ],

@@ -89,11 +89,11 @@
 ## Cron
 
 ```
-* * * * * ${PHP} ${ROOT}/artisan schedule:run | rotatelogs -n 1 ${ROOT}/storage/logs/cron.log 50M
+* * * * * ./artisan schedule:run | rotatelogs -n 1 ./storage/logs/cron.log 50M
 ```
 
 ## Supervisor
 
 ```
-${PHP} ${ROOT}/artisan queue:work redis --tries=3 --sleep=3 --memory=65535 --timeout=86400 --queue=default --max-time=86400 --max-jobs=1000 --backoff=3600
+./artisan queue:work redis --tries=3 --sleep=3 --memory=65535 --timeout=86400 --queue=default --max-time=86400 --max-jobs=1000 --backoff=3600
 ```

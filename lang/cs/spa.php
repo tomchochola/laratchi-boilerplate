@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-$url = mustConfigString('spa.url.cs');
+use Tomchochola\Laratchi\Config\Config;
+
+$config = Config::inject();
+
+$url = $config->assertString('spa.url.cs');
 
 return [
     'url' => $url,

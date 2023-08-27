@@ -3,6 +3,11 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Str;
+use Tomchochola\Laratchi\Config\Env;
+use Tomchochola\Laratchi\Support\Resolver;
+
+$env = Env::inject();
+$app = Resolver::resolveApp();
 
 return [
     /*
@@ -19,7 +24,7 @@ return [
     |
     */
 
-    'driver' => mapEnv([
+    'driver' => $env->appEnvMap([
         'local' => 'file',
         'testing' => 'array',
         'development' => 'redis',
@@ -66,7 +71,7 @@ return [
     |
     */
 
-    'files' => resolveApp()->storagePath('framework/sessions'),
+    'files' => $app->storagePath('framework/sessions'),
 
     /*
     |--------------------------------------------------------------------------
@@ -133,7 +138,7 @@ return [
     |
     */
 
-    'cookie' => (isEnv(['local', 'testing']) ? '' : '__Host-').Str::slug(mustEnvString('APP_NAME'), '_').'_'.currentEnv().'_session',
+    'cookie' => ($env->appEnvIs(['local', 'testing']) ? '' : '__Host-').Str::slug($env->mustParseString('APP_NAME'), '_').'_'.$env->appEnv().'_session',
 
     /*
     |--------------------------------------------------------------------------

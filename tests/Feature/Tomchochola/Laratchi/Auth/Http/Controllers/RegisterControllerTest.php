@@ -10,9 +10,10 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Notifications\AnonymousNotifiable;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
-use Tomchochola\Laratchi\Auth\Http\Controllers\RegisterController;
 use Tomchochola\Laratchi\Auth\Notifications\EmailConfirmationNotification;
 use Tomchochola\Laratchi\Auth\Services\EmailBrokerService;
+use Tomchochola\Laratchi\Support\Resolver;
+use Tomchochola\Laratchi\Support\Typer;
 
 class RegisterControllerTest extends TestCase
 {
@@ -27,9 +28,7 @@ class RegisterControllerTest extends TestCase
 
         Notification::fake();
 
-        $me = UserFactory::new()->makeOne();
-
-        \assert($me instanceof User);
+        $me = Typer::assertInstance(UserFactory::new()->makeOne(), User::class);
 
         $data = [
             'email' => $me->getEmail(),
@@ -38,11 +37,11 @@ class RegisterControllerTest extends TestCase
             'password' => UserFactory::PASSWORD,
         ];
 
-        $response = $this->post(resolveUrlFactory()->action(RegisterController::class), $data);
+        $response = $this->post(Resolver::resolveUrlGenerator()->to('/api/v1/auth/register'), $data);
 
         $response->assertNoContent(202);
 
-        $response->assertCookieMissing(resolveGuard($me->getTable())->cookieName());
+        $response->assertCookieMissing(Resolver::resolveDatabaseTokenGuard($me->getTable())->cookieName());
 
         $this->assertGuest();
 
@@ -58,9 +57,7 @@ class RegisterControllerTest extends TestCase
 
         Notification::fake();
 
-        $me = UserFactory::new()->makeOne();
-
-        \assert($me instanceof User);
+        $me = Typer::assertInstance(UserFactory::new()->makeOne(), User::class);
 
         $data = [
             'email' => $me->getEmail(),
@@ -71,11 +68,11 @@ class RegisterControllerTest extends TestCase
 
         EmailBrokerService::inject()->confirm($me->getTable(), $me->getEmail());
 
-        $response = $this->post(resolveUrlFactory()->action(RegisterController::class), $data);
+        $response = $this->post(Resolver::resolveUrlGenerator()->to('/api/v1/auth/register'), $data);
 
         $response->assertOk();
 
-        $response->assertCookie(resolveGuard($me->getTable())->cookieName());
+        $response->assertCookie(Resolver::resolveDatabaseTokenGuard($me->getTable())->cookieName());
 
         $this->validateJsonApiResponse($response, $this->structureMe(), []);
 
@@ -93,9 +90,7 @@ class RegisterControllerTest extends TestCase
 
         Notification::fake();
 
-        $me = UserFactory::new()->createOne();
-
-        \assert($me instanceof User);
+        $me = Typer::assertInstance(UserFactory::new()->createOne(), User::class);
 
         $data = [
             'email' => $me->getEmail(),
@@ -104,9 +99,9 @@ class RegisterControllerTest extends TestCase
             'password' => UserFactory::PASSWORD,
         ];
 
-        $response = $this->post(resolveUrlFactory()->action(RegisterController::class), $data);
+        $response = $this->post(Resolver::resolveUrlGenerator()->to('/api/v1/auth/register'), $data);
 
-        $response->assertCookieMissing(resolveGuard($me->getTable())->cookieName());
+        $response->assertCookieMissing(Resolver::resolveDatabaseTokenGuard($me->getTable())->cookieName());
 
         $this->validateJsonApiValidationError($response, ['email']);
 

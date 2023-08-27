@@ -8,7 +8,8 @@ use App\Models\User;
 use Database\Factories\UserFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
-use Tomchochola\Laratchi\Auth\Http\Controllers\LoginController;
+use Tomchochola\Laratchi\Support\Resolver;
+use Tomchochola\Laratchi\Support\Typer;
 
 class LoginControllerTest extends TestCase
 {
@@ -21,22 +22,23 @@ class LoginControllerTest extends TestCase
     {
         $this->locale($locale);
 
-        $me = UserFactory::new()
-            ->password()
-            ->createOne();
-
-        \assert($me instanceof User);
+        $me = Typer::assertInstance(
+            UserFactory::new()
+                ->password()
+                ->createOne(),
+            User::class,
+        );
 
         $data = [
             'email' => $me->getEmail(),
             'password' => UserFactory::PASSWORD,
         ];
 
-        $response = $this->post(resolveUrlFactory()->action(LoginController::class), $data);
+        $response = $this->post(Resolver::resolveUrlGenerator()->to('/api/v1/auth/login'), $data);
 
         $response->assertOk();
 
-        $response->assertCookie(resolveGuard($me->getTable())->cookieName());
+        $response->assertCookie(Resolver::resolveDatabaseTokenGuard($me->getTable())->cookieName());
 
         $this->validateJsonApiResponse($response, $this->structureMe(), []);
 
