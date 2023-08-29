@@ -88,7 +88,7 @@ return [
 
         'options' => [
             'cluster' => 'redis',
-            'prefix' => Str::slug($env->mustParseString('APP_NAME'), '_').'_'.$env->appEnv().'_database_',
+            'prefix' => Str::slug($env->mustParseString('APP_NAME'), '_') . '_' . $env->appEnv() . '_database_',
         ],
 
         'default' => [

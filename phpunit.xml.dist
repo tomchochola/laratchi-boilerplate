@@ -4,32 +4,25 @@
   xsi:noNamespaceSchemaLocation="./vendor/phpunit/phpunit/phpunit.xsd"
   bootstrap="vendor/autoload.php"
   colors="true"
-  convertDeprecationsToExceptions="true"
-  failOnIncomplete="true"
+  failOnEmptyTestSuite="true"
   failOnRisky="true"
-  failOnSkipped="true"
   failOnWarning="true"
+  failOnDeprecation="true"
+  failOnNotice="true"
   beStrictAboutChangesToGlobalState="true"
   beStrictAboutOutputDuringTests="true"
-  beStrictAboutTodoAnnotatedTests="true"
   beStrictAboutTestsThatDoNotTestAnything="false"
-  verbose="true"
 >
   <testsuites>
-    <testsuite name="Feature">
-      <directory>./tests/Feature</directory>
-    </testsuite>
-  </testsuites>
-  <coverage processUncoveredFiles="true">
-    <include>
-      <directory suffix=".php">./app</directory>
-    </include>
-  </coverage>
-  <groups>
-    <exclude>
-      <group>integration</group>
-    </exclude>
-  </groups>
+        <testsuite name="Feature">
+            <directory>tests/Feature</directory>
+        </testsuite>
+    </testsuites>
+    <source>
+        <include>
+            <directory>app</directory>
+        </include>
+    </source>
   <php>
     <env name="APP_NAME" value="'Feature test'" />
     <env name="APP_ENV" value="'testing'" />

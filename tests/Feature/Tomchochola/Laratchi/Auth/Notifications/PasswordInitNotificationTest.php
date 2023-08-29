@@ -21,7 +21,7 @@ class PasswordInitNotificationTest extends TestCase
     {
         $this->locale($locale);
 
-        $email = fake()->email();
+        $email = \fake()->email();
 
         foreach (Config::inject()->authGuards() as $guard) {
             $notification = PasswordInitNotification::inject($guard, 'token', $email);

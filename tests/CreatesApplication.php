@@ -14,7 +14,7 @@ trait CreatesApplication
      */
     public function createApplication(): HttpKernelInterface
     {
-        $app = require __DIR__.'/../bootstrap/app.php';
+        $app = require __DIR__ . '/../bootstrap/app.php';
 
         $app->make(KernelContract::class)->bootstrap();
 

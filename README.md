@@ -8,10 +8,6 @@ Available at URL `/api/v1/spec`.
 
 Source files are located in [./public/docs/openapi_v1.json](./public/docs/openapi_v1.json).
 
-## Database schema
-
-Source files are located in [./docs/database_schema.md](./docs/database_schema.md).
-
 ## CLI
 
 ```sh

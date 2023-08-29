@@ -72,5 +72,5 @@ return [
     |
     */
 
-    'prefix' => Str::slug($env->mustParseString('APP_NAME'), '_').'_'.$env->appEnv().'_cache_',
+    'prefix' => Str::slug($env->mustParseString('APP_NAME'), '_') . '_' . $env->appEnv() . '_cache_',
 ];

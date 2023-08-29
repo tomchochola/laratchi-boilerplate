@@ -11,8 +11,8 @@ Resolver::resolveRouter()
 Resolver::resolveRouteRegistrar()
     ->middleware('api')
     ->prefix('api')
-    ->group(__DIR__.'/api.php');
+    ->group(__DIR__ . '/api.php');
 
 Resolver::resolveRouteRegistrar()
     ->middleware('session')
-    ->group(__DIR__.'/session.php');
+    ->group(__DIR__ . '/session.php');

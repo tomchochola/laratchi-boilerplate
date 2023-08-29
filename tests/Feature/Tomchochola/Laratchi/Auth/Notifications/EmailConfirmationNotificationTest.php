@@ -21,7 +21,7 @@ class EmailConfirmationNotificationTest extends TestCase
     {
         $this->locale($locale);
 
-        $email = fake()->email();
+        $email = \fake()->email();
 
         foreach (Config::inject()->authGuards() as $guard) {
             $notification = EmailConfirmationNotification::inject($guard, 'token', $email);

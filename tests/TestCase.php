@@ -13,9 +13,11 @@ abstract class TestCase extends LaratchiTestCase
     use CreatesApplication;
 
     /**
-     * @inheritDoc
+     * Locale data provider.
+     *
+     * @return array<mixed>
      */
-    public function localeDataProvider(): array
+    public static function localeDataProvider(): array
     {
         return [
             'cs' => ['cs'],
