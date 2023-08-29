@@ -20,8 +20,8 @@ abstract class TestCase extends LaratchiTestCase
     public static function localeDataProvider(): array
     {
         return [
-            'cs' => ['cs'],
             'en' => ['en'],
+            'cs' => ['cs'],
         ];
     }
 

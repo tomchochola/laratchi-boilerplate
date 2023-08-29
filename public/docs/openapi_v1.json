@@ -1,12 +1,12 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "title": "Laratchi",
-    "description": "API V1 specification\n\n## Request data format\n\nAPI expects `multipart/form-data` or `application/x-www-form-urlencoded` on every input and produces `application/json` on most outputs\n\n### JSON to form conversions\n\n#### Boolean\n\n`true` -> `1`\n\n`false` -> `0`\n\n#### String\n\n`String` -> `no change`\n\n#### Number\n\n`Number` -> `String`\n\n#### Null\n\n`null` -> `_` (empty string)\n\n#### Object and Array\n\nEncode using exploded and deep object format\n\n\n`{data: [{title: 'a'},{title: null}], collection: [], object: {}}` -> `?data[0][title]=a&data[1][title]=&collection=&object=`\n\nEmpty arrays encode as null\n\n`[]` -> `_` (empty string)\n\nEmpty objects encode as null\n\n`{}` -> `_` (empty string)",
-    "version": "3.5.0",
+    "title": "Laratchi boilerplate",
+    "description": "# API Version 1 Specification\n\nWelcome to the API V1 documentation. This document outlines the request and response formats along with data conversion guidelines.\n\n---\n\n## Request Data Format\n\n- **Input Content Types**: The API expects one of the following content types for incoming requests: `multipart/form-data` or `application/x-www-form-urlencoded`.\n\n- **Output Content Type**: The API typically responds with data in `application/json` format.\n\n---\n\n## Data Type Conversions\n\n### JSON to Form Data\n\nWhen converting JSON data to form data, please follow these conversion guidelines:\n\n#### Boolean\n\n- `true` should be converted to `1`\n- `false` should be converted to `0`\n\n#### String\n\n- Strings remain unchanged.\n\n#### Number\n\n- Numeric types should be converted to strings.\n\n#### Null\n\n- For null values, send an empty string.\n\n#### Object and Array\n\n- Encode using the exploded and deep object format. For example, `{data: [{title: 'a'}, {title: null}], collection: [], object: {}}` becomes `?data[0][title]=a&data[1][title]=&collection=&object=`.\n\n**Note:**\n\n- Empty arrays and empty objects should be encoded as an empty string.\n\n---\n\nFeel free to consult this guide while interacting with the API. Let us know if you have any questions or need further clarification.",
+    "version": "4.0.0",
     "contact": {
       "name": "Tomáš Chochola",
-      "url": "https://github.com/tomchochola/laratchi",
+      "url": "https://github.com/tomchochola",
       "email": "chocholatom1997@gmail.com"
     }
   },
@@ -599,12 +599,12 @@
       "locale": {
         "description": "locale",
         "type": "string",
-        "enum": ["cs", "en"]
+        "enum": ["en", "cs"]
       },
       "nullableLocale": {
         "description": "locale or null",
         "type": "string",
-        "enum": ["cs", "en"],
+        "enum": ["en", "cs"],
         "nullable": true
       },
       "email": {
@@ -1082,7 +1082,7 @@
                   "$ref": "#/components/schemas/Error"
                 },
                 {
-                  "description": "Validation error\n\n## Validation error format\n\nError arguments are encoded using `csv` format, strings are wrapped inside `\"`, if `\"` occurs inside string it is doubled `'string \" string'` -> `'string \"\" string'`, fields are separated using `,`\n\n### JSON to csv conversion\n\n#### Boolean\n\n`true` -> `1`\n\n`false` -> `0`\n\n#### String\n\n`String` -> `\"String\"`\n\n#### Number\n\n`Number` -> `no change`\n\n#### Null\n\n`null` -> `_` (empty string)\n\n### Sample conversion\n\n`[true, false, null, 1.0, 1, 'string \" string']` -> `1,0,,1.0,1,\"string \"\" string\"`\n\n### Sample responses\n\n`{errors: {title: ['required_unless:\"type\",0,1']}}`\n\n`{errors: {date: ['before:\"2023-01-01\"']}}`\n\n`{errors: {event_date: ['before:\"registration_date\"']}}`",
+                  "description": "## Validation Errors\n\nThis section describes how the API handles validation errors and returns them in responses.\n\n### Error Format\n\nErrors are returned in `csv` format. Strings are enclosed in double quotes `\"`, and any occurrence of a double quote within a string is doubled (e.g., `'string \" string'` becomes `'string \"\" string'`). Fields are comma-separated.\n\n### Data Type Conversion for Errors\n\n#### Boolean\n\n- `true` becomes `1`\n- `false` becomes `0`\n\n#### String\n\n- Enclose strings in double quotes: `\"String\"`\n\n#### Number\n\n- Numbers remain unchanged\n\n#### Null\n\n- `null` is represented as an empty string\n\n### Example Conversions\n\nFor `[true, false, null, 1.0, 1, 'string \" string']`, the CSV would be `1,0,,1.0,1,\"string \"\" string\"`.\n\n### Sample Error Responses\n\n- `{errors: {title: ['required_unless:\"type\",0,1']}}`\n- `{errors: {date: ['before:\"2023-01-01\"']}}`\n- `{errors: {event_date: ['before:\"registration_date\"']}}`",
                   "type": "object",
                   "properties": {
                     "errors": {

@@ -3,7 +3,7 @@
 ## Tech stack
 
 - PHP 8.2
-- Laravel 9
+- Laravel 10
 - Composer 2
 
 ## Software requirements
@@ -71,13 +71,8 @@
 
 ## Locales
 
-- cs
 - en
-
-## Services
-
-- Mailer - SMTP (development|staging)
-- Mailer - Mailgun (production)
+- cs
 
 ## Cookies
 

@@ -32,7 +32,7 @@ class UserSeeder extends Seeder
             ->password()
             ->blankRememberToken()
             ->unverified()
-            ->createOne(['email' => 'testovaci@uzivatel.cz', 'name' => 'Testovací Uživatel']);
+            ->createOne(['email' => 'test@test.com', 'name' => 'Full Name']);
 
         UserFactory::new()
             ->randomLocale()
