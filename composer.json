@@ -23,7 +23,7 @@
     "laravel/tinker": "^2.8",
     "symfony/http-client": "^6.3",
     "symfony/mailgun-mailer": "^6.3",
-    "tomchochola/laratchi": "dev-main"
+    "tomchochola/laratchi": "^4.x-dev"
   },
   "require-dev": {
     "composer/composer": "^2.5",
