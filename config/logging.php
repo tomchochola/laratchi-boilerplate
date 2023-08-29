@@ -79,6 +79,7 @@ return [
             'driver' => 'single',
             'path' => $app->storagePath('logs/laravel.log'),
             'level' => $level,
+            'replace_placeholders' => true,
         ],
 
         'daily' => [
@@ -86,6 +87,7 @@ return [
             'path' => $app->storagePath('logs/laravel.log'),
             'level' => $level,
             'days' => 14,
+            'replace_placeholders' => true,
         ],
 
         'null' => [

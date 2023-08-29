@@ -43,7 +43,7 @@ return [
     | sending an e-mail. You will specify which one you are using for your
     | mailers below. You are free to add additional mailers as required.
     |
-    | Supported: "smtp", "sendmail", "mailgun", "ses",
+    | Supported: "smtp", "sendmail", "mailgun", "ses", "ses-v2",
     |            "postmark", "log", "array", "failover"
     |
     */
@@ -51,6 +51,7 @@ return [
     'mailers' => [
         'smtp' => [
             'transport' => 'smtp',
+            'url' => null,
             'host' => $driver === 'smtp' ? $env->mustParseString('MAIL_HOST') : $env->mustParseNullableString('MAIL_HOST'),
             'port' => $driver === 'smtp' ? $env->mustParseInt('MAIL_PORT') : $env->mustParseNullableInt('MAIL_PORT'),
             'encryption' => 'tls',
@@ -62,6 +63,9 @@ return [
 
         'mailgun' => [
             'transport' => 'mailgun',
+            'client' => [
+                'timeout' => 5,
+            ],
         ],
 
         'log' => [

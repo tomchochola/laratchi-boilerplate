@@ -10,7 +10,7 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 trait CreatesApplication
 {
     /**
-     * @inheritDoc
+     * Creates the application.
      */
     public function createApplication(): HttpKernelInterface
     {

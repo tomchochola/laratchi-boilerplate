@@ -52,6 +52,7 @@ return [
         'file' => [
             'driver' => 'file',
             'path' => $app->storagePath('framework/cache/data'),
+            'lock_path' => $app->storagePath('framework/cache/data'),
         ],
 
         'redis' => [
