@@ -135,16 +135,6 @@ update: update-tools update-composer
 clean: clean-tools clean-composer
 	git clean -xfd public
 
-# Aliases
-.PHONY: start
-start: serve
-
-.PHONY: ci
-ci: check
-
-.PHONY: update-full
-update-full: update
-
 # Dependencies
 tools: tools/prettier-lint/node_modules/.bin/prettier tools/prettier-fix/node_modules/.bin/prettier tools/phpstan/vendor/bin/phpstan tools/php-cs-fixer/vendor/bin/php-cs-fixer tools/spectral/node_modules/.bin/spectral
 
