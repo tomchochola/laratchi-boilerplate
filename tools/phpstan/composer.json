@@ -8,8 +8,8 @@
   },
   "repositories": [
     {
-      "type": "git",
-      "url": "git@github.com:tomchochola/phpstan-rules.git"
+      "type": "vcs",
+      "url": "https://github.com/tomchochola/phpstan-rules.git"
     }
   ],
   "minimum-stability": "stable",
