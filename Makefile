@@ -10,7 +10,7 @@ MAKE_COMPOSER ?= ${MAKE_PHP} ${MAKE_COMPOSER_2_BIN}
 MAKE_ARTISAN ?= ${MAKE_PHP} artisan
 
 # Default goal
-.DEFAULT_GOAL := assert-never
+.DEFAULT_GOAL := panic
 
 # Goals
 .PHONY: check
@@ -28,7 +28,7 @@ stan: vendor tools
 .PHONY: lint
 lint: vendor tools
 	${MAKE_COMPOSER} validate --strict
-	"tools/prettier-lint/node_modules/.bin/prettier" -c .
+	"tools/prettier/node_modules/.bin/prettier" --plugin=tools/prettier/node_modules/@prettier/plugin-xml/src/plugin.js -c .
 	${MAKE_PHP} tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --dry-run --diff
 
 .PHONY: test
@@ -37,7 +37,7 @@ test: vendor clear
 
 .PHONY: fix
 fix: vendor tools
-	"tools/prettier-fix/node_modules/.bin/prettier" -w .
+	"tools/prettier/node_modules/.bin/prettier" --plugin=tools/prettier/node_modules/@prettier/plugin-xml/src/plugin.js --plugin=tools/prettier/node_modules/@prettier/plugin-php/src/index.js -w .
 	${MAKE_PHP} tools/php-cs-fixer/vendor/bin/php-cs-fixer fix
 
 .PHONY: production
@@ -116,6 +116,7 @@ serve: vendor
 .PHONY: clean-composer
 clean-composer:
 	git clean -xfd vendor composer.lock
+	rm -rf vendor
 
 .PHONY: update-composer
 update-composer: clean-composer
@@ -124,6 +125,8 @@ update-composer: clean-composer
 .PHONY: clean-tools
 clean-tools:
 	git clean -xfd tools
+	rm -rf tools/*/vendor
+	rm -rf tools/*/node_modules
 
 .PHONY: update-tools
 update-tools: clean-tools tools
@@ -135,24 +138,11 @@ update: update-tools update-composer
 clean: clean-tools clean-composer
 	git clean -xfd public
 
-# Aliases
-.PHONY: start
-start: serve
-
-.PHONY: ci
-ci: check
-
-.PHONY: update-full
-update-full: update
-
 # Dependencies
-tools: tools/prettier-lint/node_modules/.bin/prettier tools/prettier-fix/node_modules/.bin/prettier tools/phpstan/vendor/bin/phpstan tools/php-cs-fixer/vendor/bin/php-cs-fixer tools/spectral/node_modules/.bin/spectral
+tools: tools/prettier/node_modules/.bin/prettier tools/phpstan/vendor/bin/phpstan tools/php-cs-fixer/vendor/bin/php-cs-fixer tools/spectral/node_modules/.bin/spectral
 
-tools/prettier-lint/node_modules/.bin/prettier:
-	npm --prefix=tools/prettier-lint update
-
-tools/prettier-fix/node_modules/.bin/prettier:
-	npm --prefix=tools/prettier-fix update
+tools/prettier/node_modules/.bin/prettier:
+	npm --prefix=tools/prettier update
 
 vendor:
 	${MAKE_COMPOSER} install
