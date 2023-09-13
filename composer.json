@@ -24,11 +24,11 @@
     "tomchochola/laratchi": "^3.x-dev"
   },
   "require-dev": {
-    "fakerphp/faker": "^1.9.1",
-    "laravel/sail": "^1.0.1",
-    "mockery/mockery": "^1.4.4",
+    "fakerphp/faker": "^1.9",
+    "laravel/sail": "^1.0",
+    "mockery/mockery": "^1.4",
     "nunomaduro/collision": "^6.1",
-    "phpunit/phpunit": "^9.5.10",
+    "phpunit/phpunit": "^9.5",
     "spatie/laravel-ignition": "^1.0"
   },
   "repositories": [
@@ -37,7 +37,7 @@
       "url": "https://github.com/tomchochola/laratchi"
     }
   ],
-  "minimum-stability": "dev",
+  "minimum-stability": "stable",
   "prefer-stable": true,
   "autoload": {
     "psr-4": {

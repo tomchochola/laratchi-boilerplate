@@ -25,11 +25,6 @@
       <directory suffix=".php">./app</directory>
     </include>
   </coverage>
-  <groups>
-    <exclude>
-      <group>integration</group>
-    </exclude>
-  </groups>
   <php>
     <env name="APP_NAME" value="'Feature test'" />
     <env name="APP_ENV" value="'testing'" />
