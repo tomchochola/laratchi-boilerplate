@@ -56,7 +56,7 @@ class User extends LaratchiUser
     /**
      * E-mail verified at getter.
      */
-    public function getEmailVerifiedAt(): ?Carbon
+    public function getEmailVerifiedAt(): Carbon|null
     {
         return $this->assertNullableCarbon('email_verified_at');
     }
@@ -68,7 +68,7 @@ class User extends LaratchiUser
     {
         return new ModelResource(
             $this,
-            static fn (self $resource): array => [
+            static fn(self $resource): array => [
                 'email' => $resource->getEmail(),
                 'name' => $resource->getName(),
                 'locale' => $resource->getLocale(),
@@ -86,7 +86,7 @@ class User extends LaratchiUser
     {
         return new ModelResource(
             $this,
-            static fn (self $resource): array => [
+            static fn(self $resource): array => [
                 'email' => $resource->getEmail(),
                 'name' => $resource->getName(),
             ],

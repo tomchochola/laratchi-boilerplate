@@ -45,7 +45,7 @@ return [
         'public' => [
             'driver' => 'local',
             'root' => $app->storagePath('app/public'),
-            'url' => $env->mustParseString('APP_URL').'/storage',
+            'url' => $env->mustParseString('APP_URL') . '/storage',
             'visibility' => 'public',
             'throw' => false,
         ],
@@ -63,6 +63,6 @@ return [
     */
 
     'links' => [
-        $app->publicPath().'/storage' => $app->storagePath('app/public'),
+        $app->publicPath() . '/storage' => $app->storagePath('app/public'),
     ],
 ];

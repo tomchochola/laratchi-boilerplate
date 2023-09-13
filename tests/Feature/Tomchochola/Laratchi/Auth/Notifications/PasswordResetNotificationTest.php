@@ -21,7 +21,7 @@ class PasswordResetNotificationTest extends TestCase
     {
         $this->locale($locale);
 
-        $email = fake()->email();
+        $email = \fake()->email();
 
         foreach (Config::inject()->authGuards() as $guard) {
             $notification = PasswordResetNotification::inject($guard, 'token', $email);

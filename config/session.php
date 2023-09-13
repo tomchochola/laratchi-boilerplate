@@ -138,7 +138,7 @@ return [
     |
     */
 
-    'cookie' => ($env->appEnvIs(['local', 'testing']) ? '' : '__Host-').Str::slug($env->mustParseString('APP_NAME'), '_').'_'.$env->appEnv().'_session',
+    'cookie' => ($env->appEnvIs(['local', 'testing']) ? '' : '__Host-') . Str::slug($env->mustParseString('APP_NAME'), '_') . '_' . $env->appEnv() . '_session',
 
     /*
     |--------------------------------------------------------------------------
