@@ -6,4 +6,6 @@ namespace App\Providers;
 
 use Tomchochola\Laratchi\Providers\LaratchiServiceProvider as LaratchiLaratchiServiceProvider;
 
-class AppServiceProvider extends LaratchiLaratchiServiceProvider {}
+class AppServiceProvider extends LaratchiLaratchiServiceProvider
+{
+}
