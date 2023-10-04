@@ -27,6 +27,7 @@ yarn-error.log
 # node
 /node_modules
 /package-lock.json
+/yarn.lock
 
 # composer
 /vendor
@@ -47,6 +48,7 @@ phpstan.neon
 /tools/*/node_modules
 /tools/*/package-lock.json
 /tools/*/composer.lock
+/tools/*/yarn.lock
 
 # public
 /public/vendor

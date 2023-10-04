@@ -35,8 +35,8 @@
   },
   "repositories": [
     {
-      "type": "git",
-      "url": "git@github.com:tomchochola/laratchi.git"
+      "type": "vcs",
+      "url": "https://github.com/tomchochola/laratchi.git"
     }
   ],
   "minimum-stability": "stable",
