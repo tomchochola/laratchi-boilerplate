@@ -1,0 +1,20 @@
+includes:
+    - ./vendor/tomchochola/phpstan-rules/shared/phpstan/full.neon
+    - ./vendor/phpstan/phpstan/conf/bleedingEdge.neon
+    - ./vendor/spaze/phpstan-disallowed-calls/disallowed-dangerous-calls.neon
+    - ./vendor/spaze/phpstan-disallowed-calls/disallowed-execution-calls.neon
+    - ./vendor/spaze/phpstan-disallowed-calls/disallowed-insecure-calls.neon
+    - ./vendor/spaze/phpstan-disallowed-calls/disallowed-loose-calls.neon
+    - ./vendor/tomchochola/laratchi/shared/phpstan/hardcore.neon
+
+parameters:
+  paths:
+    - ./app
+    - ./config
+    - ./database
+    - ./lang
+    - ./resources
+    - ./routes
+    - ./tests
+  stubFiles:
+    - ./phpstan.stub

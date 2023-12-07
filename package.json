@@ -1,0 +1,41 @@
+{
+  "name": "@tomchochola/php-template",
+  "description": "php template",
+  "keywords": [
+    "tomchochola",
+    "php-template"
+  ],
+  "homepage": "https://github.com/tomchochola/php-template",
+  "bugs": {
+    "email": "chocholatom1997@gmail.com",
+    "url": "https://github.com/tomchochola/php-template/issues"
+  },
+  "license": "SEE LICENSE IN LICENSE.md",
+  "author": {
+    "email": "chocholatom1997@gmail.com",
+    "name": "Tomáš Chochola",
+    "url": "https://github.com/tomchochola"
+  },
+  "contributors": [
+    {
+      "email": "chocholatom1997@gmail.com",
+      "name": "Tomáš Chochola",
+      "url": "https://github.com/tomchochola"
+    }
+  ],
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/tomchochola"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tomchochola/php-template.git"
+  },
+  "devDependencies": {
+    "@prettier/plugin-php": "latest",
+    "@prettier/plugin-xml": "latest",
+    "prettier": "latest",
+    "@stoplight/spectral-cli": "latest"
+  },
+  "private": true
+}

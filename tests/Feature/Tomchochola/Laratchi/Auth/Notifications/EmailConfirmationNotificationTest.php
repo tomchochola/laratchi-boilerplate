@@ -19,6 +19,8 @@ class EmailConfirmationNotificationTest extends TestCase
      */
     public function test_sending_notification(string $locale): void
     {
+        $this::expectNotToPerformAssertions();
+
         $this->locale($locale);
 
         $email = \fake()->email();

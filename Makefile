@@ -7,160 +7,115 @@ MAKE_COMPOSER_2_BIN ?= /usr/local/bin/composer2
 
 MAKE_PHP ?= ${MAKE_PHP_8_2_BIN}
 MAKE_COMPOSER ?= ${MAKE_PHP} ${MAKE_COMPOSER_2_BIN}
+MAKE_ARTISAN ?= ${MAKE_PHP} ./artisan
 
 # Default goal
 .DEFAULT_GOAL := panic
 
 # Goals
 .PHONY: check
-check: stan test lint audit
+check: stan lint audit test
 
 .PHONY: audit
-audit: vendor
+audit: ./vendor ./composer.lock ./node_modules ./package-lock.json
 	${MAKE_COMPOSER} audit
+	${MAKE_COMPOSER} check-platform-reqs
+	${MAKE_COMPOSER} validate --strict --no-check-all
+	npm audit --audit-level info
 
 .PHONY: stan
-stan: vendor tools
-	${MAKE_PHP} ./tools/phpstan/vendor/bin/phpstan analyse
-	./tools/spectral/node_modules/.bin/spectral lint --fail-severity=hint ./public/docs/openapi*
+stan: ./vendor/bin/phpstan ./node_modules/.bin/spectral
+	${MAKE_PHP} ./vendor/bin/phpstan analyse
+	./node_modules/.bin/spectral lint --fail-severity=hint ./public/docs/openapi*
 
 .PHONY: lint
-lint: vendor tools
-	${MAKE_COMPOSER} validate --strict
-	./tools/prettier/node_modules/.bin/prettier --plugin=./tools/prettier/node_modules/@prettier/plugin-xml/src/plugin.js --xml-quote-attributes=double --xml-whitespace-sensitivity=ignore -c .
-	${MAKE_PHP} ./tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --dry-run --diff
-
-.PHONY: test
-test: vendor clear
-	./artisan test
+lint: ./node_modules/.bin/prettier ./vendor/bin/php-cs-fixer
+	./node_modules/.bin/prettier --plugin=@prettier/plugin-xml --xml-quote-attributes=double --xml-whitespace-sensitivity=ignore -c .
+	${MAKE_PHP} ./vendor/bin/php-cs-fixer fix --dry-run --diff
 
 .PHONY: fix
-fix: vendor tools
-	./tools/prettier/node_modules/.bin/prettier --plugin=./tools/prettier/node_modules/@prettier/plugin-xml/src/plugin.js --xml-quote-attributes=double --xml-whitespace-sensitivity=ignore --plugin=./tools/prettier/node_modules/@prettier/plugin-php/src/index.js --php-version=8.2 -w .
-	${MAKE_PHP} ./tools/php-cs-fixer/vendor/bin/php-cs-fixer fix
+fix: ./node_modules/.bin/prettier ./vendor/bin/php-cs-fixer
+	./node_modules/.bin/prettier --plugin=@prettier/plugin-xml --xml-quote-attributes=double --xml-whitespace-sensitivity=ignore --plugin=@prettier/plugin-php --php-version=8.2 -w .
+	${MAKE_PHP} ./vendor/bin/php-cs-fixer fix
 
-.PHONY: production
-production: composer clear migrate seed composer-no-dev optimize storage queue
+.PHONY: test
+test: ./vendor/bin/phpunit ./.env
+	${MAKE_ARTISAN} optimize:clear
+	${MAKE_ARTISAN} cache:clear
+	${MAKE_ARTISAN} config:clear
+	${MAKE_ARTISAN} event:clear
+	${MAKE_ARTISAN} route:clear
+	${MAKE_ARTISAN} view:clear
+	${MAKE_ARTISAN} clear-compiled
+	${MAKE_ARTISAN} test
 
-.PHONY: staging
-staging: production
-
-.PHONY: development
-development: composer clear migrate seed composer-no-dev optimize storage queue
-
-.PHONY: local
-local: composer clear migrate seed storage queue
-
-.PHONY: testing
-testing: composer clear migrate seed storage queue
-
-.PHONY: composer
-composer:
-	${MAKE_COMPOSER} install
-
-.PHONY: composer-no-dev
-composer-no-dev:
-	${MAKE_COMPOSER} install --no-dev -a
-
-.PHONY: clear
-clear: vendor
-	./artisan optimize:clear
-	./artisan cache:clear
-	./artisan config:clear
-	./artisan event:clear
-	./artisan route:clear
-	./artisan view:clear
-	./artisan clear-compiled
-
-.PHONY: migrate
-migrate: vendor
-	./artisan migrate --force
-
-.PHONY: seed
-seed: vendor
-	./artisan db:seed --force
-
-.PHONY: optimize
-optimize: vendor
-	./artisan optimize
-	./artisan config:cache
-	./artisan event:cache
-	./artisan route:cache
-	./artisan view:cache
-
-.PHONY: storage
-storage: vendor
-	./artisan storage:link --force
-
-.PHONY: queue
-queue: vendor
-	./artisan queue:restart
-
-.PHONY: down
-down: vendor
-	./artisan down
-
-.PHONY: up
-up: vendor
-	./artisan up
-
-.PHONY: tinker
-tinker: vendor
-	./artisan tinker
-
-.PHONY: serve
-serve: vendor
-	./artisan serve --host=0.0.0.0 --port=8000
-
-.PHONY: clean-composer
-clean-composer:
+.PHONY: clean
+clean:
+	rm -rf ./node_modules
+	rm -rf ./package-lock.json
 	rm -rf ./vendor
 	rm -rf ./composer.lock
 
-.PHONY: clean-tools
-clean-tools:
-	rm -rf ./tools/*/vendor
-	rm -rf ./tools/*/node_modules
-	rm -rf ./tools/*/composer.lock
-	rm -rf ./tools/*/package-lock.json
-	rm -rf ./tools/*/yarn.lock
+# Deploy / Release
+.PHONY: local
+local: ./.env
+	if test -d ./vendor; then ${MAKE_ARTISAN} down; fi
+	${MAKE_COMPOSER} update
+	npm update --install-links
+	${MAKE_ARTISAN} optimize:clear
+	${MAKE_ARTISAN} cache:clear
+	${MAKE_ARTISAN} config:clear
+	${MAKE_ARTISAN} event:clear
+	${MAKE_ARTISAN} route:clear
+	${MAKE_ARTISAN} view:clear
+	${MAKE_ARTISAN} clear-compiled
+	${MAKE_ARTISAN} migrate --force
+	${MAKE_ARTISAN} db:seed --force
+	${MAKE_ARTISAN} storage:link --force
+	${MAKE_ARTISAN} queue:restart
+	${MAKE_ARTISAN} up
 
-.PHONY: clean-node
-clean-node:
-	rm -rf ./node_modules
-	rm -rf ./package-lock.json
-	rm -rf ./yarn.lock
+.PHONY: testing
+testing: local
 
-.PHONY: clean
-clean: clean-tools clean-composer clean-node
+.PHONY: development
+development: ./.env
+	if test -d ./vendor; then ${MAKE_ARTISAN} down; fi
+	${MAKE_COMPOSER} update
+	npm update --install-links
+	${MAKE_ARTISAN} optimize:clear
+	${MAKE_ARTISAN} cache:clear
+	${MAKE_ARTISAN} config:clear
+	${MAKE_ARTISAN} event:clear
+	${MAKE_ARTISAN} route:clear
+	${MAKE_ARTISAN} view:clear
+	${MAKE_ARTISAN} clear-compiled
+	${MAKE_ARTISAN} migrate --force
+	${MAKE_ARTISAN} db:seed --force
+	${MAKE_COMPOSER} update -a --no-dev
+	npm update --omit dev --install-links
+	${MAKE_ARTISAN} optimize
+	${MAKE_ARTISAN} config:cache
+	${MAKE_ARTISAN} event:cache
+	${MAKE_ARTISAN} route:cache
+	${MAKE_ARTISAN} view:cache
+	${MAKE_ARTISAN} storage:link --force
+	${MAKE_ARTISAN} queue:restart
+	${MAKE_ARTISAN} up
 
-# Aliases
-.PHONY: ci
-ci: check
+.PHONY: staging
+staging: development
 
-.PHONY: start
-start: serve
+.PHONY: production
+production: development
 
-.PHONY: dev
-dev: serve
-
-.PHONY: cli
-cli: tinker
+.PHONY: serve
+serve: local
+	${MAKE_ARTISAN} serve --host=0.0.0.0 --port=8000
 
 # Dependencies
-tools: ./tools/prettier/node_modules/.bin/prettier ./tools/phpstan/vendor/bin/phpstan ./tools/php-cs-fixer/vendor/bin/php-cs-fixer ./tools/spectral/node_modules/.bin/spectral
+./vendor ./composer.lock ./vendor/bin/phpstan ./vendor/bin/php-cs-fixer ./vendor/bin/phpunit:
+	${MAKE_COMPOSER} update
 
-vendor:
-	${MAKE_COMPOSER} install
-
-./tools/prettier/node_modules/.bin/prettier:
-	npm --prefix=./tools/prettier install
-
-./tools/phpstan/vendor/bin/phpstan:
-	${MAKE_COMPOSER} --working-dir=./tools/phpstan install
-
-./tools/php-cs-fixer/vendor/bin/php-cs-fixer:
-	${MAKE_COMPOSER} --working-dir=./tools/php-cs-fixer install
-
-./tools/spectral/node_modules/.bin/spectral:
-	npm --prefix=./tools/spectral install
+./node_modules ./package-lock.json ./node_modules/.bin/prettier tools/spectral/node_modules/.bin/spectral:
+	npm update --install-links
