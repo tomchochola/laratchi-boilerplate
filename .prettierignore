@@ -33,20 +33,10 @@ yarn-error.log
 /composer.lock
 
 # phpunit
-phpunit.xml
 .phpunit.result.cache
-
-# phpstan
-phpstan.neon
 
 # php-cs-fixer
 .php-cs-fixer.cache
-
-# tools
-/tools/*/vendor
-/tools/*/node_modules
-/tools/*/package-lock.json
-/tools/*/composer.lock
 
 # public
 /public/vendor
@@ -56,9 +46,6 @@ phpstan.neon
 
 # svg
 *.svg
-
-# blade
-*.blade.php
 
 # storage
 /storage

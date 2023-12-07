@@ -7,64 +7,39 @@ MAKE_COMPOSER_2_BIN ?= /usr/local/bin/composer2
 
 MAKE_PHP ?= ${MAKE_PHP_8_2_BIN}
 MAKE_COMPOSER ?= ${MAKE_PHP} ${MAKE_COMPOSER_2_BIN}
-MAKE_ARTISAN ?= ${MAKE_PHP} artisan
+MAKE_ARTISAN ?= ${MAKE_PHP} ./artisan
 
 # Default goal
-.DEFAULT_GOAL := assert-never
+.DEFAULT_GOAL := panic
 
 # Goals
 .PHONY: check
-check: stan test lint audit
+check: stan lint audit test
 
 .PHONY: audit
-audit: vendor tools
+audit: ./vendor ./composer.lock ./node_modules ./package-lock.json
 	${MAKE_COMPOSER} audit
+	${MAKE_COMPOSER} check-platform-reqs
+	${MAKE_COMPOSER} validate --strict --no-check-all
+	npm audit --audit-level info
 
 .PHONY: stan
-stan: vendor tools
-	${MAKE_PHP} tools/phpstan/vendor/bin/phpstan analyse
-	"tools/spectral/node_modules/.bin/spectral" lint --fail-severity=hint public/docs/openapi*
+stan: ./vendor/bin/phpstan ./node_modules/.bin/spectral
+	${MAKE_PHP} ./vendor/bin/phpstan analyse
+	./node_modules/.bin/spectral lint --fail-severity=hint ./public/docs/openapi*
 
 .PHONY: lint
-lint: vendor tools
-	${MAKE_COMPOSER} validate --strict
-	"tools/prettier-lint/node_modules/.bin/prettier" -c .
-	${MAKE_PHP} tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --dry-run --diff
-
-.PHONY: test
-test: vendor clear
-	${MAKE_ARTISAN} test
+lint: ./node_modules/.bin/prettier ./vendor/bin/php-cs-fixer
+	./node_modules/.bin/prettier --plugin=@prettier/plugin-xml --xml-quote-attributes=double --xml-whitespace-sensitivity=ignore -c .
+	${MAKE_PHP} ./vendor/bin/php-cs-fixer fix --dry-run --diff
 
 .PHONY: fix
-fix: vendor tools
-	"tools/prettier-fix/node_modules/.bin/prettier" -w .
-	${MAKE_PHP} tools/php-cs-fixer/vendor/bin/php-cs-fixer fix
+fix: ./node_modules/.bin/prettier ./vendor/bin/php-cs-fixer
+	./node_modules/.bin/prettier --plugin=@prettier/plugin-xml --xml-quote-attributes=double --xml-whitespace-sensitivity=ignore --plugin=@prettier/plugin-php --php-version=8.2 -w .
+	${MAKE_PHP} ./vendor/bin/php-cs-fixer fix
 
-.PHONY: production
-production: composer clear migrate seed composer-no-dev optimize storage queue
-
-.PHONY: staging
-staging: production
-
-.PHONY: development
-development: composer clear migrate seed composer-no-dev optimize storage queue
-
-.PHONY: local
-local: composer clear migrate seed storage queue
-
-.PHONY: testing
-testing: composer clear migrate seed storage queue
-
-.PHONY: composer
-composer:
-	${MAKE_COMPOSER} install
-
-.PHONY: composer-no-dev
-composer-no-dev:
-	${MAKE_COMPOSER} install --no-dev -a
-
-.PHONY: clear
-clear: vendor
+.PHONY: test
+test: ./vendor/bin/phpunit ./.env
 	${MAKE_ARTISAN} optimize:clear
 	${MAKE_ARTISAN} cache:clear
 	${MAKE_ARTISAN} config:clear
@@ -72,86 +47,75 @@ clear: vendor
 	${MAKE_ARTISAN} route:clear
 	${MAKE_ARTISAN} view:clear
 	${MAKE_ARTISAN} clear-compiled
+	${MAKE_ARTISAN} test
 
-.PHONY: migrate
-migrate: vendor
+.PHONY: clean
+clean:
+	rm -rf ./node_modules
+	rm -rf ./package-lock.json
+	rm -rf ./vendor
+	rm -rf ./composer.lock
+
+# Deploy / Release
+.PHONY: local
+local: ./.env
+	if test -d ./vendor; then ${MAKE_ARTISAN} down; fi
+	${MAKE_COMPOSER} update
+	npm update --install-links
+	${MAKE_ARTISAN} optimize:clear
+	${MAKE_ARTISAN} cache:clear
+	${MAKE_ARTISAN} config:clear
+	${MAKE_ARTISAN} event:clear
+	${MAKE_ARTISAN} route:clear
+	${MAKE_ARTISAN} view:clear
+	${MAKE_ARTISAN} clear-compiled
 	${MAKE_ARTISAN} migrate --force
-
-.PHONY: seed
-seed: vendor
 	${MAKE_ARTISAN} db:seed --force
+	${MAKE_ARTISAN} storage:link --force
+	${MAKE_ARTISAN} queue:restart
+	${MAKE_ARTISAN} up
 
-.PHONY: optimize
-optimize: vendor
+.PHONY: testing
+testing: local
+
+.PHONY: development
+development: ./.env
+	if test -d ./vendor; then ${MAKE_ARTISAN} down; fi
+	${MAKE_COMPOSER} update
+	npm update --install-links
+	${MAKE_ARTISAN} optimize:clear
+	${MAKE_ARTISAN} cache:clear
+	${MAKE_ARTISAN} config:clear
+	${MAKE_ARTISAN} event:clear
+	${MAKE_ARTISAN} route:clear
+	${MAKE_ARTISAN} view:clear
+	${MAKE_ARTISAN} clear-compiled
+	${MAKE_ARTISAN} migrate --force
+	${MAKE_ARTISAN} db:seed --force
+	${MAKE_COMPOSER} update -a --no-dev
+	npm update --omit dev --install-links
 	${MAKE_ARTISAN} optimize
 	${MAKE_ARTISAN} config:cache
 	${MAKE_ARTISAN} event:cache
 	${MAKE_ARTISAN} route:cache
 	${MAKE_ARTISAN} view:cache
-
-.PHONY: storage
-storage: vendor
 	${MAKE_ARTISAN} storage:link --force
-
-.PHONY: queue
-queue: vendor
 	${MAKE_ARTISAN} queue:restart
-
-.PHONY: down
-down: vendor
-	${MAKE_ARTISAN} down
-
-.PHONY: up
-up: vendor
 	${MAKE_ARTISAN} up
 
-.PHONY: tinker
-tinker: vendor
-	${MAKE_ARTISAN} tinker
+.PHONY: staging
+staging: development
+
+.PHONY: production
+production: development
 
 .PHONY: serve
-serve: vendor
-	${MAKE_ARTISAN} serve
-
-.PHONY: clean-composer
-clean-composer:
-	git clean -xfd vendor composer.lock
-
-.PHONY: update-composer
-update-composer: clean-composer
-	${MAKE_COMPOSER} update
-
-.PHONY: clean-tools
-clean-tools:
-	git clean -xfd tools
-
-.PHONY: update-tools
-update-tools: clean-tools tools
-
-.PHONY: update
-update: update-tools update-composer
-
-.PHONY: clean
-clean: clean-tools clean-composer
-	git clean -xfd public
+serve: local
+	${MAKE_ARTISAN} serve --host=0.0.0.0 --port=8000
 
 # Dependencies
-tools: tools/prettier-lint/node_modules/.bin/prettier tools/prettier-fix/node_modules/.bin/prettier tools/phpstan/vendor/bin/phpstan tools/php-cs-fixer/vendor/bin/php-cs-fixer tools/spectral/node_modules/.bin/spectral
+./vendor ./composer.lock ./vendor/bin/phpstan ./vendor/bin/php-cs-fixer ./vendor/bin/phpunit:
+	${MAKE_COMPOSER} update
 
-tools/prettier-lint/node_modules/.bin/prettier:
-	npm --prefix=tools/prettier-lint update
-
-tools/prettier-fix/node_modules/.bin/prettier:
-	npm --prefix=tools/prettier-fix update
-
-vendor:
-	${MAKE_COMPOSER} install
-
-tools/phpstan/vendor/bin/phpstan:
-	${MAKE_COMPOSER} --working-dir=tools/phpstan update
-
-tools/php-cs-fixer/vendor/bin/php-cs-fixer:
-	${MAKE_COMPOSER} --working-dir=tools/php-cs-fixer update
-
-tools/spectral/node_modules/.bin/spectral:
-	npm --prefix=tools/spectral update
+./node_modules ./package-lock.json ./node_modules/.bin/prettier tools/spectral/node_modules/.bin/spectral:
+	npm update --install-links

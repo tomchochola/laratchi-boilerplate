@@ -2,27 +2,27 @@
 <phpunit
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:noNamespaceSchemaLocation="./vendor/phpunit/phpunit/phpunit.xsd"
-  bootstrap="vendor/autoload.php"
+  bootstrap="./vendor/autoload.php"
   colors="true"
-  failOnEmptyTestSuite="true"
   failOnRisky="true"
   failOnWarning="true"
   failOnDeprecation="true"
   failOnNotice="true"
   beStrictAboutChangesToGlobalState="true"
   beStrictAboutOutputDuringTests="true"
-  beStrictAboutTestsThatDoNotTestAnything="false"
+  beStrictAboutTestsThatDoNotTestAnything="true"
+  beStrictAboutCoverageMetadata="true"
 >
   <testsuites>
-        <testsuite name="Feature">
-            <directory>tests/Feature</directory>
-        </testsuite>
-    </testsuites>
-    <source>
-        <include>
-            <directory>app</directory>
-        </include>
-    </source>
+    <testsuite name="feature">
+      <directory>./tests/Feature</directory>
+    </testsuite>
+  </testsuites>
+  <source>
+    <include>
+      <directory>./app</directory>
+    </include>
+  </source>
   <php>
     <env name="APP_NAME" value="'Feature test'" />
     <env name="APP_ENV" value="'testing'" />
