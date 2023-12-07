@@ -160,10 +160,9 @@ return [
     |
     */
 
-    'providers' => ServiceProvider::defaultProviders()->merge([
-        App\Providers\AppServiceProvider::class,
-        Tomchochola\Laratchi\Providers\RouteServiceProvider::class,
-    ])->toArray(),
+    'providers' => ServiceProvider::defaultProviders()
+        ->merge([App\Providers\AppServiceProvider::class, Tomchochola\Laratchi\Providers\RouteServiceProvider::class])
+        ->toArray(),
 
     /*
     |--------------------------------------------------------------------------
