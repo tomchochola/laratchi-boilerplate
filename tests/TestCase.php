@@ -34,12 +34,7 @@ abstract class TestCase extends LaratchiTestCase
 
         return $this->structure('users', [
             'email' => $authValidity->email()->required(),
-            'name' => $authValidity->name()->required(),
             'locale' => $authValidity->locale()->required(),
-            'email_verified_at' => $authValidity
-                ->emailVerifiedAt()
-                ->nullable()
-                ->present(),
             'created_at' => $authValidity->createdAt()->required(),
             'updated_at' => $authValidity->updatedAt()->required(),
         ]);
@@ -50,11 +45,6 @@ abstract class TestCase extends LaratchiTestCase
      */
     protected function structureUserEmbed(): JsonApiValidator
     {
-        $authValidity = AuthValidity::inject();
-
-        return $this->structure('users', [
-            'email' => $authValidity->email()->required(),
-            'name' => $authValidity->name()->required(),
-        ]);
+        return $this->structure('users', []);
     }
 }

@@ -30,15 +30,11 @@ class UserSeeder extends Seeder
 
         UserFactory::new()
             ->password()
-            ->blankRememberToken()
-            ->unverified()
             ->createOne(['email' => 'test@test.com']);
 
         UserFactory::new()
             ->randomLocale()
             ->password()
-            ->blankRememberToken()
-            ->unverified()
             ->count(100)
             ->create();
     }

@@ -70,7 +70,7 @@ return [
 
         'log' => [
             'transport' => 'log',
-            'channel' => 'info',
+            'channel' => null,
         ],
 
         'array' => [

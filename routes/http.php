@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Tomchochola\Laratchi\Support\Resolver;
 
-Resolver::resolveRouter()
+Resolver::resolveRouteRegistrar()
     ->get('api/v1/spec', Tomchochola\Laratchi\Swagger\Http\Controllers\SwaggerController::class)
     ->defaults('url', Resolver::resolveUrlGenerator()->asset('docs/openapi_v1.json'));
 
