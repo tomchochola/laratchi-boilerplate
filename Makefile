@@ -59,7 +59,6 @@ clean:
 # Deploy / Release
 .PHONY: local
 local: ./.env
-	if test -d ./vendor; then ${MAKE_ARTISAN} down; fi
 	${MAKE_COMPOSER} update
 	npm update --install-links
 	${MAKE_ARTISAN} optimize:clear
@@ -80,7 +79,6 @@ testing: local
 
 .PHONY: development
 development: ./.env
-	if test -d ./vendor; then ${MAKE_ARTISAN} down; fi
 	${MAKE_COMPOSER} update
 	npm update --install-links
 	${MAKE_ARTISAN} optimize:clear
