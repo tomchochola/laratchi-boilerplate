@@ -32,7 +32,6 @@ class RegisterControllerTest extends TestCase
 
         $data = [
             'email' => $me->getEmail(),
-            'name' => $me->getName(),
             'locale' => $me->getLocale(),
             'password' => UserFactory::PASSWORD,
         ];
@@ -61,7 +60,6 @@ class RegisterControllerTest extends TestCase
 
         $data = [
             'email' => $me->getEmail(),
-            'name' => $me->getName(),
             'locale' => $me->getLocale(),
             'password' => UserFactory::PASSWORD,
         ];
@@ -94,7 +92,6 @@ class RegisterControllerTest extends TestCase
 
         $data = [
             'email' => $me->getEmail(),
-            'name' => $me->getName(),
             'locale' => $me->getLocale(),
             'password' => UserFactory::PASSWORD,
         ];

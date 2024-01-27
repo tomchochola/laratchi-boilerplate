@@ -20,8 +20,8 @@ return [
     */
 
     'mailgun' => [
-        'domain' => $env->appEnvIs(['production']) ? $env->mustParseString('MAILGUN_DOMAIN') : $env->mustParseNullableString('MAILGUN_DOMAIN'),
-        'secret' => $env->appEnvIs(['production']) ? $env->mustParseString('MAILGUN_SECRET') : $env->mustParseNullableString('MAILGUN_SECRET'),
+        'domain' => $env->mustParseNullableString('MAILGUN_DOMAIN'),
+        'secret' => $env->mustParseNullableString('MAILGUN_SECRET'),
         'endpoint' => $env->mustParseNullableString('MAILGUN_ENDPOINT') ?? 'api.eu.mailgun.net',
         'scheme' => 'https',
     ],

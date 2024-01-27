@@ -33,7 +33,6 @@ class MeUpdateControllerTest extends TestCase
 
         $data = [
             'email' => $newMe->getEmail(),
-            'name' => $newMe->getName(),
             'locale' => $newMe->getLocale(),
         ];
 
@@ -58,7 +57,6 @@ class MeUpdateControllerTest extends TestCase
 
         $data = [
             'email' => $newMe->getEmail(),
-            'name' => $newMe->getName(),
             'locale' => $newMe->getLocale(),
         ];
 
@@ -84,7 +82,6 @@ class MeUpdateControllerTest extends TestCase
 
         $data = [
             'email' => $me->getEmail(),
-            'name' => $me->getName(),
             'locale' => $me->getLocale(),
         ];
 
@@ -111,7 +108,6 @@ class MeUpdateControllerTest extends TestCase
 
         $data = [
             'email' => $newMe->getEmail(),
-            'name' => $newMe->getName(),
             'locale' => $newMe->getLocale(),
         ];
 

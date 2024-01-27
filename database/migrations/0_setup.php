@@ -15,11 +15,10 @@ return new class extends Migration {
         Resolver::resolveSchemaBuilder()->create('users', static function (Blueprint $table): void {
             $table->id();
 
-            $table->string('name');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
+
             $table->string('password')->nullable();
-            $table->rememberToken();
+
             $table->char('locale', 2);
 
             $table->timestamp('created_at');

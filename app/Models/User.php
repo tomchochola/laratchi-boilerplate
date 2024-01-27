@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Carbon;
 use Tomchochola\Laratchi\Auth\User as LaratchiUser;
 use Tomchochola\Laratchi\Http\JsonApi\JsonApiResource;
 use Tomchochola\Laratchi\Http\JsonApi\ModelResource;
@@ -17,9 +16,7 @@ class User extends LaratchiUser
      *
      * @var array<mixed>
      */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    protected $casts = [];
 
     /**
      * Modify embed query.
@@ -38,27 +35,11 @@ class User extends LaratchiUser
     }
 
     /**
-     * Name getter.
-     */
-    public function getName(): string
-    {
-        return $this->assertString('name');
-    }
-
-    /**
      * Locale getter.
      */
     public function getLocale(): string
     {
         return $this->assertString('locale');
-    }
-
-    /**
-     * E-mail verified at getter.
-     */
-    public function getEmailVerifiedAt(): Carbon|null
-    {
-        return $this->assertNullableCarbon('email_verified_at');
     }
 
     /**
@@ -70,26 +51,39 @@ class User extends LaratchiUser
             $this,
             static fn(self $resource): array => [
                 'email' => $resource->getEmail(),
-                'name' => $resource->getName(),
                 'locale' => $resource->getLocale(),
-                'email_verified_at' => $resource->getEmailVerifiedAt(),
-                'created_at' => $resource->getCreatedAt(),
-                'updated_at' => $resource->getUpdatedAt(),
+                'created_at' => $resource->getCreatedAt()->toJSON(),
+                'updated_at' => $resource->getUpdatedAt()->toJSON(),
             ],
         );
     }
 
     /**
-     * Embed resource.
+     * @inheritDoc
      */
-    public function embedResource(): JsonApiResource
+    public function getRememberTokenName(): string
     {
-        return new ModelResource(
-            $this,
-            static fn(self $resource): array => [
-                'email' => $resource->getEmail(),
-                'name' => $resource->getName(),
-            ],
-        );
+        return '';
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getRememberToken(): string
+    {
+        return '';
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setRememberToken(mixed $value): void {}
+
+    /**
+     * Route notifications for the mail channel.
+     */
+    public function routeNotificationForMail(): string
+    {
+        return $this->getEmail();
     }
 }
