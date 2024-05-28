@@ -22,12 +22,7 @@ class MeDestroyControllerTest extends TestCase
     {
         $this->locale($locale);
 
-        $me = Typer::assertInstance(
-            UserFactory::new()
-                ->password()
-                ->createOne(),
-            User::class,
-        );
+        $me = Typer::assertInstance(UserFactory::new()->password()->createOne(), User::class);
 
         $data = [
             'password' => UserFactory::PASSWORD,

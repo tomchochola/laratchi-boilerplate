@@ -22,12 +22,7 @@ class LoginControllerTest extends TestCase
     {
         $this->locale($locale);
 
-        $me = Typer::assertInstance(
-            UserFactory::new()
-                ->password()
-                ->createOne(),
-            User::class,
-        );
+        $me = Typer::assertInstance(UserFactory::new()->password()->createOne(), User::class);
 
         $data = [
             'email' => $me->getEmail(),

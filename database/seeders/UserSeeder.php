@@ -20,11 +20,7 @@ class UserSeeder extends Seeder
             return;
         }
 
-        if (
-            User::query()
-                ->getQuery()
-                ->exists()
-        ) {
+        if (User::query()->getQuery()->exists()) {
             return;
         }
 
@@ -32,10 +28,6 @@ class UserSeeder extends Seeder
             ->password()
             ->createOne(['email' => 'test@test.com']);
 
-        UserFactory::new()
-            ->randomLocale()
-            ->password()
-            ->count(100)
-            ->create();
+        UserFactory::new()->randomLocale()->password()->count(100)->create();
     }
 }
