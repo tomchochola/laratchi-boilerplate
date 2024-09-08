@@ -2,10 +2,10 @@
 SHELL := /bin/bash
 
 # Variables
-MAKE_PHP_8_2_BIN ?= php8.2
+MAKE_PHP_8_3_BIN ?= php8.3
 MAKE_COMPOSER_2_BIN ?= /usr/local/bin/composer2
 
-MAKE_PHP ?= ${MAKE_PHP_8_2_BIN}
+MAKE_PHP ?= ${MAKE_PHP_8_3_BIN}
 MAKE_COMPOSER ?= ${MAKE_PHP} ${MAKE_COMPOSER_2_BIN}
 MAKE_ARTISAN ?= ${MAKE_PHP} ./artisan
 
@@ -115,5 +115,5 @@ serve: local
 ./vendor ./composer.lock ./vendor/bin/phpstan ./vendor/bin/php-cs-fixer ./vendor/bin/phpunit:
 	${MAKE_COMPOSER} update
 
-./node_modules ./package-lock.json ./node_modules/.bin/prettier tools/spectral/node_modules/.bin/spectral:
+./node_modules ./package-lock.json ./node_modules/.bin/prettier ./node_modules/.bin/spectral:
 	npm update --install-links

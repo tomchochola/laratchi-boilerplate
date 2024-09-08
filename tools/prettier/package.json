@@ -1,7 +1,0 @@
-{
-  "devDependencies": {
-    "@prettier/plugin-php": "latest",
-    "@prettier/plugin-xml": "latest",
-    "prettier": "latest"
-  }
-}

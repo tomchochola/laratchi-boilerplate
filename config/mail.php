@@ -8,13 +8,15 @@ use Tomchochola\Laratchi\Support\Resolver;
 $env = Env::inject();
 $app = Resolver::resolveApp();
 
-$driver = $env->appEnvMap([
-    'local' => 'log',
-    'testing' => 'array',
-    'development' => 'smtp',
-    'staging' => 'smtp',
-    'production' => 'mailgun',
-]);
+$driver =
+    $env->parseNullableString('MAIL_DRIVER') ??
+    $env->appEnvMap([
+        'local' => 'log',
+        'testing' => 'array',
+        'development' => 'smtp',
+        'staging' => 'smtp',
+        'production' => 'smtp',
+    ]);
 
 return [
     /*
@@ -49,29 +51,33 @@ return [
     */
 
     'mailers' => [
-        'smtp' => [
-            'transport' => 'smtp',
-            'url' => null,
-            'host' => $driver === 'smtp' ? $env->mustParseString('MAIL_HOST') : $env->mustParseNullableString('MAIL_HOST'),
-            'port' => $driver === 'smtp' ? $env->mustParseInt('MAIL_PORT') : $env->mustParseNullableInt('MAIL_PORT'),
-            'encryption' => 'tls',
-            'username' => $driver === 'smtp' ? $env->mustParseString('MAIL_USERNAME') : $env->mustParseNullableString('MAIL_USERNAME'),
-            'password' => $driver === 'smtp' ? $env->mustParseString('MAIL_PASSWORD') : $env->mustParseNullableString('MAIL_PASSWORD'),
-            'timeout' => null,
-            'local_domain' => $env->mustParseNullableString('MAIL_EHLO_DOMAIN'),
-        ],
-
-        'mailgun' => [
-            'transport' => 'mailgun',
-            'client' => [
-                'timeout' => 5,
-            ],
-        ],
+        'smtp' => $driver === 'smtp'
+                ? [
+                    'transport' => 'smtp',
+                    'url' => null,
+                    'host' => $env->mustParseString('MAIL_HOST'),
+                    'port' => $env->mustParseInt('MAIL_PORT'),
+                    'encryption' => 'tls',
+                    'username' => $env->mustParseString('MAIL_USERNAME'),
+                    'password' => $env->mustParseString('MAIL_PASSWORD'),
+                    'timeout' => null,
+                    'local_domain' => $env->mustParseNullableString('MAIL_EHLO_DOMAIN'),
+                ]
+                : [],
 
         'log' => [
             'transport' => 'log',
             'channel' => null,
         ],
+
+        'ses' => $driver === 'ses'
+                ? [
+                    'transport' => 'ses',
+                    'key' => $env->mustParseString('AWS_ACCESS_KEY_ID'),
+                    'secret' => $env->mustParseString('AWS_SECRET_ACCESS_KEY'),
+                    'region' => $env->mustParseString('AWS_DEFAULT_REGION'),
+                ]
+                : [],
 
         'array' => [
             'transport' => 'array',

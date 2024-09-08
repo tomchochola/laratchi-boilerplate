@@ -46,9 +46,7 @@ return [
             'database' => $env->mustParseString('DB_DATABASE'),
             'username' => $env->mustParseString('DB_USERNAME'),
             'password' => $env->mustParseNullableString('DB_PASSWORD'),
-            'unix_socket' => $env->appEnvIs(['development', 'staging', 'production'])
-                ? $env->mustParseNullableString('DB_SOCKET') ?? '/var/run/mysqld/mysqld.sock'
-                : $env->mustParseNullableString('DB_SOCKET'),
+            'unix_socket' => $env->mustParseNullableString('DB_SOCKET'),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_0900_ai_ci',
             'prefix' => '',
@@ -88,7 +86,7 @@ return [
 
         'options' => [
             'cluster' => 'redis',
-            'prefix' => Str::slug($env->mustParseString('APP_NAME'), '_') . '_' . $env->appEnv() . '_database_',
+            'prefix' => $env->parseNullableString('REDIS_PREFIX') ?? '{' . Str::slug($env->mustParseString('APP_NAME') . '_' . $env->appEnv() . '_database', '_') . '}',
         ],
 
         'default' => [
@@ -98,6 +96,7 @@ return [
             'password' => $env->mustParseNullableString('REDIS_PASSWORD'),
             'port' => $env->mustParseNullableInt('REDIS_PORT') ?? 6379,
             'database' => '0',
+            'scheme' => $env->parseNullableString('REDIS_SCHEME') ?? 'tcp',
         ],
 
         'cache' => [
@@ -107,6 +106,7 @@ return [
             'password' => $env->mustParseNullableString('REDIS_PASSWORD'),
             'port' => $env->mustParseNullableInt('REDIS_PORT') ?? 6379,
             'database' => '1',
+            'scheme' => $env->parseNullableString('REDIS_SCHEME') ?? 'tcp',
         ],
     ],
 ];

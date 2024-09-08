@@ -24,13 +24,14 @@ return [
     |
     */
 
-    'driver' => $env->appEnvMap([
-        'local' => 'file',
-        'testing' => 'array',
-        'development' => 'redis',
-        'staging' => 'redis',
-        'production' => 'redis',
-    ]),
+    'driver' => $env->parseNullableString('SESSION_DRIVER') ??
+        $env->appEnvMap([
+            'local' => 'file',
+            'testing' => 'array',
+            'development' => 'redis',
+            'staging' => 'redis',
+            'production' => 'redis',
+        ]),
 
     /*
     |--------------------------------------------------------------------------
@@ -138,7 +139,7 @@ return [
     |
     */
 
-    'cookie' => ($env->appEnvIs(['local', 'testing']) ? '' : '__Host-') . Str::slug($env->mustParseString('APP_NAME'), '_') . '_' . $env->appEnv() . '_session',
+    'cookie' => ($env->appEnvIs(['local', 'testing']) ? '' : '__Host-') . Str::slug($env->mustParseString('APP_NAME') . '_' . $env->appEnv() . '_session', '_'),
 
     /*
     |--------------------------------------------------------------------------

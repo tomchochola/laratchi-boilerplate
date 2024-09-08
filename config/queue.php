@@ -18,13 +18,14 @@ return [
     |
     */
 
-    'default' => $env->appEnvMap([
-        'local' => 'sync',
-        'testing' => 'sync',
-        'development' => 'redis',
-        'staging' => 'redis',
-        'production' => 'redis',
-    ]),
+    'default' => $env->parseNullableString('QUEUE_DRIVER') ??
+        $env->appEnvMap([
+            'local' => 'sync',
+            'testing' => 'sync',
+            'development' => 'redis',
+            'staging' => 'redis',
+            'production' => 'redis',
+        ]),
 
     /*
     |--------------------------------------------------------------------------

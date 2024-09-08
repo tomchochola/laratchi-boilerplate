@@ -39,16 +39,28 @@ return [
         'local' => [
             'driver' => 'local',
             'root' => $app->storagePath('app'),
-            'throw' => false,
+            'throw' => true,
         ],
 
-        'public' => [
-            'driver' => 'local',
-            'root' => $app->storagePath('app/public'),
-            'url' => $env->mustParseString('APP_URL') . '/storage',
-            'visibility' => 'public',
-            'throw' => false,
-        ],
+        'public' => $env->appEnvIs(['production'])
+            ? [
+                'driver' => 's3',
+                'key' => $env->mustParseString('AWS_ACCESS_KEY_ID'),
+                'secret' => $env->mustParseString('AWS_SECRET_ACCESS_KEY'),
+                'region' => $env->mustParseString('AWS_DEFAULT_REGION'),
+                'bucket' => $env->mustParseString('AWS_BUCKET'),
+                'url' => $env->parseNullableString('AWS_URL'),
+                'endpoint' => null,
+                'use_path_style_endpoint' => false,
+                'throw' => true,
+            ]
+            : [
+                'driver' => 'local',
+                'root' => $app->storagePath('app/public'),
+                'url' => $env->mustParseString('APP_URL') . '/storage',
+                'visibility' => 'public',
+                'throw' => false,
+            ],
     ],
 
     /*
@@ -63,6 +75,6 @@ return [
     */
 
     'links' => [
-        $app->publicPath() . '/storage' => $app->storagePath('app/public'),
+        $app->publicPath('storage') => $app->storagePath('app/public'),
     ],
 ];

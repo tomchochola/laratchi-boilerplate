@@ -9,13 +9,15 @@ use Tomchochola\Laratchi\Support\Resolver;
 $env = Env::inject();
 $app = Resolver::resolveApp();
 
-$level = $env->appEnvMap([
-    'local' => 'debug',
-    'testing' => 'debug',
-    'development' => 'debug',
-    'staging' => 'debug',
-    'production' => 'info',
-]);
+$level =
+    $env->parseNullableString('LOG_LEVEL') ??
+    $env->appEnvMap([
+        'local' => 'debug',
+        'testing' => 'debug',
+        'development' => 'debug',
+        'staging' => 'debug',
+        'production' => 'info',
+    ]);
 
 return [
     /*
@@ -29,13 +31,14 @@ return [
     |
     */
 
-    'default' => $env->appEnvMap([
-        'local' => 'single',
-        'testing' => 'null',
-        'development' => 'single',
-        'staging' => 'single',
-        'production' => 'single',
-    ]),
+    'default' => $env->parseNullableString('LOG_DRIVER') ??
+        $env->appEnvMap([
+            'local' => 'single',
+            'testing' => 'null',
+            'development' => 'single',
+            'staging' => 'single',
+            'production' => 'single',
+        ]),
 
     /*
     |--------------------------------------------------------------------------
@@ -49,13 +52,14 @@ return [
     */
 
     'deprecations' => [
-        'channel' => $env->appEnvMap([
-            'local' => 'single',
-            'testing' => 'null',
-            'development' => 'single',
-            'staging' => 'single',
-            'production' => 'single',
-        ]),
+        'channel' => $env->parseNullableString('LOG_DEPRECATIONS_DRIVER') ??
+            $env->appEnvMap([
+                'local' => 'single',
+                'testing' => 'null',
+                'development' => 'single',
+                'staging' => 'single',
+                'production' => 'single',
+            ]),
         'trace' => false,
     ],
 

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Builder;
 use Tomchochola\Laratchi\Auth\User as LaratchiUser;
 use Tomchochola\Laratchi\Http\JsonApi\JsonApiResource;
 use Tomchochola\Laratchi\Http\JsonApi\ModelResource;
@@ -17,14 +16,6 @@ class User extends LaratchiUser
      * @var array<mixed>
      */
     protected $casts = [];
-
-    /**
-     * Modify embed query.
-     */
-    public static function queryEmbed(Builder $builder): void
-    {
-        $builder->getQuery()->select($builder->qualifyColumn('*'));
-    }
 
     /**
      * E-mail getter.

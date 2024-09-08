@@ -21,13 +21,14 @@ return [
     |
     */
 
-    'default' => $env->appEnvMap([
-        'local' => 'file',
-        'testing' => 'array',
-        'development' => 'redis',
-        'staging' => 'redis',
-        'production' => 'redis',
-    ]),
+    'default' => $env->parseNullableString('CACHE_DRIVER') ??
+        $env->appEnvMap([
+            'local' => 'file',
+            'testing' => 'array',
+            'development' => 'redis',
+            'staging' => 'redis',
+            'production' => 'redis',
+        ]),
 
     /*
     |--------------------------------------------------------------------------
@@ -73,5 +74,5 @@ return [
     |
     */
 
-    'prefix' => Str::slug($env->mustParseString('APP_NAME'), '_') . '_' . $env->appEnv() . '_cache_',
+    'prefix' => $env->parseNullableString('CACHE_PREFIX') ?? '{' . Str::slug($env->mustParseString('APP_NAME') . '_' . $env->appEnv() . '_cache', '_') . '}',
 ];

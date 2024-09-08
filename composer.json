@@ -30,13 +30,12 @@
     }
   ],
   "require": {
-    "php": "^8.2.0",
+    "php": "^8.3.0",
     "doctrine/dbal": "^3.6",
     "guzzlehttp/guzzle": "^7.8",
     "laravel/framework": "^10.20",
     "laravel/tinker": "^2.8",
     "symfony/http-client": "^6.3",
-    "symfony/mailgun-mailer": "^6.3",
     "tomchochola/laratchi": "@dev"
   },
   "require-dev": {
