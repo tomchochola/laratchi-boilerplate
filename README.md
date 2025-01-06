@@ -1,41 +1,11 @@
-## Application documentation
+# 🚨 This Project is Deprecated 🚨
 
-Source files are located in [./docs/application_documentation.md](./docs/application_documentation.md).
+This repository/library/project has reached its **End of Life (EOL)** and is no longer maintained or updated.
 
-## API specification
+### Please switch to the recommended alternative: **Premierstacks**
 
-Available at URL `/api/v1/spec`.
+Premierstacks offers an actively maintained and improved replacement for this project, ensuring better performance, security, and long-term support.
 
-Source files are located in [./public/docs/openapi_v1.json](./public/docs/openapi_v1.json).
+[https://github.com/premierstacks](https://github.com/premierstacks)
 
-## CLI
-
-```sh
-# scaffold validity
-./artisan make:validity SharedValidity
-
-# test mailer integration
-./artisan test:mail
-
-# scaffold crud
-./artisan make:tchi Model
-```
-
-## Provision
-
-```sh
-# production provision
-make production
-
-# staging provision
-make staging
-
-# development provision
-make development
-
-# local provision
-make local
-
-# testing provision
-make testing
-```
+Thank you for your understanding and support.
